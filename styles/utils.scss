@@ -1,0 +1,49 @@
+.pixelated {
+    image-rendering: pixelated;
+}
+
+.button-border-rainbow {
+    box-shadow: 0 0 6px 2px rgb(134 0 255 / 50%), 2px 1000px 1px #000000 inset;
+    border: solid 3px transparent;
+    background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), linear-gradient(60deg, #00e39f, #00c1b9, #009cc2, #0075b3, #004e8e, #2c4089, #462f7e, #59166d, #91006d, #c3005c, #ea003e, #ff0000);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    animation: random-bg-position 5s linear alternate infinite;
+    background-size: 300% 300%;
+}
+
+@keyframes random-bg-position {
+    0% {
+        background-position: 0 0;
+    }
+    10% {
+        background-position: 20% 30%;
+    }
+    20% {
+        background-position: 40% 40%;
+    }
+    30% {
+        background-position: 60% 60%;
+    }
+    40% {
+        background-position: 80% 90%;
+    }
+    50% {
+        background-position: 100% 70%;
+    }
+    60% {
+        background-position: 70% 60%;
+    }
+    70% {
+        background-position: 50% 30%;
+    }
+    80% {
+        background-position: 40% 50%;
+    }
+    90% {
+        background-position: 20% 30%;
+    }
+    100% {
+        background-position: 0 50%;
+    }
+}

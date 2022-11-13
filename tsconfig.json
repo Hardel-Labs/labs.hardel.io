@@ -24,7 +24,8 @@
             "@pages/*": ["pages/*"],
             "@app/*": ["app/*"],
             "@styles/*": ["styles/*"],
-            "@libs/*": ["libs/*"]
+            "@libs/*": ["libs/*"],
+            "@session": ["pages/api/auth/[...nextauth]"]
         },
         "plugins": [
             {

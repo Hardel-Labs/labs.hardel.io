@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.bg-coral {
+    @apply bg-gradient-to-br from-purple-900 to-blue-300;
+}
+
+.text-gradient {
+    @apply text-transparent bg-clip-text;
+}
+
+.rounded-royal {
+    @apply rounded-bl-[1.75rem] rounded-tr-[1.75rem]
+}
+
+.royal-border {
+    @apply border-b-gold border-b-8 border-solid
+}
