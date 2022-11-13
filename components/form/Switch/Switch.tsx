@@ -1,13 +1,11 @@
 import React, { useId } from 'react';
 import styles from './Switch.module.scss';
-import classNames from 'classnames';
 
 type Props = {
     onClick?: (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => void;
     disabled?: boolean;
     label?: string;
     checked?: boolean;
-    className?: string;
 };
 
 export default function Switch(props: Props) {
@@ -15,14 +13,7 @@ export default function Switch(props: Props) {
 
     return (
         <label className={styles.toggle} htmlFor={id}>
-            <input
-                type="checkbox"
-                disabled={props.disabled}
-                defaultChecked={props.checked}
-                className={classNames(props.className, styles.toggleInput)}
-                id={id}
-                onClick={props.onClick}
-            />
+            <input type="checkbox" disabled={props.disabled} defaultChecked={props.checked} className={styles.toggleInput} id={id} onClick={props.onClick} />
             <span className={styles.toggleTrack}>
                 <span className={styles.toggleIndicator}>
                     <span className={styles.checkMark}>
