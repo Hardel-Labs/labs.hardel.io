@@ -1,10 +1,14 @@
 import MinecraftSlot from '@components/MinecraftSlot';
 import Stone from '@images/placeholder/Stone.webp';
-import GoldButton from '@components/form/Gold';
 import Arrow from '@images/design/download.png';
 import Table from '@images/design/custom_crafting_table.png';
-
 import Image from 'next/image';
+import localFont from '@next/font/local';
+import RainbowButton from '@components/form/Rainbox';
+
+const minecraftFont = localFont({
+    src: './minecraft.ttf'
+});
 
 export default function Page() {
     return (
@@ -14,7 +18,7 @@ export default function Page() {
                     <div className={'border-gold border border-solid bg-black rounded-md px-10 relative'}>
                         <div className={'my-6 flex justify-center'}>
                             <div>
-                                <p className={'text-xl font-normal text-white text-start minecraft'}>Crafting table</p>
+                                <p className={'text-xl font-normal text-white text-start ' + minecraftFont.className}>Crafting table</p>
                                 <div className={'flex justify-between items-center w-[18rem]'}>
                                     <div className={'w-[10.5rem] flex flex-wrap'}>
                                         {Array.from(Array(9).keys()).map((i) => (
@@ -49,8 +53,8 @@ export default function Page() {
                         <div className={'my-10'}>
                             <div className={'mb-4'}>
                                 <div className={'flex justify-between items-center mb-4'}>
-                                    <p className={'text-white text-2xl font-normal mb-0 minecraft'}>Minecraft Items</p>
-                                    <GoldButton>Add new items</GoldButton>
+                                    <p className={'text-white text-2xl font-normal mb-0 ' + minecraftFont.className}>Minecraft Items</p>
+                                    <RainbowButton>Add an item</RainbowButton>
                                 </div>
                                 <input
                                     type="text"

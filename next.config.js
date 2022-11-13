@@ -6,7 +6,6 @@ const nextConfig = {
     images: {
         domains: ['avatars.githubusercontent.com']
     },
-    optimizeFonts: false,
     reactStrictMode: true
 };
 
