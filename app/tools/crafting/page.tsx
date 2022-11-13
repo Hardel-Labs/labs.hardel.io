@@ -54,12 +54,12 @@ export default function Page() {
                             <div className={'mb-4'}>
                                 <div className={'flex justify-between items-center mb-4'}>
                                     <p className={'text-white text-2xl font-normal mb-0 ' + minecraftFont.className}>Minecraft Items</p>
-                                    <RainbowButton>Add an item</RainbowButton>
+                                    <RainbowButton>Add new item</RainbowButton>
                                 </div>
                                 <input
                                     type="text"
                                     className="bg-black w-full text-sm border-2 border-solid border-gray-800 rounded-xl px-4 py-1 text-white focus:outline-none focus:border-gold"
-                                    placeholder="Search an items"
+                                    placeholder="Search an item"
                                 />
                             </div>
                             <hr />

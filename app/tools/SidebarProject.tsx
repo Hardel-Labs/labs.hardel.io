@@ -62,7 +62,7 @@ export default function SidebarProject() {
                 <input
                     type="text"
                     className="bg-black text-sm border-2 border-solid border-gray-800 rounded-xl px-4 py-1 text-white placeholder-gray-400 focus:outline-none focus:border-gold"
-                    placeholder="Search a command"
+                    placeholder="Search a project"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                 />
