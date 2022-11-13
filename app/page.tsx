@@ -23,9 +23,9 @@ export default function Home() {
                         Try now to create your first optimized and fast datapack without any knowledge in development and programming languages.
                     </p>
                     <div className={'mt-8'}>
-                        <GoldButton>Donation</GoldButton>
-                        <RainbowButton>Try Now</RainbowButton>
-                        <WhiteButton>Learn More</WhiteButton>
+                        <GoldButton className={'mx-4'}>Donation</GoldButton>
+                        <RainbowButton className={'mx-4'}>Try Now</RainbowButton>
+                        <WhiteButton className={'mx-4'}>Learn More</WhiteButton>
                     </div>
                     <Skew />
                 </div>
@@ -59,8 +59,8 @@ export default function Home() {
                     </div>
                     <hr className={'my-10'} />
                     <div className={'w-full flex justify-center mt-12'}>
-                        <RainbowButton>Try it Now</RainbowButton>
-                        <WhiteButton>View changelog</WhiteButton>
+                        <RainbowButton className={'mx-4'}>Try it Now</RainbowButton>
+                        <WhiteButton className={'mx-4'}>View changelog</WhiteButton>
                     </div>
                 </div>
             </section>
