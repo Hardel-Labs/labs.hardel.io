@@ -44,9 +44,9 @@ export default function Sidebar() {
     }, [component]);
 
     return (
-        <>
-            <div className={'mt-[73px] relative sticky top-0 left-0 h-screen bg-gray-900/50 flex'}>
-                <div className={'h-full flex flex-col justify-between w-16 relative z-50 border-r border-gold border-solid'}>
+        <div className={'relative z-50'}>
+            <div className={'mt-[73px] sticky top-0 left-0 h-screen bg-gray-900/50 flex'}>
+                <div className={'h-full flex flex-col justify-between w-16 border-r border-gold border-solid'}>
                     <div className={'flex flex-col gap-y-4 items-center p-4 overflow-y-auto'}>
                         <Menu className={'w-full h-auto fill-gray-600 hover:fill-white transition cursor-pointer'} />
                         <Download className={'w-full h-auto fill-gray-600 hover:fill-white transition cursor-pointer'} />
@@ -70,6 +70,6 @@ export default function Sidebar() {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 }

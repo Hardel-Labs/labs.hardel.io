@@ -5,7 +5,7 @@ export default async function ToolsLayout({ children }: { children: React.ReactN
     return (
         <div className={'flex'}>
             <Sidebar />
-            <div className={'mt-[73px] w-full relative -z-10'}>{children}</div>
+            <div className={'mt-[73px] w-full relative z-40'}>{children}</div>
         </div>
     );
 }
