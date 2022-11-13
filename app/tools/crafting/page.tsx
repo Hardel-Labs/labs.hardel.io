@@ -5,6 +5,7 @@ import Table from '@images/design/custom_crafting_table.png';
 import Image from 'next/image';
 import localFont from '@next/font/local';
 import RainbowButton from '@components/form/Rainbox';
+import Add from '@icons/Common/Add';
 
 const minecraftFont = localFont({
     src: './minecraft.ttf'
@@ -54,7 +55,10 @@ export default function Page() {
                             <div className={'mb-4'}>
                                 <div className={'flex justify-between items-center mb-4'}>
                                     <p className={'text-white text-2xl font-normal mb-0 ' + minecraftFont.className}>Minecraft Items</p>
-                                    <RainbowButton>Add new item</RainbowButton>
+                                    <RainbowButton className={'flex justify-center items-center'}>
+                                        <Add className={'w-8 h-8 fill-white mr-2'} />
+                                        Add new item
+                                    </RainbowButton>
                                 </div>
                                 <input
                                     type="text"
