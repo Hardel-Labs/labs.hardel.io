@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 const diamondSize = 63;
 export default function HighlightDiamonds() {
@@ -29,23 +29,23 @@ export default function HighlightDiamonds() {
 
     return (
         <div ref={ref}>
-            {diamonds?.map((position, index) => (
-                <Diamond key={index} position={position} />
-            ))}
+            <React.Fragment>
+                {diamonds?.map((position, index) => (
+                    <Diamond key={index} position={position} />
+                ))}
+            </React.Fragment>
         </div>
     );
 }
 
 const Diamond = ({ position }: { position: Position2D }) => {
     return (
-        <>
-            <div
-                className={'absolute -z-10 bg-zinc-700 pt-0 top-[-11px] left-0 h-[63px] w-[63px] animate-pulse-void'}
-                style={{
-                    clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
-                    transform: `translate(${position.x * diamondSize}px, ${position.y * diamondSize}px)`
-                }}
-            />
-        </>
+        <span
+            className={'absolute -z-10 bg-zinc-700 pt-1 top-0 left-0 h-[63px] w-[63px] animate-pulse-void'}
+            style={{
+                clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
+                transform: `translate(${position.x * diamondSize}px, ${position.y * diamondSize}px)`
+            }}
+        />
     );
 };
