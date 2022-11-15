@@ -1,6 +1,7 @@
 @import "utils";
 @import "generic";
 @import "scrollbar";
+@import "range";
 @import "tailwind.css";
 
 html,
@@ -44,3 +45,4 @@ a {
     box-sizing: border-box;
     border: 0 solid #c9cad0;
 }
+

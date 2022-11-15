@@ -27,3 +27,15 @@
     border-radius: 0.75rem;
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
+
+.background-royal {
+    background-image: url('/images/design/hex-transparent.png'), linear-gradient(263deg, #000 77%, rgba(177, 124, 6, 1) 77%, rgba(190, 146, 47, 1) 78%, rgba(255, 255, 255, 1) 78%);
+}
+
+.background-royal-reverse {
+    background-image: url('/images/design/hex-transparent.png'), linear-gradient(107deg, #000 77%, rgba(177, 124, 6, 1) 77%, rgba(190, 146, 47, 1) 78%, rgba(255, 255, 255, 1) 78%)
+}
+
+.background-grid {
+    background-image: url('/images/design/hex-222.png'), radial-gradient(at center top, #212121, #191919, #0f0f0f, #000000);
+}
