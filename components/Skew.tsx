@@ -6,8 +6,13 @@ export default function Skew() {
     const [skew, setSkew] = useState(30);
 
     useEffect(() => {
-        window.addEventListener('scroll', () => setSkew(30 - window.scrollY / 10));
-        return () => window.removeEventListener('scroll', () => setSkew(30 - window.scrollY / 10));
+        const skewCalc = () => {
+            const base = Math.min(Math.max(30 - window.scrollY / 10, -50), 30);
+            setSkew(base);
+        };
+
+        window.addEventListener('scroll', skewCalc);
+        return () => window.removeEventListener('scroll', skewCalc);
     }, []);
 
     return (

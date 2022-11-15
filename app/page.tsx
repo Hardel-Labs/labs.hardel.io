@@ -2,20 +2,15 @@ import GoldButton from '@components/form/Gold';
 import RainbowButton from '@components/form/Rainbox';
 import WhiteButton from '@components/form/White';
 import Skew from '@components/Skew';
-import { CSSProperties } from 'react';
 import Image from 'next/image';
 import CraftingCover from '@images/cover/hqdefault.jpg';
 import Check from '@components/Check';
 import Link from 'next/link';
 
-const backgroundBlack: CSSProperties = {
-    backgroundImage: "url('/images/design/hex-222.png'), radial-gradient(at center top, #212121, #191919, #0f0f0f, #000000)"
-};
-
 export default function Home() {
     return (
         <>
-            <section style={backgroundBlack} className={'h-[100vh] overflow-hidden relative z-10 royal-border'}>
+            <section className={'bg-grid h-[100vh] overflow-hidden relative z-10 royal-border'}>
                 <div className={'container mx-auto h-full flex flex-col justify-center items-center'}>
                     <h1 className={'font-bold text-gold text-center'}>Hardel Labs</h1>
                     <hr />

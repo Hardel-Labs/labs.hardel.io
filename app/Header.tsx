@@ -18,7 +18,7 @@ export default function Header({ session }: Props) {
     const [collapsed, setCollapsed] = useState(true);
 
     return (
-        <nav className="bg-black sticky relative z-40 px-2 sm:px-12 py-2.5">
+        <nav className="bg-black/10 backdrop-blur-sm sticky relative z-40 px-4 py-2.5">
             <div className="container flex flex-wrap justify-between items-center mx-auto">
                 <div className={'flex'}>
                     <Link href="/" className="flex items-center fill-white hover:fill-gold">
@@ -87,7 +87,7 @@ export default function Header({ session }: Props) {
                     {session?.user && (
                         <div
                             aria-expanded={isOpen}
-                            className="hidden aria-expanded:block bg-black/70 backdrop-blur-[1rem] absolute -top-2 -right-8 z-50 text-base list-none rounded-xl shadow-2xl"
+                            className="hidden aria-expanded:block bg-black/70 backdrop-blur-[1rem] absolute -top-2 -right-0 z-[100] text-base list-none rounded-xl shadow-2xl"
                             id="user-dropdown"
                             data-popper-reference-hidden=""
                             data-popper-escaped=""

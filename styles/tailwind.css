@@ -17,3 +17,20 @@
 .royal-border {
     @apply border-b-gold border-b-8 border-solid
 }
+
+.preserve-3d {
+    transform-style: preserve-3d;
+}
+
+.animate-pulse-void {
+    animation: pulse-void 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-void {
+    0%, 100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: .5;
+    }
+}
