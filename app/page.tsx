@@ -10,7 +10,7 @@ import Link from 'next/link';
 export default function Home() {
     return (
         <>
-            <section className={'bg-grid h-[100vh] overflow-hidden relative z-10 royal-border'}>
+            <section className={'bg-grid h-[100vh] overflow-hidden relative z-10 border-b-gold border-b-8 border-solid'}>
                 <div className={'container mx-auto h-full flex flex-col justify-center items-center'}>
                     <h1 className={'font-bold text-gold text-center'}>Hardel Labs</h1>
                     <hr />
@@ -26,7 +26,7 @@ export default function Home() {
                     <Skew />
                 </div>
             </section>
-            <section className={'shadow-section overflow-hidden bg-royal py-20 royal-border'}>
+            <section className={'shadow-section overflow-hidden bg-royal py-20 border-b-gold border-b-8 border-solid'}>
                 <div className={'container w-10/12 mx-auto'}>
                     <div className={'grid grid-cols-1 md:grid-cols-5 gap-8'}>
                         <div className={'md:col-span-2 bg-transparent self-center rounded-royal'}>

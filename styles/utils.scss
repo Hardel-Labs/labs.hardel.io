@@ -21,10 +21,6 @@
     border-radius: 0 1.75rem 0 1.75rem;
 }
 
-.royal-border {
-    @apply border-b-gold border-b-8 border-solid
-}
-
 .glassmorphism {
     background: linear-gradient(151deg, rgba(116, 116, 116, 0.25), rgba(0, 0, 0, 0.35));
     backdrop-filter: blur(8px);
