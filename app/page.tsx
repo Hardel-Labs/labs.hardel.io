@@ -16,7 +16,7 @@ export default function Home() {
                     <hr />
                     <p className={'text-white w-fit text-2xl font-semibold text-center'}>Very simple and powerful tools to create datapacks.</p>
                     <p className={'text-gray-400 text-sm text-center w-1/2'}>
-                        Try now to create your first optimized and fast datapack without any knowledge in development and programming languages.
+                        Try now to create your first optimized and fast data pack without any knowledge in development and programming languages.
                     </p>
                     <div className={'mt-8'}>
                         <GoldButton className={'mx-4'}>Donation</GoldButton>
