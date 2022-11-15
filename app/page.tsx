@@ -1,5 +1,5 @@
 import GoldButton from '@components/form/Gold';
-import RainbowButton from '@components/form/Rainbox';
+import RainbowButton from '@components/form/Rainbow';
 import WhiteButton from '@components/form/White';
 import Skew from '@components/Skew';
 import Image from 'next/image';

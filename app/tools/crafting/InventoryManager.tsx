@@ -3,7 +3,7 @@
 import { categories } from '@libs/craftTest';
 import React, { useMemo } from 'react';
 import Image from 'next/image';
-import RainbowButton from '@components/form/Rainbox';
+import RainbowButton from '@components/form/Rainbow';
 import Add from '@icons/Common/Add';
 import MinecraftItem from '@components/minecraft/MinecraftItem';
 

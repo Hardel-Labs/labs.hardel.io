@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Session } from 'next-auth';
 import Link from 'next/link';
 import { signIn, signOut } from 'next-auth/react';
-import RainbowButton from '@components/form/Rainbox';
+import RainbowButton from '@components/form/Rainbow';
 import HardelLetter from '@icons/logo/HardelLetter';
 import Search from '@icons/Common/Search';
 
