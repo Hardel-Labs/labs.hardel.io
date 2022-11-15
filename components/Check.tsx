@@ -1,4 +1,5 @@
 import CheckMark from '@icons/CheckMark';
+import React from 'react';
 
 export default function Check(props: { children: React.ReactNode }) {
     return (
