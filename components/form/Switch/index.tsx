@@ -1,5 +1,5 @@
 import React, { useId } from 'react';
-import styles from './Switch.module.scss';
+import styles from './styles.module.scss';
 
 type Props = {
     onClick?: (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => void;
