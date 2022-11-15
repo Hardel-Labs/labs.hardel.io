@@ -17,7 +17,7 @@ export default function CraftingGroupButton() {
             <input
                 type="range"
                 className="w-full"
-                min={0}
+                min={1}
                 max={64}
                 step={1}
                 value={count}
