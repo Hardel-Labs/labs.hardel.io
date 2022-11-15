@@ -19,7 +19,7 @@ export const makeShapelessRecipes = (ingredients: SlotData[], result?: SlotData)
         ingredients: ingredientsItem,
         result: {
             item: result?.item?.id,
-            count: result?.count
+            count: result?.count || 1
         }
     };
 };
