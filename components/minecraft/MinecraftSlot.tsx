@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { MinecraftItemData } from '@definitions/minecraft';
 import { ProjectContext } from '@app/tools/Context';
 import { CraftingContext } from '@app/tools/crafting/Context';
@@ -13,28 +13,18 @@ type Props = {
 
 export default function MinecraftSlot(props: Props) {
     const { setHoveredItem } = useContext(ProjectContext);
-    const { setSlotItem, selectedItem } = useContext(CraftingContext);
-    const [item, setItem] = React.useState<MinecraftItemData>();
+    const { setSlotItem, selectedItem, slots } = useContext(CraftingContext);
     const [isOver, setIsOver] = React.useState(false);
 
-    const handleClick = () => {
-        if (item) {
-            setItem(undefined);
-            setSlotItem(props.id, undefined);
-        } else {
-            setSlotItem(props.id, selectedItem);
-            setItem(selectedItem);
-        }
-    };
+    const slot = useMemo(() => {
+        return slots.find((slot) => slot.id === props.id);
+    }, [props.id, slots]);
 
-    const handleDrop = (item: MinecraftItemData) => {
-        setItem(item);
-        setSlotItem(props.id, item);
-    };
+    const handleClick = () => (slot?.item ? setSlotItem(props.id, undefined) : setSlotItem(props.id, selectedItem));
 
     return (
         <Droppable
-            handleDrop={handleDrop}
+            handleDrop={(item: MinecraftItemData) => setSlotItem(props.id, item)}
             hovered={setIsOver}
             acceptId={['minecraftItem']}
             spanAttributes={{
@@ -42,12 +32,13 @@ export default function MinecraftSlot(props: Props) {
                 className:
                     'border border-white/20 w-14 h-14 p-[4px] relative hover:bg-zinc-800' +
                     (isOver ? ' bg-zinc-700' : ' bg-black/50') +
-                    (item ? ' cursor-pointer' : ' cursor-default'),
-                onMouseEnter: () => setHoveredItem(item),
+                    (slot?.item ? ' cursor-pointer' : ' cursor-default'),
+                onMouseEnter: () => setHoveredItem(slot?.item),
                 onMouseLeave: () => setHoveredItem(undefined)
             }}
         >
-            {item?.image && <Image alt={''} src={item.image} height={64} width={64} className={'w-full h-full pixelated'} />}
+            {slot?.item?.image && <Image alt={''} src={slot.item.image} height={64} width={64} className={'w-full h-full pixelated'} />}
+            {slot?.count && slot.count > 1 && <span className={'absolute bottom-0 right-0 text-xl text-white seven'}>{slot.count}</span>}
         </Droppable>
     );
 }
