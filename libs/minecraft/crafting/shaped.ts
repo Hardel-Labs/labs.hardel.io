@@ -8,8 +8,7 @@ import { makeShapedExactRecipes } from '@libs/minecraft/crafting/shapedExact';
  * @param result
  */
 export const makeShapedRecipes = (ingredients: SlotData[], result?: SlotData): Recipe => {
-    const shapedExact = makeShapedExactRecipes(ingredients, result);
-    let shaped: Recipe = { ...shapedExact };
+    const shaped: Recipe = { ...makeShapedExactRecipes(ingredients, result) };
 
     // Remove empty lines from top to bottom when an item is found in the line stop removing
     for (let i = 0; i < shaped.pattern.length; i++) {

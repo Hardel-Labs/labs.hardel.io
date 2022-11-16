@@ -7,7 +7,7 @@ import { makeShapelessRecipes } from '@libs/minecraft/crafting/shapeless';
 import { CraftingContext } from '@app/tools/crafting/Context';
 import { RecipeType } from '@libs/constant';
 import { makeShapedExactRecipes } from '@libs/minecraft/crafting/shapedExact';
-import { makeShapedRecipes } from '@libs/minecraft/crafting/shaped';
+import { makeShapedRecipes } from '@libs/minecraft/crafting/experimental/shaped';
 
 export default function CodePreview() {
     const { slots, recipeType, exactPattern } = useContext(CraftingContext);
