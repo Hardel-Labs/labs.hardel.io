@@ -18,11 +18,12 @@ export const makeShapedRecipes = (ingredients: SlotData[], result?: SlotData): R
     let startColIndex = shaped.pattern[0].length - 1;
     let endColIndex = 0;
     shaped.pattern.forEach((patternLine) => {
-        const trimmedLine = patternLine.trim();
-        const trimmedLineStartIndex = patternLine.indexOf(trimmedLine);
+        const trimedLine = patternLine.trim();
+        if (trimedLine.length === 0) return;
 
+        const trimmedLineStartIndex = patternLine.indexOf(trimedLine);
         startColIndex = Math.min(startColIndex, trimmedLineStartIndex);
-        endColIndex = Math.max(endColIndex, trimmedLineStartIndex + trimmedLine.length - 1);
+        endColIndex = Math.max(endColIndex, trimmedLineStartIndex + trimedLine.length - 1);
     });
     shaped.pattern = shaped.pattern.map((patternLine) => patternLine.slice(startColIndex, endColIndex + 1));
 
