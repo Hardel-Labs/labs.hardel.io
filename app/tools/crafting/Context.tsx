@@ -2,7 +2,7 @@
 
 import React, { createContext } from 'react';
 import { MinecraftItemData, SlotData } from '@definitions/minecraft';
-import { RecipeType } from '@libs/constant';
+import { DEFAULT_SLOT_VALUE, RecipeType } from '@libs/constant';
 
 type CraftingContextData = {
     slots: SlotData[];
@@ -19,7 +19,7 @@ type CraftingContextData = {
 
 export const CraftingContext = createContext<CraftingContextData>({} as CraftingContextData);
 export default function CraftingContextProvider(props: { children: React.ReactNode }) {
-    const [slots, setSlots] = React.useState<SlotData[]>([]);
+    const [slots, setSlots] = React.useState<SlotData[]>(DEFAULT_SLOT_VALUE);
     const [exactPattern, setExactPattern] = React.useState<boolean>(false);
     const [recipeType, setRecipeType] = React.useState<RecipeType>(RecipeType.SHAPED);
     const [selectedItem, setSelectedItem] = React.useState<MinecraftItemData | undefined>(undefined);
