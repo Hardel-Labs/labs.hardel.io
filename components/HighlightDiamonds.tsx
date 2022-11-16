@@ -13,8 +13,8 @@ export default function HighlightDiamonds() {
         const maxX = screenWidth / diamondSize;
         const maxY = screenHeight / diamondSize;
 
-        const x = Math.floor(Math.random() * maxX);
-        const y = Math.floor(Math.random() * maxY);
+        const x = Math.floor(Math.random() * maxX - 1);
+        const y = Math.floor(Math.random() * maxY - 1);
         return { x, y };
     }, [screenWidth, screenHeight]);
 

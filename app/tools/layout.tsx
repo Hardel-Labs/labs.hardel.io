@@ -7,15 +7,14 @@ import ProjectContextProvider from '@app/tools/Context';
 export default async function ToolsLayout({ children }: { children: React.ReactNode }) {
     return (
         <ProjectContextProvider>
-            <div className={'background-grid relative overflow-hidden z-10'}>
+            <div className={'background-grid relative z-10'}>
                 <div className={'flex'}>
                     <Sidebar />
-                    <div className={'w-full'}>
+                    <div className={'w-full relative overflow-hidden'}>
                         <div className={'relative mt-[73px] border-gold border-t z-20'}>{children}</div>
+                        <Skew />
                     </div>
                 </div>
-
-                <Skew />
                 <HighlightDiamonds />
             </div>
         </ProjectContextProvider>
