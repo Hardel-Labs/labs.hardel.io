@@ -30,7 +30,7 @@ export default function Page() {
                         </div>
                         <CraftingOptions />
                         <div className={'absolute top-0 right-0 w-16 h-16 m-6'}>
-                            <Image src={Table} alt={''} width={200} height={200} />
+                            <Image src={Table} alt={''} width={64} height={64} />
                         </div>
                     </div>
 

@@ -21,7 +21,7 @@ export default function NotificationToast(props: Props) {
             </div>
             <div className="flex items-center">
                 <div className="inline-block relative shrink-0">
-                    <Image className="w-12 h-12 rounded-full" src={props.picture} alt="" />
+                    <Image className="w-12 h-12 rounded-full" src={props.picture} width={48} height={48} alt="" />
                     <span className="inline-flex absolute -right-1 -bottom-1 justify-center items-center w-6 h-6">
                         <Image src={props.project} alt={''} width={64} height={64} className={'rounded-full border-white border border-2'} />
                     </span>

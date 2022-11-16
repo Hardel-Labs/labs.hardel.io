@@ -33,7 +33,7 @@ export default function Home() {
                 <div className={'container w-10/12 mx-auto'}>
                     <div className={'grid grid-cols-1 md:grid-cols-5 gap-8'}>
                         <div className={'md:col-span-2 bg-transparent self-center rounded-royal'}>
-                            <Image src={CraftingCover} alt={'Crafting Cover'} width={1280} height={720} className={'rounded-royal border-gold border-2 border-solid shadow-big'} />
+                            <Image src={CraftingCover} alt={'Crafting Cover'} width={240} height={134} className={'rounded-royal border-gold border-2 border-solid shadow-big'} />
                         </div>
                         <div className={'md:col-span-3 pl-20 py-4'}>
                             <h1 className={'text-white text-4xl font-bold'}>Crafting Generator</h1>
@@ -70,11 +70,11 @@ export default function Home() {
                     <h2>Other tools :</h2>
                     <hr className={'mb-20'} />
                     <div className={'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-16'}>
-                        <Image src={CraftingCover} alt={'Crafting Cover'} width={1280} height={720} className={'rounded-royal border-gold border-2 border-solid shadow-big'} />
-                        <Image src={CraftingCover} alt={'Crafting Cover'} width={1280} height={720} className={'rounded-royal border-gold border-2 border-solid shadow-big'} />
-                        <Image src={CraftingCover} alt={'Crafting Cover'} width={1280} height={720} className={'rounded-royal border-gold border-2 border-solid shadow-big'} />
-                        <Image src={CraftingCover} alt={'Crafting Cover'} width={1280} height={720} className={'rounded-royal border-gold border-2 border-solid shadow-big'} />
-                        <Image src={CraftingCover} alt={'Crafting Cover'} width={1280} height={720} className={'rounded-royal border-gold border-2 border-solid shadow-big'} />
+                        <Image src={CraftingCover} alt={'Crafting Cover'} width={240} height={134} className={'rounded-royal border-gold border-2 border-solid shadow-big'} />
+                        <Image src={CraftingCover} alt={'Crafting Cover'} width={240} height={134} className={'rounded-royal border-gold border-2 border-solid shadow-big'} />
+                        <Image src={CraftingCover} alt={'Crafting Cover'} width={240} height={134} className={'rounded-royal border-gold border-2 border-solid shadow-big'} />
+                        <Image src={CraftingCover} alt={'Crafting Cover'} width={240} height={134} className={'rounded-royal border-gold border-2 border-solid shadow-big'} />
+                        <Image src={CraftingCover} alt={'Crafting Cover'} width={240} height={134} className={'rounded-royal border-gold border-2 border-solid shadow-big'} />
                     </div>
                     <hr className={'my-10'} />
                     <div className={'w-full flex justify-center mt-12'}>
