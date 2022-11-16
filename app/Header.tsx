@@ -29,34 +29,34 @@ export default function Header({ session }: Props) {
                     <div aria-expanded={collapsed} className="hidden aria-expanded:block ml-8 justify-between items-center w-full md:flex md:w-auto md:order-1" id="mobile-menu-2">
                         <ul className="apple-system flex flex-col p-4 mt-4 text-white font-semibold md:flex-row md:space-x-4 md:mt-0 md:text-[14px]">
                             <li>
-                                <a href="#" className="block py-2 pl-3 text-white md:bg-transparent md:p-0" aria-current="page">
+                                <Link href="#" className="block py-2 pl-3 text-white md:bg-transparent md:p-0" aria-current="page">
                                     Home
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="#" className="block py-2 pl-3 text-gray-400 md:hover:bg-transparent md:p-0">
+                                <Link href="#" className="block py-2 pl-3 text-gray-400 md:hover:bg-transparent md:p-0">
                                     Blog
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="#" className="block py-2 pl-3 text-gray-400 md:hover:bg-transparent md:p-0">
+                                <Link href="#" className="block py-2 pl-3 text-gray-400 md:hover:bg-transparent md:p-0">
                                     Changelog
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="#" className="block py-2 pl-3 text-gray-400 md:hover:bg-transparent md:p-0">
+                                <Link href="#" className="block py-2 pl-3 text-gray-400 md:hover:bg-transparent md:p-0">
                                     Generator
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="#" className="block py-2 pl-3 text-gray-400 md:hover:bg-transparent md:p-0">
+                                <Link href="#" className="block py-2 pl-3 text-gray-400 md:hover:bg-transparent md:p-0">
                                     Donation
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="#" className="block py-2 pl-3 text-gray-400 md:hover:bg-transparent md:p-0">
+                                <Link href="#" className="block py-2 pl-3 text-gray-400 md:hover:bg-transparent md:p-0">
                                     Contact
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </div>
@@ -112,19 +112,19 @@ export default function Header({ session }: Props) {
                             <hr className={'border-secondary w-9/12 mx-auto my-3'} />
                             <ul className="py-1" aria-labelledby="user-menu-button">
                                 <li className={'w-11/12 mx-auto my-1'}>
-                                    <a href="#" className="block w-full text-start py-2 px-4 text-sm text-white hover:bg-secondary/20 hover:text-white  rounded">
+                                    <Link href="#" className="block w-full text-start py-2 px-4 text-sm text-white hover:bg-secondary/20 hover:text-white  rounded">
                                         Dashboard
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className={'w-11/12 mx-auto my-1'}>
-                                    <a href="#" className="block w-full text-start py-2 px-4 text-sm text-white hover:bg-secondary/20  hover:text-white  rounded">
+                                    <Link href="#" className="block w-full text-start py-2 px-4 text-sm text-white hover:bg-secondary/20  hover:text-white  rounded">
                                         Settings
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className={'w-11/12 mx-auto my-1'}>
-                                    <a href="#" className="block w-full text-start py-2 px-4 text-sm text-white hover:bg-secondary/20 hover:text-white rounded">
+                                    <Link href="#" className="block w-full text-start py-2 px-4 text-sm text-white hover:bg-secondary/20 hover:text-white rounded">
                                         Earnings
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className={'w-11/12 mx-auto my-1'}>
                                     <button
