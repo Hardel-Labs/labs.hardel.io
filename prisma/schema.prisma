@@ -25,15 +25,15 @@ model Item {
   Recipes    Recipes?   @relation(fields: [recipesId], references: [id])
   recipesId  Int?
   createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
+  updatedAt  DateTime?  @updatedAt
 }
 
 model Category {
-  id        Int      @id @default(autoincrement())
-  name      String   @db.VarChar(30)
+  id        Int       @id @default(autoincrement())
+  name      String    @db.VarChar(30)
   item      Item[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
 }
 
 model Project {
@@ -44,29 +44,29 @@ model Project {
   namespace    String         @db.VarChar(50)
   item         Item[]
   Recipes      Recipes[]
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
   Notification Notification[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime?      @updatedAt
 }
 
 model Recipes {
-  id        Int      @id @default(autoincrement())
-  name      String   @db.VarChar(50)
-  type      String   @db.VarChar(30)
-  project   Project? @relation(fields: [projectId], references: [id])
+  id        Int       @id @default(autoincrement())
+  name      String    @db.VarChar(50)
+  type      String    @db.VarChar(30)
+  project   Project?  @relation(fields: [projectId], references: [id])
   projectId Int?
   item      Item[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
 }
 
 model Notification {
-  id        Int      @id @default(autoincrement())
-  title     String   @db.VarChar(50)
-  message   String   @db.VarChar(255)
-  project   Project  @relation(fields: [projectId], references: [id])
+  id        Int       @id @default(autoincrement())
+  title     String    @db.VarChar(50)
+  message   String    @db.VarChar(255)
+  project   Project   @relation(fields: [projectId], references: [id])
   projectId Int
   asset     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
 }
