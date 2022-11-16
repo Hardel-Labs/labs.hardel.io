@@ -1,39 +1,36 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-  provider             = "mysql"
-  url                  = env("DATABASE_URL")
-  referentialIntegrity = "prisma"
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model Item {
-  id         Int        @id @default(autoincrement())
-  minecrafId String     @db.VarChar(80)
-  name       String     @db.VarChar(80)
-  asset      String     @default("vanilla/missing.webp")
-  tag        String?
-  custom     Boolean    @default(false)
-  project    Project?   @relation(fields: [projectId], references: [id])
-  projectId  Int?
-  category   Category[]
-  Recipes    Recipes?   @relation(fields: [recipesId], references: [id])
-  recipesId  Int?
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime?  @updatedAt
+  id             Int              @id @default(autoincrement())
+  minecrafId     String           @db.VarChar(80)
+  name           String           @db.VarChar(80)
+  asset          String           @default("vanilla/missing.webp")
+  tag            String?
+  custom         Boolean          @default(false)
+  projectId      Int?
+  recipesId      Int?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime?        @updatedAt
+  project        Project?         @relation(fields: [projectId], references: [id])
+  Recipes        Recipes?         @relation(fields: [recipesId], references: [id])
+  CategoryToItem CategoryToItem[]
 }
 
 model Category {
-  id        Int       @id @default(autoincrement())
-  name      String    @db.VarChar(30)
-  item      Item[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime? @updatedAt
+  id             Int              @id @default(autoincrement())
+  name           String           @db.VarChar(30)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime?        @updatedAt
+  CategoryToItem CategoryToItem[]
 }
 
 model Project {
@@ -42,31 +39,42 @@ model Project {
   description  String         @db.VarChar(255)
   version      String         @db.VarChar(10)
   namespace    String         @db.VarChar(50)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime?      @updatedAt
   item         Item[]
   Recipes      Recipes[]
   Notification Notification[]
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime?      @updatedAt
 }
 
 model Recipes {
   id        Int       @id @default(autoincrement())
   name      String    @db.VarChar(50)
   type      String    @db.VarChar(30)
-  project   Project?  @relation(fields: [projectId], references: [id])
   projectId Int?
-  item      Item[]
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
+  project   Project?  @relation(fields: [projectId], references: [id])
+  item      Item[]
 }
 
 model Notification {
   id        Int       @id @default(autoincrement())
   title     String    @db.VarChar(50)
   message   String    @db.VarChar(255)
-  project   Project   @relation(fields: [projectId], references: [id])
-  projectId Int
   asset     String
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
+  projectId Int
+  project   Project   @relation(fields: [projectId], references: [id])
+}
+
+model CategoryToItem {
+  category   Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId Int
+  item       Item      @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  itemId     Int
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime? @updatedAt
+
+  @@id([categoryId, itemId])
 }
