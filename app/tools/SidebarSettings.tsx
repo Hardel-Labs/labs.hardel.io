@@ -42,7 +42,7 @@ export default function SidebarSettings() {
                             type="text"
                             className="bg-black text-sm border-2 border-solid border-gray-800 rounded-xl px-4 py-1 text-white focus:outline-none focus:border-gold"
                             placeholder="Project name"
-                            value={'Placeholder Project'}
+                            defaultValue={'Placeholder Project'}
                         />
                     </SettingsEntry>
                     <SettingsEntry title={'Project description'} inline={true}>
