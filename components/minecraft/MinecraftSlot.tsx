@@ -38,7 +38,7 @@ export default function MinecraftSlot(props: Props) {
             }}
         >
             {slot?.item?.image && <Image alt={''} src={slot.item.image} height={64} width={64} className={'w-full h-full pixelated'} />}
-            {slot?.count && slot.count > 1 && <span className={'absolute bottom-0 right-0 text-xl text-white seven'}>{slot.count}</span>}
+            {slot?.item && slot?.count && <span className={'absolute bottom-0 right-0 text-xl text-white seven'}>{slot.count}</span>}
         </Droppable>
     );
 }
