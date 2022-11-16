@@ -1,4 +1,4 @@
-import { Recipe, SlotData } from '@definitions/minecraft';
+import { Recipe, ShapedRecipe, SlotData } from '@definitions/minecraft';
 import { makeShapedExactRecipes } from '@libs/minecraft/crafting/shapedExact';
 
 /**
@@ -8,7 +8,7 @@ import { makeShapedExactRecipes } from '@libs/minecraft/crafting/shapedExact';
  * @param result
  */
 export const makeShapedRecipes = (ingredients: SlotData[], result?: SlotData): Recipe => {
-    const shaped: Recipe = { ...makeShapedExactRecipes(ingredients, result) };
+    const shaped: ShapedRecipe = { ...makeShapedExactRecipes(ingredients, result) };
 
     if (shaped.pattern.length === 0 || shaped.pattern.find((patternLine) => patternLine.length !== shaped.pattern[0].length) !== undefined) {
         throw Error;
@@ -18,12 +18,12 @@ export const makeShapedRecipes = (ingredients: SlotData[], result?: SlotData): R
     let startColIndex = shaped.pattern[0].length - 1;
     let endColIndex = 0;
     shaped.pattern.forEach((patternLine) => {
-        const trimedLine = patternLine.trim();
-        if (trimedLine.length === 0) return;
+        const trimmedLine = patternLine.trim();
+        if (trimmedLine.length === 0) return;
 
-        const trimedLineStartIndex = patternLine.indexOf(trimedLine);
-        startColIndex = Math.min(startColIndex, trimedLineStartIndex);
-        endColIndex = Math.max(endColIndex, trimedLineStartIndex + trimedLine.length - 1);
+        const trimmedLineStartIndex = patternLine.indexOf(trimmedLine);
+        startColIndex = Math.min(startColIndex, trimmedLineStartIndex);
+        endColIndex = Math.max(endColIndex, trimmedLineStartIndex + trimmedLine.length - 1);
     });
     shaped.pattern = shaped.pattern.map((patternLine) => patternLine.slice(startColIndex, endColIndex + 1));
 
