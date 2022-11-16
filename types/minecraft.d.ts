@@ -5,7 +5,6 @@ type MinecraftItemData = {
     name: string;
     image: string | StaticImageData;
     custom?: boolean;
-    damage?: number;
     tag?: any;
 };
 
@@ -22,6 +21,18 @@ type SlotData = {
     count?: number;
 };
 
+type RecipeKey = {
+    [key: string]: {
+        item: string;
+    };
+};
+
+type ShapedRecipeLData = {
+    key: string;
+    item: MinecraftItemData;
+    slot: number[];
+};
+
 type ShapelessRecipe = {
     type: string;
     ingredients: Array<{ item: string }>;
@@ -30,3 +41,15 @@ type ShapelessRecipe = {
         count?: number;
     };
 };
+
+type ShapedRecipe = {
+    type: string;
+    pattern: string[];
+    key: RecipeKey;
+    result: {
+        item?: string;
+        count?: number;
+    };
+};
+
+type Recipe = ShapelessRecipe | ShapedRecipe;
