@@ -1,4 +1,4 @@
-import { MinecraftItemData, Recipe, SlotData } from '@definitions/minecraft';
+import { Recipe, ShapedRecipe, SlotData } from '@definitions/minecraft';
 import { makeShapedExactRecipes } from '@libs/minecraft/crafting/shapedExact';
 
 /**
@@ -8,72 +8,35 @@ import { makeShapedExactRecipes } from '@libs/minecraft/crafting/shapedExact';
  * @param result
  */
 export const makeShapedRecipes = (ingredients: SlotData[], result?: SlotData): Recipe => {
-    const shaped: Recipe = { ...makeShapedExactRecipes(ingredients, result) };
+    const shaped: ShapedRecipe = { ...makeShapedExactRecipes(ingredients, result) };
 
-    // Remove empty lines from top to bottom when an item is found in the line stop removing
-    for (let i = 0; i < shaped.pattern.length; i++) {
-        const pattern = shaped.pattern[i];
-        if (pattern !== Array(pattern.length + 1).join(' ')) {
-            break;
-        }
-
-        shaped.pattern.splice(shaped.pattern.indexOf(pattern), 1);
+    if (shaped.pattern.length === 0 || shaped.pattern.find((patternLine) => patternLine.length !== shaped.pattern[0].length) !== undefined) {
+        throw new Error('Invalid shaped recipe');
     }
 
-    // Remove empty lines from bottom to top when an item is found in the line stop removing
-    for (let i = shaped.pattern.length - 1; i >= 0; i--) {
-        const pattern = shaped.pattern[i];
-        if (pattern !== Array(pattern.length + 1).join(' ')) {
-            break;
-        }
+    // Remove left/right empty columns
+    let startColIndex = shaped.pattern[0].length - 1;
+    let endColIndex = 0;
+    shaped.pattern.forEach((patternLine) => {
+        const trimmedLine = patternLine.trim();
+        if (trimmedLine.length === 0) return;
 
-        shaped.pattern.splice(shaped.pattern.indexOf(pattern), 1);
-    }
+        const trimmedLineStartIndex = patternLine.indexOf(trimmedLine);
+        startColIndex = Math.min(startColIndex, trimmedLineStartIndex);
+        endColIndex = Math.max(endColIndex, trimmedLineStartIndex + trimmedLine.length - 1);
+    });
+    shaped.pattern = shaped.pattern.map((patternLine) => patternLine.slice(startColIndex, endColIndex + 1));
 
-    if (shaped.pattern.length === 0) {
-        return shaped;
-    }
-
-    const rows = shaped.pattern.length;
-    const columns = shaped.pattern[0].length;
-
-    // Remove empty columns from left to right when an item is found in the column stop removing
-    for (let i = 0; i < columns; i++) {
-        let empty = true;
-        for (let j = 0; j < rows; j++) {
-            if (shaped.pattern[j][i] !== ' ') {
-                empty = false;
-                break;
-            }
-        }
-
-        if (empty) {
-            for (let j = 0; j < rows; j++) {
-                shaped.pattern[j] = shaped.pattern[j].slice(0, i) + shaped.pattern[j].slice(i + 1);
-            }
-        } else {
-            break;
-        }
-    }
-
-    // Remove empty columns from right to left when an item is found in the column stop removing
-    for (let i = columns - 1; i >= 0; i--) {
-        let empty = true;
-        for (let j = 0; j < rows; j++) {
-            if (shaped.pattern[j][i] !== ' ') {
-                empty = false;
-                break;
-            }
-        }
-
-        if (empty) {
-            for (let j = 0; j < rows; j++) {
-                shaped.pattern[j] = shaped.pattern[j].slice(0, i) + shaped.pattern[j].slice(i + 1);
-            }
-        } else {
-            break;
-        }
-    }
+    // Remove top/bottom empty rows
+    const startLineIndex = shaped.pattern.findIndex((patternLine) => patternLine.trim().length > 0);
+    const endLineIndex =
+        shaped.pattern.length -
+        1 -
+        shaped.pattern
+            .slice()
+            .reverse()
+            .findIndex((patternLine) => patternLine.trim().length > 0);
+    shaped.pattern = shaped.pattern.slice(startLineIndex, endLineIndex + 1);
 
     return shaped;
 };
