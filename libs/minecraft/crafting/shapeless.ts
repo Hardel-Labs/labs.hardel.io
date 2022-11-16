@@ -1,4 +1,5 @@
 import { MinecraftItemData, SlotData } from '@definitions/minecraft';
+import { RecipeType } from '@libs/constant';
 
 /**
  * Transforms ingredients into a shapeless recipe
@@ -15,7 +16,7 @@ export const makeShapelessRecipes = (ingredients: SlotData[], result?: SlotData)
     }
 
     return {
-        type: 'minecraft:crafting_shapeless',
+        type: RecipeType.SHAPELESS,
         ingredients: ingredientsItem,
         result: {
             item: result?.item?.id,
