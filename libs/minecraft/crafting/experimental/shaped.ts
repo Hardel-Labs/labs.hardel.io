@@ -21,9 +21,9 @@ export const makeShapedRecipes = (ingredients: SlotData[], result?: SlotData): R
         const trimedLine = patternLine.trim();
         if (trimedLine.length === 0) return;
 
-        const trimmedLineStartIndex = patternLine.indexOf(trimedLine);
-        startColIndex = Math.min(startColIndex, trimmedLineStartIndex);
-        endColIndex = Math.max(endColIndex, trimmedLineStartIndex + trimedLine.length - 1);
+        const trimedLineStartIndex = patternLine.indexOf(trimedLine);
+        startColIndex = Math.min(startColIndex, trimedLineStartIndex);
+        endColIndex = Math.max(endColIndex, trimedLineStartIndex + trimedLine.length - 1);
     });
     shaped.pattern = shaped.pattern.map((patternLine) => patternLine.slice(startColIndex, endColIndex + 1));
 
@@ -36,7 +36,7 @@ export const makeShapedRecipes = (ingredients: SlotData[], result?: SlotData): R
             .slice()
             .reverse()
             .findIndex((patternLine) => patternLine.trim().length > 0);
-    shaped.pattern = shaped.pattern.slice(startLineIndex, endLineIndex - startLineIndex + 1);
+    shaped.pattern = shaped.pattern.slice(startLineIndex, endLineIndex + 1);
 
     return shaped;
 };
