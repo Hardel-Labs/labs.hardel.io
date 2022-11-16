@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function Footer() {
     return (
         <footer className={'bg-primary text-secondary border-t-8 border-solid border-t-gold text-[15px] leading-6 pt-16 pb-5'}>
@@ -16,22 +18,16 @@ export default function Footer() {
                         <h3 className={'text-base font-bold text-white tracking-widest'}>PAGES RACCOURCIE</h3>
                         <ul className={'list-inside mt-2 font-light'}>
                             <li>
-                                <a href="">Page d&lsquo;accueil</a>
+                                <Link href="/">Page d&lsquo;accueil</Link>
                             </li>
                             <li>
-                                <a href="">Page de contact</a>
+                                <Link href="/">Page de contact</Link>
                             </li>
                             <li>
-                                <a href="">Page de connexion</a>
+                                <Link href="/">Page de connexion</Link>
                             </li>
                             <li>
-                                <a href="">Page de création de compte</a>
-                            </li>
-                            <li>
-                                <a href="">Page de mot de passe oublié</a>
-                            </li>
-                            <li>
-                                <a href="">Page de profil</a>
+                                <Link href="/">Page de profil</Link>
                             </li>
                         </ul>
                     </div>
@@ -39,16 +35,10 @@ export default function Footer() {
                         <h3 className={'text-base font-bold text-white tracking-widest'}>CONTACT & DIVERS</h3>
                         <ul className={'list-inside mt-2 font-light'}>
                             <li>
-                                <a href="">Discord</a>
+                                <Link href="/">Discord</Link>
                             </li>
                             <li>
-                                <a href="">Twitter</a>
-                            </li>
-                            <li>
-                                <a href="">Instagram</a>
-                            </li>
-                            <li>
-                                <a href="">Facebook</a>
+                                <Link href="/">Twitter</Link>
                             </li>
                         </ul>
                     </div>
