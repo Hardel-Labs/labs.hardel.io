@@ -35,6 +35,11 @@ export default function Header({ session }: Props) {
                             </li>
                             <li>
                                 <a href="#" className="block py-2 pl-3 text-gray-400 md:hover:bg-transparent md:p-0">
+                                    Blog
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" className="block py-2 pl-3 text-gray-400 md:hover:bg-transparent md:p-0">
                                     Changelog
                                 </a>
                             </li>
