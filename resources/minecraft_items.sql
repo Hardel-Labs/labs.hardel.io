@@ -1,4 +1,4 @@
-INSERT INTO `Item` (`minecrafId`, `asset`, `name`) VALUES
+INSERT INTO `Item` (`minecraftId`, `asset`, `name`) VALUES
 ('minecraft:stone', 'vanilla/stone.webp', 'Stone'),
 ('minecraft:granite', 'vanilla/granite.webp', 'Granite'),
 ('minecraft:polished_granite', 'vanilla/polished_granite.webp', 'Polished Granite'),
@@ -96,7 +96,7 @@ INSERT INTO `Item` (`minecrafId`, `asset`, `name`) VALUES
 ('minecraft:brick_slab', 'vanilla/brick_slab.webp', 'Brick Slab'),
 ('minecraft:stone_brick_slab', 'vanilla/stone_brick_slab.webp', 'Stone Brick Slab'),
 ('minecraft:nether_brick_slab', 'vanilla/nether_brick_slab.webp', 'Nether Brick Slab'),
-('minecraft:quartz_slab', 'vanilla/quartz_slab.webp', 'Quartz Slab');
+('minecraft:quartz_slab', 'vanilla/quartz_slab.webp', 'Quartz Slab'),
 ('minecraft:red_sandstone_slab', 'vanilla/red_sandstone_slab.webp', 'Red Sandstone Slab'),
 ('minecraft:cut_red_sandstone_slab', 'vanilla/cut_red_sandstone_slab.webp', 'Cut Red Sandstone Slab'),
 ('minecraft:purpur_slab', 'vanilla/purpur_slab.webp', 'Purpur Slab'),
@@ -943,7 +943,7 @@ INSERT INTO `Item` (`minecrafId`, `asset`, `name`) VALUES
 ('minecraft:elytra', 'vanilla/elytra.webp', 'Elytra'),
 ('minecraft:oak_boat', 'vanilla/oak_boat.webp', 'Oak Boat'),
 ('minecraft:spruce_boat', 'vanilla/spruce_boat.webp', 'Spruce Boat'),
-('minecraft:birch_boat', 'vanilla/birch_boat.webp', 'Birch Boat');
+('minecraft:birch_boat', 'vanilla/birch_boat.webp', 'Birch Boat'),
 ('minecraft:jungle_boat', 'vanilla/jungle_boat.webp', 'Jungle Boat'),
 ('minecraft:acacia_boat', 'vanilla/acacia_boat.webp', 'Acacia Boat'),
 ('minecraft:dark_oak_boat', 'vanilla/dark_oak_boat.webp', 'Dark Oak Boat'),
