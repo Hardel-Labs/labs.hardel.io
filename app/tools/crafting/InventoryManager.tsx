@@ -1,22 +1,26 @@
 'use client';
 
-import { categories } from '@libs/craftTest';
 import React, { useMemo } from 'react';
 import Image from 'next/image';
 import RainbowButton from '@components/form/Rainbow';
 import Add from '@icons/Common/Add';
 import MinecraftItem from '@components/minecraft/MinecraftItem';
+import { MinecraftCategoryData } from '@definitions/minecraft';
 
-export default function InventoryManager() {
-    const [selected, setSelected] = React.useState(categories[0].id);
-    const [search, setSearch] = React.useState('');
+type Props = {
+    categories: Array<MinecraftCategoryData>;
+};
+
+export default function InventoryManager(props: Props) {
+    const [selected, setSelected] = React.useState<number>(props.categories[0].id);
+    const [search, setSearch] = React.useState<string>('');
 
     const displayItems = useMemo(() => {
-        const items = categories.find((category) => category.id === selected)?.items;
+        const items = props.categories.find((category) => category.id === selected)?.items;
         if (!items) return null;
 
         return items.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()));
-    }, [selected, search]);
+    }, [props.categories, selected, search]);
 
     return (
         <div className={'my-10'}>
@@ -39,7 +43,7 @@ export default function InventoryManager() {
             <hr />
             <div className={'flex'}>
                 <div>
-                    {categories.map((category, index) => (
+                    {props.categories.map((category, index) => (
                         <span
                             key={index}
                             className={
@@ -49,7 +53,7 @@ export default function InventoryManager() {
                             onClick={() => setSelected(category.id)}
                         >
                             <span className={'absolute top-0 bottom-0 right-[-1px] w-[1px] bg-zinc-800'} />
-                            <Image alt={''} src={category.image} height={64} width={64} className={'w-full h-full pixelated'} />
+                            <Image alt={''} src={category.asset} height={64} width={64} className={'w-full h-full pixelated'} />
                         </span>
                     ))}
                 </div>

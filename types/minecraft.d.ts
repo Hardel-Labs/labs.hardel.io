@@ -9,9 +9,9 @@ type MinecraftItemData = {
 };
 
 type MinecraftCategoryData = {
-    id: string;
-    image: string | StaticImageData;
+    id: number;
     name: string;
+    asset: string | StaticImageData;
     items: Array<MinecraftItemData>;
 };
 

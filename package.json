@@ -12,6 +12,7 @@
     "dependencies": {
         "@next/font": "^13.0.3",
         "@prisma/client": "^4.6.1",
+        "cors": "^2.8.5",
         "next": "13.0.3",
         "next-auth": "^4.16.4",
         "prisma": "^4.6.1",

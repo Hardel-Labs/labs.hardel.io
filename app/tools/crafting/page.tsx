@@ -10,8 +10,46 @@ import ItemTooltip from '@components/minecraft/ItemTooltip';
 import DNDContextProvider from '@components/dnd/DNDContext';
 import CraftingContextProvider from '@app/tools/crafting/Context';
 import React from 'react';
+import { MinecraftCategoryData } from '@definitions/minecraft';
+import prisma from '@libs/prisma';
 
-export default function Page() {
+async function getData() {
+    const categories = await prisma.category.findMany({
+        include: {
+            items: {
+                where: {
+                    custom: false
+                },
+                select: {
+                    minecraftId: true,
+                    name: true,
+                    asset: true
+                }
+            }
+        }
+    });
+
+    const data: Array<MinecraftCategoryData> = categories.map((category) => {
+        return {
+            id: category.id,
+            name: category.name,
+            asset: `${process.env.ASSET_PREFIX}/minecraft/items/${category.asset}`,
+            items: category.items.map((item) => {
+                return {
+                    id: item.minecraftId,
+                    name: item.name,
+                    image: `${process.env.ASSET_PREFIX}/minecraft/items/${item.asset}`
+                };
+            })
+        };
+    });
+
+    return data;
+}
+
+export default async function Page() {
+    const data = await getData();
+
     return (
         <DNDContextProvider>
             <CraftingContextProvider>
@@ -46,7 +84,7 @@ export default function Page() {
                     <div className={'flex flex-col w-full md:w-1/2'}>
                         <div className={'pr-10 pl-5 my-10'}>
                             <div className={'glassmorphism px-10'}>
-                                <InventoryManager />
+                                <InventoryManager categories={data} />
                             </div>
                         </div>
                     </div>
