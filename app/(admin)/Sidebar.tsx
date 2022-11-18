@@ -43,13 +43,13 @@ export default function Sidebar() {
                         </SidebarCategory>
                         <SidebarCategory title={'Project :'}>
                             <SidebarLink href={'/dashboard/project'} icon={<Settings />} title={'General'} />
-                            <SidebarLink href={'/dashboard/notification'} icon={<Settings />} title={'Notification'} />
+                            <SidebarLink href={'/dashboard/project/notification'} icon={<Settings />} title={'Notification'} />
                         </SidebarCategory>
                         <SidebarCategory title={'Crafting :'}>
-                            <SidebarLink href={'/dashboard/items'} icon={<Settings />} title={'Items'} />
-                            <SidebarLink href={'/dashboard/recipes'} icon={<Settings />} title={'Recipes'} />
-                            <SidebarLink href={'/dashboard/category'} icon={<Settings />} title={'Category'} />
-                            <SidebarLink href={'/dashboard/config'} icon={<Settings />} title={'Configuration'} />
+                            <SidebarLink href={'/dashboard/crafting'} icon={<Settings />} title={'Configuration'} />
+                            <SidebarLink href={'/dashboard/crafting/items'} icon={<Settings />} title={'Items'} />
+                            <SidebarLink href={'/dashboard/crafting/recipes'} icon={<Settings />} title={'Recipes'} />
+                            <SidebarLink href={'/dashboard/crafting/category'} icon={<Settings />} title={'Category'} />
                         </SidebarCategory>
                     </div>
                 </div>
