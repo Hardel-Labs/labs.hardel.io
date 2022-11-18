@@ -1,7 +1,10 @@
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import prisma from '@libs/prisma';
 
 export const authOptions: NextAuthOptions = {
+    adapter: PrismaAdapter(prisma),
     secret: process.env.NEXTAUTH_SECRET,
     session: {
         strategy: 'jwt',
@@ -16,14 +19,26 @@ export const authOptions: NextAuthOptions = {
     ],
     callbacks: {
         async jwt({ token, account, user }) {
-            if (account) {
+            if (account?.access_token) {
                 token.accessToken = account.access_token;
             }
+
+            if (user?.roles) {
+                token.roles = user.roles;
+            }
+
             user && (token.id = user.id);
             return token;
         },
         async session({ session, token }) {
-            session.accessToken = token.accessToken;
+            if (token?.accessToken) {
+                session.accessToken = token.accessToken;
+            }
+
+            if (token?.roles) {
+                session.user.roles = token.roles;
+            }
+
             session.id = token.id;
             return session;
         }
