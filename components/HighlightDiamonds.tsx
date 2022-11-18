@@ -20,9 +20,9 @@ export default function HighlightDiamonds() {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            const newDiamonds = Array.from({ length: 3 }, () => getRandomPosition());
-            setDiamonds(newDiamonds);
-        }, 2000);
+            setDiamonds(Array.from({ length: 5 }, () => getRandomPosition()));
+            setTimeout(() => setDiamonds([]), 2000);
+        }, 2500);
 
         return () => clearInterval(interval);
     }, [diamonds, getRandomPosition]);
@@ -31,21 +31,16 @@ export default function HighlightDiamonds() {
         <div ref={ref}>
             <React.Fragment>
                 {diamonds?.map((position, index) => (
-                    <Diamond key={index} position={position} />
+                    <span
+                        key={index}
+                        className={'absolute -z-10 bg-zinc-700 pt-1 top-0 left-0 h-[63px] w-[63px] animate-pulse-void'}
+                        style={{
+                            clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
+                            transform: `translate(${position.x * diamondSize}px, ${position.y * diamondSize}px)`
+                        }}
+                    />
                 ))}
             </React.Fragment>
         </div>
     );
 }
-
-const Diamond = ({ position }: { position: Position2D }) => {
-    return (
-        <span
-            className={'absolute -z-10 bg-zinc-700 pt-1 top-0 left-0 h-[63px] w-[63px] animate-pulse-void'}
-            style={{
-                clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
-                transform: `translate(${position.x * diamondSize}px, ${position.y * diamondSize}px)`
-            }}
-        />
-    );
-};
