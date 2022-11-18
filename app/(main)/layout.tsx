@@ -1,4 +1,5 @@
 import '@styles/main.scss';
+import '@styles/tailwind.css';
 import { Inter } from '@next/font/google';
 import Header from '@main/Header';
 import Footer from '@main/Footer';

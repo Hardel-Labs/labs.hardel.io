@@ -1,4 +1,5 @@
 import '@styles/dashboard.scss';
+import '@styles/tailwind.css';
 import { Inter } from '@next/font/google';
 import React from 'react';
 import { unstable_getServerSession } from 'next-auth/next';
@@ -25,7 +26,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                         <Sidebar />
                         <div className={'flex flex-auto flex-col justify-between min-h-screen'}>
                             <div className={'relative'}>
-                                <Header />
+                                <Header data={session} />
                                 <div>{children}</div>
                             </div>
                             <Footer />
