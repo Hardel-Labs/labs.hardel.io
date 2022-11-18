@@ -1,7 +1,8 @@
-@import "utils";
-@import "generic";
-@import "scrollbar";
-@import "tailwind.css";
+@import "common/generic";
+@import "common/tailwind.css";
+@import "common/scrollbar";
+@import "common/utils";
+@import "app/main";
 
 html,
 body {

@@ -1,8 +1,8 @@
 import React from 'react';
-import Sidebar from '@app/tools/Sidebar';
+import Sidebar from '@main/tools/Sidebar';
 import Skew from '@components/Skew';
 import HighlightDiamonds from '@components/HighlightDiamonds';
-import ProjectContextProvider from '@app/tools/Context';
+import ProjectContextProvider from '@main/tools/Context';
 
 export default async function ToolsLayout({ children }: { children: React.ReactNode }) {
     return (

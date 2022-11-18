@@ -22,7 +22,8 @@
             "@components/*": ["components/*"],
             "@icons/*": ["components/icons/*"],
             "@pages/*": ["pages/*"],
-            "@app/*": ["app/*"],
+            "@main/*": ["app/(main)/*"],
+            "@admin/*": ["app/(admin)/*"],
             "@styles/*": ["styles/*"],
             "@libs/*": ["libs/*"],
             "@session": ["pages/api/auth/[...nextauth]"]

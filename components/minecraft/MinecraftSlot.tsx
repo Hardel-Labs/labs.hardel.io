@@ -3,8 +3,8 @@
 import Image from 'next/image';
 import React, { useContext, useMemo } from 'react';
 import { MinecraftItemData } from '@definitions/minecraft';
-import { ProjectContext } from '@app/tools/Context';
-import { CraftingContext } from '@app/tools/crafting/Context';
+import { ProjectContext } from '@main/tools/Context';
+import { CraftingContext } from '@main/tools/crafting/Context';
 import Droppable from '@components/dnd/Droppable';
 
 type Props = {

@@ -11,4 +11,10 @@ export enum RecipeType {
     SMITHING = 'minecraft:smithing'
 }
 
+export enum InventoryType {
+    SEARCH = 'search',
+    VANILLA = 'vanilla',
+    CUSTOM = 'modded'
+}
+
 export const DEFAULT_SLOT_VALUE: SlotData[] = [{ id: 'crafting:result', count: 1 }];

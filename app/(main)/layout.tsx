@@ -1,7 +1,7 @@
-import '@styles/globals.scss';
+import '@styles/main.scss';
 import { Inter } from '@next/font/google';
-import Header from '@app/Header';
-import Footer from '@app/Footer';
+import Header from '@main/Header';
+import Footer from '@main/Footer';
 import React from 'react';
 import { unstable_getServerSession } from 'next-auth/next';
 import { authOptions } from '@session';

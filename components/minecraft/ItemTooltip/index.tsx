@@ -2,7 +2,7 @@
 
 import styles from './styles.module.scss';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { ProjectContext } from '@app/tools/Context';
+import { ProjectContext } from '@main/tools/Context';
 
 export default function ItemTooltip() {
     const { hoveredItem } = useContext(ProjectContext);

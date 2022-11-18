@@ -2,9 +2,9 @@
 
 import Image from 'next/image';
 import { MinecraftItemData } from '@definitions/minecraft';
-import { useContext } from 'react';
-import { ProjectContext } from '@app/tools/Context';
-import { CraftingContext } from '@app/tools/crafting/Context';
+import React, { useContext } from 'react';
+import { ProjectContext } from '@main/tools/Context';
+import { CraftingContext } from '@main/tools/crafting/Context';
 import Draggable from '@components/dnd/Draggable';
 
 type Props = {
@@ -24,7 +24,7 @@ export default function MinecraftItem(props: Props) {
             draggableId={'minecraftItem'}
             item={props.item}
             spanAttributes={{
-                className: 'w-14 h-14 p-[6px] opacity-60 hover:opacity-100 transition ease-in-out cursor-move',
+                className: 'w-14 h-14 p-[6px] relative opacity-60 hover:opacity-100 transition ease-in-out cursor-move',
                 onMouseEnter: () => setHoveredItem(props.item),
                 onMouseLeave: () => setHoveredItem(undefined),
                 onClick: handleClick
