@@ -4,15 +4,15 @@ import Settings from '@icons/Common/Settings';
 
 function SidebarLink(props: { href: string; title: string; icon: React.ReactNode }) {
     return (
-        <li className={'cursor-pointer rounded-xl hover:bg-zinc-700 transition-all px-4 py-2 font-semibold hover:font-bold flex items-center gap-x-4'}>
-            <div className={'rounded-xl outline outline-gray-700 bg-gradient-to-br from-black to-gray-600 h-8 w-8 flex justify-center items-center'}>
-                <div className={'p-2 fill-white w-full h-full'}>{props.icon}</div>
-            </div>
+        <Link href={props.href} className={'text-white text-base text-center'}>
+            <li className={'cursor-pointer rounded-xl hover:bg-zinc-700 transition-all px-4 py-2 font-semibold hover:font-bold flex items-center gap-x-4'}>
+                <div className={'rounded-xl outline outline-gray-700 bg-gradient-to-br from-black to-gray-600 h-8 w-8 flex justify-center items-center'}>
+                    <div className={'p-2 fill-white w-full h-full'}>{props.icon}</div>
+                </div>
 
-            <Link href={props.href} className={'text-white text-base text-center'}>
                 {props.title}
-            </Link>
-        </li>
+            </li>
+        </Link>
     );
 }
 
