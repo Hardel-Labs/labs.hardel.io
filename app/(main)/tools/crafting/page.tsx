@@ -11,40 +11,16 @@ import DNDContextProvider from '@components/dnd/DNDContext';
 import CraftingContextProvider from '@main/tools/crafting/Context';
 import React from 'react';
 import { MinecraftCategoryData } from '@definitions/minecraft';
-import prisma from '@libs/prisma';
+import getCategories from '@libs/request/minecraft/category/get';
+import { SuccessRestResponse } from '@definitions/api';
 
 async function getData() {
-    const categories = await prisma.category.findMany({
-        include: {
-            items: {
-                where: {
-                    custom: false
-                },
-                select: {
-                    minecraftId: true,
-                    name: true,
-                    asset: true
-                }
-            }
-        }
-    });
+    const categories = await getCategories();
+    if (!categories.request.success) {
+        throw new Error('Failed to get categories');
+    }
 
-    const data: Array<MinecraftCategoryData> = categories.map((category) => {
-        return {
-            id: category.id,
-            name: category.name,
-            asset: `${process.env.ASSET_PREFIX}/minecraft/items/${category.asset}`,
-            items: category.items.map((item) => {
-                return {
-                    id: item.minecraftId,
-                    name: item.name,
-                    image: `${process.env.ASSET_PREFIX}/minecraft/items/${item.asset}`
-                };
-            })
-        };
-    });
-
-    return data;
+    return (categories as SuccessRestResponse<MinecraftCategoryData[]>).data;
 }
 
 export default async function Page() {
