@@ -6,6 +6,7 @@ type MinecraftItemData = {
     image: string | StaticImageData;
     custom?: boolean;
     tag?: any;
+    categories?: Omit<MinecraftCategoryData, 'items'>[];
 };
 
 type MinecraftCategoryData = {
