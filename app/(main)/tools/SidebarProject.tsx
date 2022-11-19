@@ -19,27 +19,6 @@ function ProjectLink(props: { name: string; picture: string | StaticImageData })
     );
 }
 
-const projects = [
-    { name: 'Harion' },
-    { name: 'Super Harion' },
-    { name: 'Minecraft 2' },
-    { name: 'Vanilla+ 3' },
-    { name: 'Enchant V4' },
-    { name: 'Turbo Idea Survival' },
-    { name: 'Harion' },
-    { name: 'Super Harion' },
-    { name: 'Minecraft 2' },
-    { name: 'Vanilla+ 3' },
-    { name: 'Enchant V4' },
-    { name: 'Turbo Idea Survival' },
-    { name: 'Harion' },
-    { name: 'Super Harion' },
-    { name: 'Minecraft 2' },
-    { name: 'Vanilla+ 3' },
-    { name: 'Enchant V4' },
-    { name: 'Turbo Idea Survival' }
-];
-
 export default function SidebarProject() {
     const [search, setSearch] = useState('');
 
@@ -71,11 +50,12 @@ export default function SidebarProject() {
                 </div>
             </div>
             <div className={'flex flex-col gap-y-4 px-2 w-full overflow-y-auto'}>
-                {projects
-                    .filter((project) => project.name.toLowerCase().includes(search.toLowerCase()))
-                    .map((project, index) => (
-                        <ProjectLink key={index} name={project.name} picture={Harion} />
-                    ))}
+                <ProjectLink name={'Test'} picture={Harion} />
+                {/*{projects*/}
+                {/*    .filter((project) => project.name.toLowerCase().includes(search.toLowerCase()))*/}
+                {/*    .map((project, index) => (*/}
+                {/*        <ProjectLink key={index} name={project.name} picture={Harion} />*/}
+                {/*    ))}*/}
             </div>
         </>
     );

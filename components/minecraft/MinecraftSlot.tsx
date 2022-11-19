@@ -2,17 +2,17 @@
 
 import Image from 'next/image';
 import React, { useContext, useMemo } from 'react';
-import { MinecraftItemData } from '@definitions/minecraft';
-import { ProjectContext } from '@main/tools/Context';
-import { CraftingContext } from '@main/tools/crafting/Context';
 import Droppable from '@components/dnd/Droppable';
+import { MinecraftItemData } from '@definitions/minecraft';
+import { CraftingContext } from '@main/tools/crafting/CraftingContext';
+import { TooltipContext } from '@components/minecraft/ItemTooltip/TooltipContext';
 
 type Props = {
     id: string;
 };
 
 export default function MinecraftSlot(props: Props) {
-    const { setHoveredItem } = useContext(ProjectContext);
+    const { setHoveredItem } = useContext(TooltipContext);
     const { setSlotItem, selectedItem, slots } = useContext(CraftingContext);
     const [isOver, setIsOver] = React.useState(false);
 

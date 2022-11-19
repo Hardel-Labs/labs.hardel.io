@@ -3,7 +3,7 @@
 import GroupButtonContainer from '@components/form/GroupButton/GroupButtonContainer';
 import GroupButtonItem from '@components/form/GroupButton/GroupButtonItem';
 import { useContext, useState } from 'react';
-import { CraftingContext } from '@main/tools/crafting/Context';
+import { CraftingContext } from '@main/tools/crafting/CraftingContext';
 import { RecipeType } from '@libs/constant';
 import Counter from '@components/form/Counter';
 

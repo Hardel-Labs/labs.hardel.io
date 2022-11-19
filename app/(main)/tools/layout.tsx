@@ -2,7 +2,7 @@ import React from 'react';
 import Sidebar from '@main/tools/Sidebar';
 import Skew from '@components/Skew';
 import HighlightDiamonds from '@components/HighlightDiamonds';
-import ProjectContextProvider from '@main/tools/Context';
+import ProjectContextProvider from '@main/tools/ProjectContext';
 
 export default async function ToolsLayout({ children }: { children: React.ReactNode }) {
     return (

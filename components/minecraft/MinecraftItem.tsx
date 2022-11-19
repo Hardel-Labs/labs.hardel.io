@@ -3,16 +3,16 @@
 import Image from 'next/image';
 import { MinecraftItemData } from '@definitions/minecraft';
 import React, { useContext } from 'react';
-import { ProjectContext } from '@main/tools/Context';
-import { CraftingContext } from '@main/tools/crafting/Context';
 import Draggable from '@components/dnd/Draggable';
+import { CraftingContext } from '@main/tools/crafting/CraftingContext';
+import { TooltipContext } from '@components/minecraft/ItemTooltip/TooltipContext';
 
 type Props = {
     item: MinecraftItemData;
 };
 
 export default function MinecraftItem(props: Props) {
-    const { setHoveredItem } = useContext(ProjectContext);
+    const { setHoveredItem } = useContext(TooltipContext);
     const { setSelectedItem } = useContext(CraftingContext);
 
     const handleClick = () => {

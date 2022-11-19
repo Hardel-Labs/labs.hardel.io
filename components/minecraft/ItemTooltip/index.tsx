@@ -2,10 +2,10 @@
 
 import styles from './styles.module.scss';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { ProjectContext } from '@main/tools/Context';
+import { TooltipContext } from '@components/minecraft/ItemTooltip/TooltipContext';
 
 export default function ItemTooltip() {
-    const { hoveredItem } = useContext(ProjectContext);
+    const { hoveredItem } = useContext(TooltipContext);
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const ref = useRef<HTMLDivElement>(null);
 
@@ -34,6 +34,13 @@ export default function ItemTooltip() {
                     <div className={styles.textTooltip}>
                         <div className={styles.name}>{hoveredItem.name}</div>
                         <div className={styles.lore}>{hoveredItem.id}</div>
+                        <div className={styles.categories}>
+                            {hoveredItem.categories?.map((category, index) => (
+                                <div key={index} className={styles.category}>
+                                    {category.name}
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             )}

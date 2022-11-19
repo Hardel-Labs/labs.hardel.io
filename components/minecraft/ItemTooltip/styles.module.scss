@@ -65,9 +65,19 @@
 
         .lore {
             margin-top: 0.2em;
-            font-size: 14px;
+            font-size: 16px;
             color: #545454;
             text-shadow: 0.1em 0.1em 0 #151415;
+        }
+
+        .categories {
+            margin-top: 0.45em;
+
+            .category {
+                margin-top: 0.2em;
+                color: #5555ff;
+                text-shadow: 0.1em 0.1em 0 #15153e;
+            }
         }
     }
 }
