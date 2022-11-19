@@ -28,9 +28,9 @@ function SidebarCategory(props: { children: React.ReactNode; title: string }) {
 
 export default function Sidebar() {
     return (
-        <div className={'h-screen relative w-[300px] mr-4'}>
-            <div className={'w-[inherit] fixed flex flex-col gap-y-4 p-2 h-full'}>
-                <div className={'rounded-xl flex flex-col border-gold border p-4 glassmorphism h-full'}>
+        <div className={'h-screen relative min-w-[300px]'}>
+            <div className={'min-w-[300px] fixed flex flex-col gap-y-4 p-2 h-full'}>
+                <div className={'rounded-xl flex flex-col border p-4 glassmorphism h-full'}>
                     <div>
                         <p className={'text-white text-center mb-0 text-3xl font-semibold'}>Dashboard</p>
                         <hr className={'mb-10'} />
