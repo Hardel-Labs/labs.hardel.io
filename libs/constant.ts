@@ -17,4 +17,13 @@ export enum InventoryType {
     CUSTOM = 'modded'
 }
 
+export enum RestErrorType {
+    NotFound = 'Not Found',
+    BadRequest = 'Bad Request',
+    BadParameter = 'Bad Parameter',
+    InternalServerError = 'Internal Server Error',
+    Unauthorized = 'Unauthorized',
+    Forbidden = 'Forbidden'
+}
+
 export const DEFAULT_SLOT_VALUE: SlotData[] = [{ id: 'crafting:result', count: 1 }];
