@@ -1,13 +1,13 @@
 'use client';
 
 import React, { useMemo } from 'react';
-import RainbowButton from '@components/form/Rainbow';
+import RainbowButton from '@components/form/Button/Rainbow';
 import Add from '@icons/Common/Add';
 import MinecraftItem from '@components/minecraft/MinecraftItem';
 import { MinecraftCategoryData } from '@definitions/minecraft';
 import Category from '@components/minecraft/Category';
-import GroupButtonContainer from '@components/form/GroupButton/GroupButtonContainer';
-import GroupButtonItem from '@components/form/GroupButton/GroupButtonItem';
+import GroupButtonContainer from '@components/form/Button/GroupButton/GroupButtonContainer';
+import GroupButtonItem from '@components/form/Button/GroupButton/GroupButtonItem';
 import { InventoryType } from '@libs/constant';
 
 type Props = {
@@ -39,7 +39,7 @@ export default function InventoryManager(props: Props) {
         <div className={'my-10'}>
             <div className={'mb-4'}>
                 <div className={'flex justify-between items-center mb-4'}>
-                    <p className={'text-white text-2xl font-normal mb-0 minecraft'}>Minecraft Items</p>
+                    <p className={'text-white text-2xl font-normal mb-0 font-minecraft'}>Minecraft Items</p>
                     <RainbowButton className={'flex justify-center items-center'}>
                         <Add className={'w-8 h-8 fill-white mr-2'} />
                         Add new item

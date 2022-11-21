@@ -1,6 +1,6 @@
 import Image, { StaticImageData } from 'next/image';
-import Harion from '@images/Harion.png';
-import GoldButton from '@components/form/Gold';
+import Harion from '@images/harion.webp';
+import GoldButton from '@components/form/Button/Gold';
 import Search from '@icons/Common/Search';
 import { useState } from 'react';
 

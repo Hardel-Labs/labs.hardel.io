@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import HardelLetter from '@icons/logo/HardelLetter';
 import Image from 'next/image';
-import Harion from '@images/Harion.png';
+import Harion from '@images/harion.webp';
 import { Session } from 'next-auth';
 
 type Props = {
@@ -18,7 +18,7 @@ export default function Header(props: Props) {
                 </Link>
             </div>
 
-            <button type="button" className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300" id="user-menu-button">
+            <button type="button" className="w-8 h-8 flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300" id="user-menu-button">
                 <span className="sr-only">Open user menu</span>
                 <Image className="rounded-full" width={32} height={32} src={props.data?.user.image ?? Harion} alt="user photo" />
             </button>

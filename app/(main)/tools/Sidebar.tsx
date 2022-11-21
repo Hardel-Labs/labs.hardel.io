@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect } from 'react';
 import Image from 'next/image';
-import HarionLogo from '@images/Harion.png';
+import HarionLogo from '@images/harion.webp';
 import Settings from '@icons/Common/Settings';
 import Notifications from '@icons/Common/Notifications';
 import Download from '@icons/Download';

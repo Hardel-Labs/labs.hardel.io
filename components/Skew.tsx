@@ -17,7 +17,7 @@ export default function Skew() {
 
     return (
         <span
-            className={'absolute -bottom-full left-0 w-full h-full -z-10 bg-accent-tertiary/20'}
+            className={'absolute -bottom-full left-0 w-full h-full -z-10 bg-black/10'}
             style={{
                 transform: `skewY(${skew}deg)`
             }}

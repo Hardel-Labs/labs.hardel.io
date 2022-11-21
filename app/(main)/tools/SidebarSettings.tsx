@@ -1,7 +1,8 @@
 import Switch from '@components/form/Switch';
 import React from 'react';
-import WhiteButton from '@components/form/White';
-import GoldButton from '@components/form/Gold';
+import WhiteButton from '@components/form/Button/White';
+import GoldButton from '@components/form/Button/Gold';
+import FormInput from '@components/form/input';
 
 function SettingsEntry(props: { title: string; description?: string; children: React.ReactNode; inline?: boolean }) {
     return (
@@ -46,10 +47,7 @@ export default function SidebarSettings() {
                         />
                     </SettingsEntry>
                     <SettingsEntry title={'Project description'} inline={true}>
-                        <textarea
-                            className="bg-black w-full text-sm border-2 border-solid border-gray-800 rounded-xl px-4 py-1 text-white focus:outline-none focus:border-gold"
-                            placeholder="Project description"
-                        />
+                        <FormInput placeholder="Project description" />
                     </SettingsEntry>
                     <GoldButton className={'mt-6 mb-4 w-full mx-0'}>Manage collaborators</GoldButton>
                     <WhiteButton className={'mb-4 w-full mx-0'}>See more projects settings</WhiteButton>
@@ -63,11 +61,7 @@ export default function SidebarSettings() {
                         </select>
                     </SettingsEntry>
                     <SettingsEntry title={'Namespace'} description={'The namespace used for the data pack.'}>
-                        <input
-                            type="text"
-                            className="bg-black text-sm border-2 border-solid border-gray-800 rounded-xl px-4 py-1 text-white focus:outline-none focus:border-gold"
-                            placeholder="Namespace"
-                        />
+                        <FormInput placeholder="namespace" />
                     </SettingsEntry>
                     <WhiteButton className={'mt-6 mb-4 w-full'}>See more data packs settings</WhiteButton>
                 </SettingsContainer>

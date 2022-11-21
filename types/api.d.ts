@@ -9,17 +9,20 @@ type SuccessRestResponse<T> = {
 };
 
 type ErrorRestResponse = {
-    request: {
-        error: {
-            code: RestErrorType;
-            reason: string;
-        }[];
-    } & ApiRequestData;
+    data: {
+        errors: Error[];
+    };
+    request: ApiRequestData;
 };
 
 type ApiRequestData = {
     statusCode: number;
     success: boolean;
+};
+
+type Error = {
+    code: RestErrorType;
+    reason: string;
 };
 
 type ApiPagination = {
@@ -29,4 +32,9 @@ type ApiPagination = {
     start?: number;
     end?: number;
     totalPage?: number;
+};
+
+type FormError = {
+    errors: Error[];
+    success: boolean;
 };

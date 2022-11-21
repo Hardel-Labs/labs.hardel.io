@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import Table from '@images/design/minecraft/custom_crafting_table.png';
-import Arrow from '@images/design/minecraft/arrow.png';
+import Table from '@images/design/minecraft/custom_crafting_table.webp';
+import Arrow from '@images/design/minecraft/arrow.webp';
 import InventoryManager from '@main/tools/crafting/InventoryManager';
 import MinecraftSlot from '@components/minecraft/MinecraftSlot';
 import CraftingGroupButton from '@main/tools/crafting/CraftingGroupButton';
@@ -10,10 +10,9 @@ import ItemTooltip from '@components/minecraft/ItemTooltip';
 import DNDContextProvider from '@components/dnd/DNDContext';
 import CraftingContextProvider from '@main/tools/crafting/CraftingContext';
 import React from 'react';
-import { MinecraftCategoryData } from '@definitions/minecraft';
-import getCategories from '@libs/request/minecraft/category/get';
-import { SuccessRestResponse } from '@definitions/api';
+import getCategories from '@libs/request/server/minecraft/category/get';
 import TooltipContextProvider from '@components/minecraft/ItemTooltip/TooltipContext';
+import { MinecraftCategoryData } from '@definitions/minecraft';
 
 async function getData() {
     const categories = await getCategories();
@@ -21,7 +20,7 @@ async function getData() {
         throw new Error('Failed to get categories');
     }
 
-    return (categories as SuccessRestResponse<MinecraftCategoryData[]>).data;
+    return categories.data as MinecraftCategoryData[];
 }
 
 export default async function Page() {
@@ -38,7 +37,7 @@ export default async function Page() {
                                     <CraftingGroupButton />
                                     <div className={'my-6 flex justify-center'}>
                                         <div>
-                                            <p className={'text-xl font-normal text-white text-start minecraft'}>Crafting table</p>
+                                            <p className={'text-xl font-normal text-white text-start font-minecraft'}>Crafting table</p>
                                             <div className={'flex justify-between items-center w-[18rem]'}>
                                                 <div className={'w-[10.5rem] flex flex-wrap'}>
                                                     {Array.from({ length: 9 }).map((i, index) => (

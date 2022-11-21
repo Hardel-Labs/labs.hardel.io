@@ -1,7 +1,7 @@
 import NotificationToast from '@components/NotificationToast';
-import Harion from '@images/Harion.png';
-import Hardel from '@images/logo.png';
-import WhiteButton from '@components/form/White';
+import Harion from '@images/harion.webp';
+import Hardel from '@images/logo.webp';
+import WhiteButton from '@components/form/Button/White';
 
 export default function SidebarNotification() {
     return (

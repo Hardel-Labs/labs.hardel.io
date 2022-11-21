@@ -1,11 +1,11 @@
 'use client';
 import Image from 'next/image';
-import Harion from '@images/Harion.png';
+import Harion from '@images/harion.webp';
 import { useState } from 'react';
 import { Session } from 'next-auth';
 import Link from 'next/link';
 import { signIn, signOut } from 'next-auth/react';
-import RainbowButton from '@components/form/Rainbow';
+import RainbowButton from '@components/form/Button/Rainbow';
 import HardelLetter from '@icons/logo/HardelLetter';
 import Search from '@icons/Common/Search';
 
