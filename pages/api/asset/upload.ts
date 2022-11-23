@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import CorsMiddleWare from '@libs/request/server/cors-middlewars';
 import formidable from 'formidable';
 import { PutObjectCommand, PutObjectCommandOutput, S3Client } from '@aws-sdk/client-s3';
 import fs from 'fs';
@@ -19,11 +18,6 @@ const S3 = new S3Client({
 });
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<PutObjectCommandOutput | { error: string }>) {
-    await CorsMiddleWare(req, res, {
-        methods: ['PUT', 'HEAD'],
-        origin: '*'
-    });
-
     const auth = await AuthMiddleware(req, res, { role: RoleType.ADMIN });
     if (!auth.isAuthenticated || !auth.hasRole) {
         new RestHelper(req, res).addError(RestErrorType.Unauthorized, 'You have not the permission to access this resource').checkErrors();

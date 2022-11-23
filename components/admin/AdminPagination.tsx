@@ -21,7 +21,7 @@ export default function AdminPagination(props: Props) {
 
     const filterData = useMemo(() => {
         if (search === '') {
-            return props.data?.sort((a, b) => a[props.filterBy].localeCompare(b[props.filterBy]));
+            return props.data;
         }
 
         return props.data?.filter((element: any) => element[props.filterBy].toLowerCase().includes(search.toLowerCase()));

@@ -18,6 +18,7 @@ export enum InventoryType {
 }
 
 export enum RestErrorType {
+    MethodNotAllowed = 'MethodNotAllowed',
     NotFound = 'Not Found',
     BadRequest = 'Bad Request',
     BadParameter = 'Bad Parameter',

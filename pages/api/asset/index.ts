@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import CorsMiddleWare from '@libs/request/server/cors-middlewars';
 import { ListObjectsV2Command, ListObjectsV2CommandOutput, S3Client } from '@aws-sdk/client-s3';
 import RestHelper from '@libs/request/server/form-checker';
 import { RestErrorType } from '@libs/constant';
@@ -14,11 +13,6 @@ const S3 = new S3Client({
 });
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<ListObjectsV2CommandOutput | { error: string }>) {
-    await CorsMiddleWare(req, res, {
-        methods: ['POST', 'HEAD'],
-        origin: '*'
-    });
-
     let path = (req.body.path as string) ?? '';
     if (!path) {
         new RestHelper(req, res).addError(RestErrorType.InternalServerError, 'Path is missing').checkErrors();

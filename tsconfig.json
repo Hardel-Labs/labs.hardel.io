@@ -20,6 +20,7 @@
             "@images/*": ["public/images/*"],
             "@api/*": ["pages/api/*"],
             "@components/*": ["components/*"],
+            "@repositories/*": ["prisma/repositories/*"],
             "@icons/*": ["components/icons/*"],
             "@pages/*": ["pages/*"],
             "@main/*": ["app/(main)/*"],

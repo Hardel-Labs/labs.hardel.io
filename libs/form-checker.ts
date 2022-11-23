@@ -8,6 +8,11 @@ class FormValidator {
         success: false
     };
 
+    setErrors(errors: FormError) {
+        this.formError = errors;
+        return this;
+    }
+
     checkIsVariableIsDefined<T>(variable: T, name: string) {
         if (variable === undefined || variable === null) {
             this.formError?.errors.push({
@@ -58,7 +63,7 @@ class FormValidator {
     }
 
     checkEmail(field: string) {
-        if (!field.match(/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/)) {
+        if (!field.match(/^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+)\.([a-zA-Z]{2,5})$/)) {
             this.formError?.errors.push({
                 code: RestErrorType.BadParameter,
                 reason: `Invalid email address`

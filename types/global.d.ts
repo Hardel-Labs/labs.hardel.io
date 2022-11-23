@@ -1,8 +1,3 @@
-import { PrismaClient } from '@prisma/client';
-
-declare global {
-    // eslint-disable-next-line no-var
-    var prisma: PrismaClient;
-}
-
-type SafeNumber = number | string;
+export type SafeNumber = number | string;
+export type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+export type RequiredBy<T, K extends keyof T> = Omit<T, K> & Required<Pick<T, K>>;

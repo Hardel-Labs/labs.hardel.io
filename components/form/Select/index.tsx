@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import useClickOutside from '@libs/hooks/useClickOutside';
 import Cross from '@icons/Common/Cross';
 import ArrowBottom from '@icons/Common/ArrowBottom';
@@ -12,30 +12,30 @@ export type Option = {
 };
 
 type Props = {
-    onChange?: (values: Option[]) => void;
-    values?: Option[];
+    onChange?: (values: string[]) => void;
+    values?: string[];
     options: Option[];
 };
 
 export default function Select(props: Props) {
     const [value, setValue] = useState<string>('');
-    const [options, setOptions] = useState<Option[]>(props.values ?? []);
+    const [options, setOptions] = useState<string[]>([]);
     const [open, setOpen] = useState<boolean>(false);
     const ref = React.useRef<HTMLDivElement>(null);
     useClickOutside(ref, () => setOpen(false));
 
     const displayedOptions = useMemo(() => {
-        return props.options.filter((option) => !options.includes(option)).filter((option) => option.name.toLowerCase().includes(value.toLowerCase()));
-    }, [options, props.options, value]);
+        return props.options.filter((option) => !props.values?.find((value) => value === option.id)).filter((option) => option.name.toLowerCase().includes(value.toLowerCase()));
+    }, [props.options, props.values, value]);
 
     const handleAdd = (option: Option) => {
-        setOptions([...options, option]);
-        props.onChange?.([...options, option]);
+        setOptions([...options, option.id]);
+        props.onChange?.([...options, option.id]);
     };
 
     const handleRemove = (option: Option) => {
-        setOptions(options.filter((o) => o !== option));
-        props.onChange?.(options.filter((o) => o !== option));
+        setOptions(options.filter((o) => o !== option.id));
+        props.onChange?.(options.filter((o) => o !== option.id));
     };
 
     const handleRemoveAll = () => {
@@ -44,18 +44,24 @@ export default function Select(props: Props) {
         props.onChange?.([]);
     };
 
+    useEffect(() => {
+        setOptions(props.values || []);
+    }, [props.values]);
+
     return (
         <div ref={ref} className={'relative w-full'}>
             <div className={'border-2 border-solid border-white/20 rounded-md'} onClick={() => setOpen(true)}>
                 <div className={'flex items-center justify-between p-2'}>
                     <div className={'flex'}>
                         <div className={'flex gap-x-1'}>
-                            {options.map((option, index) => (
-                                <div key={index} className={'flex items-center justify-center bg-white/10 rounded-md px-2'}>
-                                    <span className={'text-white text-sm'}>{option.shortName ?? option.name}</span>
-                                    <Cross className={'fill-white w-4 h-4 ml-2 cursor-pointer'} onClick={() => handleRemove(option)} />
-                                </div>
-                            ))}
+                            {props.options
+                                .filter((option) => options.find((o) => o === option.id))
+                                .map((option, index) => (
+                                    <div key={index} className={'flex items-center justify-center bg-white/10 rounded-md px-2'}>
+                                        <span className={'text-white text-sm'}>{option.shortName ?? option.name}</span>
+                                        <Cross className={'fill-white w-4 h-4 ml-2 cursor-pointer'} onClick={() => handleRemove(option)} />
+                                    </div>
+                                ))}
                         </div>
                         <input
                             type={'text'}

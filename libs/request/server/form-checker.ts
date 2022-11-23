@@ -67,7 +67,9 @@ export default class RestHelper<T> extends FormValidator {
     }
 
     getResponse(): RestRequest<any> {
-        this.setRestError();
+        if (this.hasErrors()) {
+            this.restErrors.data.errors = this.formError.errors;
+        }
         if (this.hasRestError()) {
             return this.restErrors;
         } else {
@@ -100,7 +102,10 @@ export default class RestHelper<T> extends FormValidator {
     }
 
     checkErrors() {
-        this.setRestError();
+        if (this.hasErrors()) {
+            this.restErrors.data.errors = this.formError.errors;
+        }
+
         if (this.hasRestError()) {
             this.response?.status(this.restErrors.request.statusCode).json(this.restErrors);
             return true;
@@ -110,7 +115,9 @@ export default class RestHelper<T> extends FormValidator {
     }
 
     send() {
-        this.setRestError();
+        if (this.hasErrors()) {
+            this.restErrors.data.errors = this.formError.errors;
+        }
         if (!this.data && !this.hasErrors()) {
             this.addError(RestErrorType.InternalServerError, 'No data or error provided');
         }
@@ -129,12 +136,6 @@ export default class RestHelper<T> extends FormValidator {
         };
 
         this.response?.status(200).json(data);
-    }
-
-    private setRestError() {
-        if (this.hasErrors()) {
-            this.restErrors.data.errors = this.formError.errors;
-        }
     }
 
     private hasRestError() {
