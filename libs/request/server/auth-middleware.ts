@@ -23,7 +23,7 @@ function authMiddleware() {
                 hasRole: false
             };
         } else {
-            const role = token.roles;
+            const role = token.userData?.roles;
             if (option && option.role && role !== option.role) {
                 return {
                     isAuthenticated: true,
