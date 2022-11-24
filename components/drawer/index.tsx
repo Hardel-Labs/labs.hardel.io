@@ -2,12 +2,14 @@ import React from 'react';
 import Cross from '@icons/Common/Cross';
 
 type Props = {
-    title: string;
+    title?: string;
     description?: string;
     onClose?: () => void;
     children: React.ReactNode;
     isOpened?: boolean;
 };
+
+export type DrawerProps = { id: string; title: string; description: string; component?: React.ReactNode };
 
 export default function Drawer(props: Props) {
     const ref = React.useRef<HTMLDivElement>(null);
@@ -28,13 +30,13 @@ export default function Drawer(props: Props) {
                     <div className={'glassmorphism h-full flex flex-col rounded-br-none rounded-tr-none p-4'}>
                         <div className={'flex-auto'}>
                             <div className={'flex justify-between items-center mb-2'}>
-                                <p className={'text-2xl font-bold mb-2'}>{props.title}</p>
+                                <p className={'text-2xl font-bold mb-2'}>{props.title ?? 'Drawer'}</p>
                                 <Cross onClick={props.onClose} className={'fill-white scale-125 transition-[fill] cursor-pointer'} />
                             </div>
                             <p className={'text-gray-400 text-sm font-normal mb-0'}>{props.description}</p>
                             <hr />
                         </div>
-                        <div className={'h-full overflow-y-auto bg-black/30 rounded-xl p-4'}>{props.children}</div>
+                        <div className={'h-full overflow-y-auto bg-black/50 rounded-xl p-4'}>{props.children}</div>
                     </div>
                 </div>
             </div>

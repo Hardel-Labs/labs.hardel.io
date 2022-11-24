@@ -31,6 +31,21 @@ export default class CategoriesRepository {
         });
     }
 
+    async connectItem(categoryId: number, itemId: number) {
+        return await this.prisma.update({
+            where: {
+                id: categoryId
+            },
+            data: {
+                items: {
+                    connect: {
+                        id: itemId
+                    }
+                }
+            }
+        });
+    }
+
     async findVanilla(): Promise<MinecraftCategoryData[]> {
         const categories = await this.prisma.findMany({
             include: {
@@ -39,9 +54,16 @@ export default class CategoriesRepository {
                         custom: false
                     },
                     select: {
+                        id: true,
                         minecraftId: true,
                         name: true,
-                        asset: true
+                        asset: true,
+                        categories: {
+                            select: {
+                                id: true,
+                                name: true
+                            }
+                        }
                     }
                 }
             }
@@ -54,9 +76,16 @@ export default class CategoriesRepository {
                 asset: `${process.env.ASSET_PREFIX}/minecraft/items/${category.asset}`,
                 items: category.items.map((item) => {
                     return {
+                        databaseId: item.id,
                         id: item.minecraftId,
                         name: item.name,
-                        image: `${process.env.ASSET_PREFIX}/minecraft/items/${item.asset}`
+                        image: `${process.env.ASSET_PREFIX}/minecraft/items/${item.asset}`,
+                        categories: item.categories?.map((category) => {
+                            return {
+                                id: category.id,
+                                name: category.name
+                            };
+                        })
                     };
                 })
             };
@@ -80,6 +109,19 @@ export default class CategoriesRepository {
             },
             data
         });
+    }
+
+    async updateOrInsert(name: string, asset: string, id?: SafeNumber) {
+        const assetUrl = asset.startsWith('minecraft:') ? asset.replace('minecraft:', '') : asset;
+        const url = 'vanilla/' + assetUrl + '.webp';
+
+        if (id) {
+            return await this.update(+id, { name, asset: url });
+        } else {
+            return await this.prisma.create({
+                data: { name, asset: url }
+            });
+        }
     }
 
     async delete(id: number) {

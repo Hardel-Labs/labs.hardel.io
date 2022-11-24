@@ -11,7 +11,7 @@ import deleteItem from '@libs/request/server/minecraft/items/delete';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<RestRequest<MinecraftItemData[] | MinecraftItemData>>) {
     const method = req.method;
-    const { id, minecraftId, name, tag, categories } = req.body;
+    const { id, minecraftId, name, tag, categories, update } = req.body;
 
     if (method !== 'GET') {
         const auth = await AuthMiddleware(req, res, { role: RoleType.ADMIN });
@@ -32,6 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             .checkIsVariableIsDefined(minecraftId, 'minecraftId')
             .checkIsVariableIsDefined(name, 'name')
             .checkIsVariableIsDefined(categories, 'categories')
+            .checkIsVariableIsDefined(update, 'update')
             .checkMaxLength(minecraftId, 80)
             .checkMaxLength(name, 80)
             .isCorrectMinecraftId(minecraftId)
@@ -41,7 +42,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         if (errors) return;
 
         const parsedCategories = JSON.parse(categories) as number[];
-        const data = await upsertItems(id, minecraftId, name, parsedCategories, tag);
+        const data = await upsertItems(update, id, minecraftId, name, parsedCategories, tag);
         res.status(data.request.statusCode).json(data);
     } else if (method === 'DELETE') {
         const errors = new RestHelper(req, res).checkIsVariableIsDefined(id, 'id').checkIsNumber(id, 'id').checkErrors();

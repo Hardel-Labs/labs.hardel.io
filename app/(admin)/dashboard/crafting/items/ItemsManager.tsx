@@ -3,12 +3,12 @@
 import AdminPagination from '@components/admin/AdminPagination';
 import { MinecraftItemData } from '@definitions/minecraft';
 import Image from 'next/image';
-import React, { useContext } from 'react';
-import { TooltipContext } from '@components/minecraft/ItemTooltip/TooltipContext';
+import React from 'react';
 import Drawer from '@components/drawer';
-import CreateItem from '@admin/dashboard/crafting/items/CreateItem';
+import AdminCreateItem, { CreateItemDefaultValue } from '@components/drawer/container/AdminCreateItem';
 import Harion from '@images/harion.webp';
 import FormInput from '@components/form/input';
+import MinecraftItem from '@components/minecraft/MinecraftItem';
 
 const drawers = [
     { title: 'Create Item', description: 'Create a new item' },
@@ -16,9 +16,8 @@ const drawers = [
 ];
 
 export default function ItemsManager(props: { data: MinecraftItemData[] }) {
-    const { setHoveredItem } = useContext(TooltipContext);
     const [isOpened, setIsOpened] = React.useState(false);
-    const [selectedItem, setSelectedItem] = React.useState<MinecraftItemData & { options?: number[] }>();
+    const [selectedItem, setSelectedItem] = React.useState<CreateItemDefaultValue>();
     const [selectedDrawer, setSelectedDrawer] = React.useState(drawers[0]);
     const [isEdit, setIsEdit] = React.useState(false);
 
@@ -49,21 +48,13 @@ export default function ItemsManager(props: { data: MinecraftItemData[] }) {
                         <div className={'flex flex-auto h-fit min-h-[250px] max-h-[400px] bg-black/20 border border-white/20 rounded-r-xl overflow-y-auto'}>
                             <div className={'h-full p-4 flex flex-wrap items-start content-start'}>
                                 {items?.map((item, index) => (
-                                    <span
-                                        onMouseEnter={() => setHoveredItem(item)}
-                                        onMouseLeave={() => setHoveredItem(undefined)}
-                                        onClick={() => handleEdit(item)}
-                                        key={index}
-                                        className={'w-14 h-14 p-[6px] relative opacity-60 hover:opacity-100 transition ease-in-out cursor-pointer'}
-                                    >
-                                        {item?.image && <Image alt={''} src={item.image} height={64} width={64} className={'w-full h-full pixelated'} />}
-                                    </span>
+                                    <MinecraftItem key={index} item={item} onClick={() => handleEdit(item)} />
                                 ))}
                             </div>
                         </div>
                     </div>
                     <Drawer title={selectedDrawer.title} description={selectedDrawer.description} isOpened={isOpened} onClose={() => handleClose()}>
-                        <CreateItem onClose={() => handleClose()} isCreating={!isEdit} defaultValues={selectedItem} />
+                        <AdminCreateItem onClose={() => handleClose()} isCreating={!isEdit} defaultValues={selectedItem} />
                     </Drawer>
                 </>
             )}

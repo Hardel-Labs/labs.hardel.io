@@ -4,7 +4,7 @@ import { RequiredBy, SafeNumber } from '@definitions/global';
 
 export type ItemWithCategories = Item & { categories?: Category[] };
 export type ItemCreateData = Omit<Item, 'id'> & { categories?: { connect: { id: number }[] } };
-export type ItemUpsertData = RequiredBy<Partial<Item & { categories?: { connect: { id: number }[] } }>, 'name' | 'asset' | 'minecraftId'>;
+export type ItemUpsertData = RequiredBy<Partial<Item & { categories: number[] }>, 'name' | 'asset' | 'minecraftId'>;
 
 export default class ItemRepository {
     constructor(private readonly prisma: PrismaClient['item']) {}
@@ -53,9 +53,30 @@ export default class ItemRepository {
 
     async updateOrInsert(data: ItemUpsertData) {
         if (data.id) {
-            return await this.update(data.id, data);
+            return await this.prisma.update({
+                where: {
+                    id: +data.id
+                },
+                data: {
+                    ...data,
+                    categories: {
+                        set: data.categories?.map((id) => {
+                            return { id };
+                        })
+                    }
+                }
+            });
         } else {
-            return await this.prisma.create({ data });
+            return await this.prisma.create({
+                data: {
+                    ...data,
+                    categories: {
+                        connect: data.categories?.map((id) => {
+                            return { id };
+                        })
+                    }
+                }
+            });
         }
     }
 

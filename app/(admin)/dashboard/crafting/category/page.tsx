@@ -1,17 +1,26 @@
-import React, { CSSProperties } from 'react';
+import React from 'react';
+import InventoryManager from '@admin/dashboard/crafting/category/InventoryManager';
+import getCategories from '@libs/request/server/minecraft/category/get';
+import { MinecraftCategoryData } from '@definitions/minecraft';
+import TooltipContextProvider from '@components/minecraft/ItemTooltip/TooltipContext';
+import ItemTooltip from '@components/minecraft/ItemTooltip';
 
-const height: CSSProperties = {
-    minHeight: 'calc(100vh - 210px)'
-};
+async function getData() {
+    const categories = await getCategories();
+    if (!categories.request.success) {
+        throw new Error('Failed to get categories');
+    }
 
-export default function Home() {
+    return categories.data as MinecraftCategoryData[];
+}
+
+export default async function CategoriesPage() {
+    const data = await getData();
+
     return (
-        <section className={'overflow-hidden flex'} style={height}>
-            <div className={'container mx-auto flex flex-col justify-center items-center'}>
-                <h1 className={'font-bold text-gold text-center'}>Category Page</h1>
-                <hr />
-                <p className={'text-white w-fit text-2xl font-semibold text-center'}>TODO: Add users page</p>
-            </div>
-        </section>
+        <TooltipContextProvider>
+            <InventoryManager data={data} />
+            <ItemTooltip />
+        </TooltipContextProvider>
     );
 }

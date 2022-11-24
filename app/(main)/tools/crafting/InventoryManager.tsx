@@ -3,7 +3,7 @@
 import React, { useMemo } from 'react';
 import RainbowButton from '@components/form/Button/Rainbow';
 import Add from '@icons/Common/Add';
-import MinecraftItem from '@components/minecraft/MinecraftItem';
+import DraggableMinecraftItem from '@components/minecraft/MinecraftItem';
 import { MinecraftCategoryData } from '@definitions/minecraft';
 import Category from '@components/minecraft/Category';
 import GroupButtonContainer from '@components/form/Button/GroupButton/GroupButtonContainer';
@@ -91,7 +91,7 @@ export default function InventoryManager(props: Props) {
 
                     <div className={'h-full p-4 flex flex-wrap items-start content-start'}>
                         {displayItems?.map((item, index) => (
-                            <MinecraftItem key={index} item={item} />
+                            <DraggableMinecraftItem key={index} item={item} />
                         ))}
                     </div>
                 </div>

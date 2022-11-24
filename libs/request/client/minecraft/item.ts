@@ -1,8 +1,16 @@
 import FastFetcher from '@libs/request/client/fast-fetcher';
 
-export const upsertVanillaItem = async (name: string, minecraftId: string, tag: string, arrayCategories: Array<number>, id?: number, callback?: (success: boolean) => void) => {
+export const upsertVanillaItem = async (
+    update: boolean,
+    name: string,
+    minecraftId: string,
+    tag: string,
+    arrayCategories: Array<number>,
+    id?: number,
+    callback?: (success: boolean) => void
+) => {
     const categories = JSON.stringify(arrayCategories);
-    new FastFetcher('/api/minecraft/items', 'PUT').setBody({ id, name, minecraftId, tag, categories }).fetching(callback);
+    new FastFetcher('/api/minecraft/items', 'PUT').setBody({ update, id, name, minecraftId, tag, categories }).fetching(callback);
 };
 
 export const deleteVanillaItem = async (id: string, callback: (success: boolean) => void) => {

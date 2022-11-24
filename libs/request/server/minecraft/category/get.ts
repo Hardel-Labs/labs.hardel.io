@@ -10,7 +10,7 @@ const getCategories = async (): Promise<RestRequest<MinecraftCategoryData[]>> =>
         const data = await new CategoriesRepository(prisma.category).findVanilla();
         return new RestHelper().setData(data).getResponse();
     } catch (error) {
-        return new RestHelper().addError(RestErrorType.InternalServerError, 'An error occured while fetching categories.').getResponse();
+        return new RestHelper().addError(RestErrorType.InternalServerError, 'An error occurred while fetching categories.').getResponse();
     }
 };
 

@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 type Props = {
     category: MinecraftCategoryData;
-    selected: number;
+    selected: number | undefined;
     onClick: () => void;
 };
 

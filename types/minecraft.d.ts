@@ -1,41 +1,39 @@
-import { StaticImageData } from 'next/image';
-
-type MinecraftItemData = {
+export type MinecraftItemData = {
     id: string;
     name: string;
-    image: string | StaticImageData;
+    image: string;
     custom?: boolean;
     tag?: any;
     databaseId?: number;
-    categories?: Omit<MinecraftCategoryData, 'items'>[];
+    categories?: Omit<MinecraftCategoryData, 'items' | 'asset'>[];
 };
 
-type MinecraftCategoryData = {
+export type MinecraftCategoryData = {
     id: number;
     name: string;
-    asset: string | StaticImageData;
+    asset: string;
     items: Array<MinecraftItemData>;
 };
 
-type SlotData = {
+export type SlotData = {
     id: string;
     item?: MinecraftItemData;
     count?: number;
 };
 
-type RecipeKey = {
+export type RecipeKey = {
     [key: string]: {
         item: string;
     };
 };
 
-type ShapedRecipeLData = {
+export type ShapedRecipeLData = {
     key: string;
     item: MinecraftItemData;
     slot: number[];
 };
 
-type ShapelessRecipe = {
+export type ShapelessRecipe = {
     type: string;
     ingredients: Array<{ item: string }>;
     result: {
@@ -44,7 +42,7 @@ type ShapelessRecipe = {
     };
 };
 
-type ShapedRecipe = {
+export type ShapedRecipe = {
     type: string;
     pattern: string[];
     key: RecipeKey;
@@ -54,4 +52,4 @@ type ShapedRecipe = {
     };
 };
 
-type Recipe = ShapelessRecipe | ShapedRecipe;
+export type Recipe = ShapelessRecipe | ShapedRecipe;

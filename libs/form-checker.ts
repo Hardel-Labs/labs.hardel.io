@@ -42,7 +42,7 @@ class FormValidator {
         return this;
     }
 
-    checkIsNumber(number: SafeNumber, name: string) {
+    checkIsNumber(number: any, name: string) {
         if (!number) {
             return this;
         }

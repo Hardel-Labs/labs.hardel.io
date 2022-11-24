@@ -11,17 +11,19 @@ import { Category } from '@prisma/client';
 import Image from 'next/image';
 import DefaultItem from '@images/design/item_placeholder.webp';
 import RedButton from '@components/form/Button/Red';
-import { assetUploadItem, deleteVanillaItem, upsertVanillaItem } from '@libs/request/client/items';
+import { assetUploadItem, deleteVanillaItem, upsertVanillaItem } from '@libs/request/client/minecraft/item';
 import { MinecraftItemData } from '@definitions/minecraft';
 import { useRouter } from 'next/navigation';
+import { PartialBy } from '@definitions/global';
 
+export type CreateItemDefaultValue = PartialBy<MinecraftItemData & { options?: number[] }, 'image'>;
 type Props = {
     onClose: () => void;
     isCreating: boolean;
-    defaultValues?: MinecraftItemData & { options?: number[] };
+    defaultValues?: CreateItemDefaultValue;
 };
 
-export default function CreateItem(props: Props) {
+export default function AdminCreateItem(props: Props) {
     const { data } = useSWR<Category[]>('/api/minecraft/categories/lite', fetcher);
     const router = useRouter();
     const [name, setName] = useState('');
@@ -47,7 +49,7 @@ export default function CreateItem(props: Props) {
     const sendData = async () => {
         const parsedCategories = categories.map((category) => Number(category));
         await assetUploadItem(minecraftId, asset);
-        await upsertVanillaItem(name, minecraftId, tags, parsedCategories, props.defaultValues?.databaseId, (success) => {
+        await upsertVanillaItem(!props.isCreating, name, minecraftId, tags, parsedCategories, props.defaultValues?.databaseId, (success) => {
             if (success) {
                 setName('');
                 setMinecraftId('');
