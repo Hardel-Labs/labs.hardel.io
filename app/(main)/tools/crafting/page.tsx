@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Table from '@images/design/minecraft/custom_crafting_table.webp';
 import Arrow from '@images/design/minecraft/arrow.webp';
 import InventoryManager from '@main/tools/crafting/InventoryManager';
-import MinecraftSlot from '@components/minecraft/MinecraftSlot';
+import DroppableMinecraftSlot from '@components/minecraft/DroppableMinecraftSlot';
 import CraftingGroupButton from '@main/tools/crafting/CraftingGroupButton';
 import CraftingOptions from './CraftingOptions';
 import CodePreview from '@main/tools/crafting/CodePreview';
@@ -42,11 +42,11 @@ export default async function Page() {
                                             <div className={'flex justify-between items-center w-[18rem]'}>
                                                 <div className={'w-[10.5rem] flex flex-wrap'}>
                                                     {Array.from({ length: 9 }).map((i, index) => (
-                                                        <MinecraftSlot id={'crafting:' + +index} key={index} />
+                                                        <DroppableMinecraftSlot id={'crafting:' + +index} key={index} />
                                                     ))}
                                                 </div>
                                                 <Image src={Arrow} alt={''} width={32} height={27} />
-                                                <MinecraftSlot id={'crafting:result'} />
+                                                <DroppableMinecraftSlot id={'crafting:result'} />
                                             </div>
                                         </div>
                                     </div>

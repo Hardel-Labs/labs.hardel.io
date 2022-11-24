@@ -3,12 +3,12 @@
 import React, { useMemo } from 'react';
 import RainbowButton from '@components/form/Button/Rainbow';
 import Add from '@icons/Common/Add';
-import DraggableMinecraftItem from '@components/minecraft/MinecraftItem';
 import { MinecraftCategoryData } from '@definitions/minecraft';
 import Category from '@components/minecraft/Category';
 import GroupButtonContainer from '@components/form/Button/GroupButton/GroupButtonContainer';
 import GroupButtonItem from '@components/form/Button/GroupButton/GroupButtonItem';
 import { InventoryType } from '@libs/constant';
+import DraggableMinecraftItem from '@components/minecraft/DraggableMinecraftItem';
 
 type Props = {
     categories: Array<MinecraftCategoryData>;

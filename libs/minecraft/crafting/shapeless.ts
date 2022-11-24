@@ -11,7 +11,7 @@ export const makeShapelessRecipes = (ingredients: SlotData[], result?: SlotData)
     const ingredientsItem: Array<{ item: string }> = [];
     for (const ingredient of ingredients) {
         if (ingredient.item) {
-            ingredientsItem.push({ item: ingredient.item.id });
+            ingredientsItem.push({ item: ingredient.item.minecraftId });
         }
     }
 
@@ -19,7 +19,7 @@ export const makeShapelessRecipes = (ingredients: SlotData[], result?: SlotData)
         type: RecipeType.SHAPELESS,
         ingredients: ingredientsItem,
         result: {
-            item: result?.item?.id,
+            item: result?.item?.minecraftId,
             count: result?.count || 1
         }
     };

@@ -1,10 +1,10 @@
 export type MinecraftItemData = {
-    id: string;
+    id: number;
+    minecraftId: string;
     name: string;
     image: string;
     custom?: boolean;
     tag?: any;
-    databaseId?: number;
     categories?: Omit<MinecraftCategoryData, 'items' | 'asset'>[];
 };
 

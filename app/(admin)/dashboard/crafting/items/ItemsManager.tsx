@@ -5,7 +5,7 @@ import { MinecraftItemData } from '@definitions/minecraft';
 import Image from 'next/image';
 import React from 'react';
 import Drawer from '@components/drawer';
-import AdminCreateItem, { CreateItemDefaultValue } from '@components/drawer/container/AdminCreateItem';
+import AdminCreateItem from '@components/drawer/container/AdminCreateItem';
 import Harion from '@images/harion.webp';
 import FormInput from '@components/form/input';
 import MinecraftItem from '@components/minecraft/MinecraftItem';
@@ -17,14 +17,14 @@ const drawers = [
 
 export default function ItemsManager(props: { data: MinecraftItemData[] }) {
     const [isOpened, setIsOpened] = React.useState(false);
-    const [selectedItem, setSelectedItem] = React.useState<CreateItemDefaultValue>();
+    const [selectedItem, setSelectedItem] = React.useState<Partial<MinecraftItemData>>();
     const [selectedDrawer, setSelectedDrawer] = React.useState(drawers[0]);
     const [isEdit, setIsEdit] = React.useState(false);
 
     const handleEdit = (item: MinecraftItemData) => {
         setIsEdit(true);
         setSelectedDrawer(drawers[1]);
-        setSelectedItem({ ...item, options: item.categories?.map((category) => category.id) });
+        setSelectedItem(item);
         setIsOpened(true);
     };
 

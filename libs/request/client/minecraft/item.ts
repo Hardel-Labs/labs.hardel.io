@@ -13,7 +13,7 @@ export const upsertVanillaItem = async (
     new FastFetcher('/api/minecraft/items', 'PUT').setBody({ update, id, name, minecraftId, tag, categories }).fetching(callback);
 };
 
-export const deleteVanillaItem = async (id: string, callback: (success: boolean) => void) => {
+export const deleteVanillaItem = async (id: number, callback: (success: boolean) => void) => {
     new FastFetcher('/api/minecraft/items', 'DELETE').setBody({ id }).fetching(callback);
 };
 

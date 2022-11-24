@@ -13,15 +13,15 @@ type Props = {
 
 export default function AdminAddItem(props: Props) {
     const router = useRouter();
-    const [itemId, setItemId] = useState<string>();
-    const [itemDatabaseId, setItemDatabaseId] = useState<number>();
+    const [itemMinecraftId, setItemMinecraftId] = useState<string>();
+    const [id, setId] = useState<number>();
 
     const sendData = async () => {
-        if (!itemDatabaseId || !props.categoryId) return;
+        if (!id || !props.categoryId) return;
 
-        await connectVanillaItemToCategory(props.categoryId, itemDatabaseId, (success) => {
+        await connectVanillaItemToCategory(props.categoryId, id, (success) => {
             if (success) {
-                setItemId(undefined);
+                setItemMinecraftId(undefined);
                 router.refresh();
                 props.onClose();
             }
@@ -39,10 +39,10 @@ export default function AdminAddItem(props: Props) {
                     <small className="text-sm text-gray-400">The item will be connected to the category.</small>
                 </div>
                 <SelectItem
-                    value={itemId}
+                    value={itemMinecraftId}
                     onChange={(item) => {
-                        setItemId(item?.id);
-                        setItemDatabaseId(item?.databaseId);
+                        setItemMinecraftId(item?.minecraftId);
+                        setId(item?.id);
                     }}
                 />
                 <hr />

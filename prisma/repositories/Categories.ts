@@ -76,8 +76,8 @@ export default class CategoriesRepository {
                 asset: `${process.env.ASSET_PREFIX}/minecraft/items/${category.asset}`,
                 items: category.items.map((item) => {
                     return {
-                        databaseId: item.id,
-                        id: item.minecraftId,
+                        id: item.id,
+                        minecraftId: item.minecraftId,
                         name: item.name,
                         image: `${process.env.ASSET_PREFIX}/minecraft/items/${item.asset}`,
                         categories: item.categories?.map((category) => {
@@ -111,8 +111,8 @@ export default class CategoriesRepository {
         });
     }
 
-    async updateOrInsert(name: string, asset: string, id?: SafeNumber) {
-        const assetUrl = asset.startsWith('minecraft:') ? asset.replace('minecraft:', '') : asset;
+    async updateOrInsert(name: string, itemId: string, id?: SafeNumber) {
+        const assetUrl = itemId.startsWith('minecraft:') ? itemId.replace('minecraft:', '') : itemId;
         const url = 'vanilla/' + assetUrl + '.webp';
 
         if (id) {
@@ -145,7 +145,8 @@ export default class CategoriesRepository {
                 items:
                     category?.items?.map((item) => {
                         return {
-                            id: item.minecraftId,
+                            id: item.id,
+                            minecraftId: item.minecraftId,
                             name: item.name,
                             image: `${process.env.ASSET_PREFIX}/minecraft/items/${item.asset}`
                         };

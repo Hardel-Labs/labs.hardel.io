@@ -100,8 +100,8 @@ export default class ItemRepository {
 
     itemToData(item: ItemWithCategories): MinecraftItemData {
         return {
-            databaseId: item.id,
-            id: item.minecraftId,
+            id: item.id,
+            minecraftId: item.minecraftId,
             name: item.name,
             image: `${process.env.ASSET_PREFIX}/minecraft/items/${item.asset}`,
             custom: item.custom,

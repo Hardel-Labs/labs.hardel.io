@@ -13,7 +13,7 @@ export const makeShapedExactRecipes = (ingredients: SlotData[], result?: SlotDat
     const pattern: string[] = [];
 
     for (const element of data) {
-        keyList[element.key] = { item: element.item.id };
+        keyList[element.key] = { item: element.item.minecraftId };
     }
 
     for (let i = 0; i < 3; i++) {
@@ -31,7 +31,7 @@ export const makeShapedExactRecipes = (ingredients: SlotData[], result?: SlotDat
         pattern: pattern,
         key: keyList,
         result: {
-            item: result?.item?.id,
+            item: result?.item?.minecraftId,
             count: result?.count || 1
         }
     };

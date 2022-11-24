@@ -7,7 +7,7 @@ import FormInput from '@components/form/input';
 import WhiteButton from '@components/form/Button/White';
 import { MinecraftCategoryData, MinecraftItemData } from '@definitions/minecraft';
 import Drawer, { DrawerProps } from '@components/drawer';
-import AdminCreateItem, { CreateItemDefaultValue } from '@components/drawer/container/AdminCreateItem';
+import AdminCreateItem from '@components/drawer/container/AdminCreateItem';
 import AdminCategory, { AdminCategoryDefaultValue } from '@components/drawer/container/AdminCategory';
 import AdminAddItem from '@components/drawer/container/AdminAddItem';
 
@@ -16,7 +16,7 @@ export default function InventoryManager({ data }: Props) {
     const [search, setSearch] = React.useState('');
     const [selectedCategory, setSelectedCategory] = React.useState<AdminCategoryDefaultValue>();
     const [isOpened, setIsOpened] = React.useState(false);
-    const [selectedItem, setSelectedItem] = React.useState<CreateItemDefaultValue>();
+    const [selectedItem, setSelectedItem] = React.useState<Partial<MinecraftItemData>>();
     const [selectedDrawer, setSelectedDrawer] = React.useState<string>();
 
     const drawer = useMemo(() => {
@@ -69,15 +69,14 @@ export default function InventoryManager({ data }: Props) {
     }, [data, selectedCategory, search]);
 
     const handleEditItem = (item: MinecraftItemData) => {
-        setSelectedItem({ ...item, options: item.categories?.map((category) => category.id) });
+        setSelectedItem(item);
         setSelectedDrawer('edit-item');
         setIsOpened(true);
     };
 
     const handleCreateItem = () => {
-        const defaultCategory = data.find((category) => category.id === selectedCategory?.id)?.id;
-        const defaultOption = defaultCategory ? [defaultCategory] : undefined;
-        setSelectedItem({ options: defaultOption, name: 'New Item', id: 'minecraft:new_item' });
+        const defaultCategory = data.find((category) => category.id === selectedCategory?.id);
+        setSelectedItem({ categories: defaultCategory ? [defaultCategory] : [] });
         setSelectedDrawer('create-item');
         setIsOpened(true);
     };

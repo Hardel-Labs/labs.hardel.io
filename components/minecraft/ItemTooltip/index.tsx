@@ -33,7 +33,7 @@ export default function ItemTooltip() {
                 <div ref={ref} className={styles.itemTooltip} style={{ left: position.x, top: position.y }}>
                     <div className={styles.textTooltip}>
                         <div className={styles.name}>{hoveredItem.name}</div>
-                        <div className={styles.lore}>{hoveredItem.id}</div>
+                        <div className={styles.lore}>{hoveredItem.minecraftId}</div>
                         <div className={styles.categories}>
                             {hoveredItem.categories?.map((category, index) => (
                                 <div key={index} className={styles.category}>

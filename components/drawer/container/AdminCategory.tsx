@@ -23,15 +23,15 @@ type Props = {
 export default function AdminCategory(props: Props) {
     const router = useRouter();
     const [name, setName] = useState('Yay');
-    const [itemId, setItemId] = useState<string | undefined>('minecraft:stone');
+    const [itemMinecraftId, setItemMinecraftId] = useState<string | undefined>('minecraft:stone');
 
     const sendData = async () => {
-        if (!name || !itemId) return;
+        if (!name || !itemMinecraftId) return;
 
-        await upsertVanillaCategory(name, itemId, props.defaultValues?.id, (success) => {
+        await upsertVanillaCategory(name, itemMinecraftId, props.defaultValues?.id, (success) => {
             if (success) {
                 setName('Yay');
-                setItemId('minecraft:stone');
+                setItemMinecraftId('minecraft:stone');
                 router.refresh();
                 props.onClose();
             }
@@ -60,7 +60,7 @@ export default function AdminCategory(props: Props) {
             }
 
             setName(name);
-            setItemId('minecraft:' + newAsset);
+            setItemMinecraftId('minecraft:' + newAsset);
         }
     }, [props.defaultValues]);
 
@@ -79,7 +79,7 @@ export default function AdminCategory(props: Props) {
                     <p className="text-xl mb-0 font-bold">Asset</p>
                     <small className="text-sm text-gray-400">The asset will be displayed depending on the id of the item.</small>
                 </div>
-                <SelectItem value={itemId} onChange={(item) => setItemId(item?.id)} />
+                <SelectItem value={itemMinecraftId} onChange={(item) => setItemMinecraftId(item?.minecraftId)} />
                 <hr />
             </div>
 

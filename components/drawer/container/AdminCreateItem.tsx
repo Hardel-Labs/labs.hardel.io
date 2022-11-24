@@ -14,13 +14,11 @@ import RedButton from '@components/form/Button/Red';
 import { assetUploadItem, deleteVanillaItem, upsertVanillaItem } from '@libs/request/client/minecraft/item';
 import { MinecraftItemData } from '@definitions/minecraft';
 import { useRouter } from 'next/navigation';
-import { PartialBy } from '@definitions/global';
 
-export type CreateItemDefaultValue = PartialBy<MinecraftItemData & { options?: number[] }, 'image'>;
 type Props = {
     onClose: () => void;
     isCreating: boolean;
-    defaultValues?: CreateItemDefaultValue;
+    defaultValues?: Partial<MinecraftItemData>;
 };
 
 export default function AdminCreateItem(props: Props) {
@@ -49,7 +47,7 @@ export default function AdminCreateItem(props: Props) {
     const sendData = async () => {
         const parsedCategories = categories.map((category) => Number(category));
         await assetUploadItem(minecraftId, asset);
-        await upsertVanillaItem(!props.isCreating, name, minecraftId, tags, parsedCategories, props.defaultValues?.databaseId, (success) => {
+        await upsertVanillaItem(!props.isCreating, name, minecraftId, tags, parsedCategories, props.defaultValues?.id, (success) => {
             if (success) {
                 setName('');
                 setMinecraftId('');
@@ -63,8 +61,8 @@ export default function AdminCreateItem(props: Props) {
     };
 
     const handleDelete = async () => {
-        if (props.defaultValues?.databaseId) {
-            await deleteVanillaItem(props.defaultValues?.databaseId.toString(), (success) => {
+        if (props.defaultValues?.id) {
+            await deleteVanillaItem(props.defaultValues?.id, (success) => {
                 if (success) {
                     router.refresh();
                     props.onClose();
@@ -74,11 +72,21 @@ export default function AdminCreateItem(props: Props) {
     };
 
     useEffect(() => {
-        if (props.defaultValues) {
-            setName(props.defaultValues.name);
-            setMinecraftId(props.defaultValues.id);
-            setTags(props.defaultValues.tag);
-            setCategories(props.defaultValues.options?.map((option) => option.toString()) || []);
+        const { name, minecraftId, tag, categories } = props.defaultValues || {};
+        if (name) {
+            setName(name);
+        }
+
+        if (minecraftId) {
+            setMinecraftId(minecraftId);
+        }
+
+        if (tag) {
+            setTags(tag);
+        }
+
+        if (categories) {
+            setCategories(categories.map((category) => category.id.toString()));
         }
     }, [props.defaultValues]);
 

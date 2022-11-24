@@ -38,7 +38,7 @@ export default function SelectItem(props: Props) {
     };
 
     useEffect(() => {
-        setSelected(items?.find((item) => item.id === props.value));
+        setSelected(items?.find((item) => item.minecraftId === props.value));
     }, [items, props.value]);
 
     return (
