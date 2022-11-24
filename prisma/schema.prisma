@@ -29,10 +29,13 @@ model Account {
 }
 
 model UserData {
-  id      String    @id @default(cuid())
+  id      String        @id @default(cuid())
   userId  String
-  user    User      @relation(fields: [userId], references: [id])
-  project Project[]
+  user    User          @relation(fields: [userId], references: [id])
+  roles   RoleType      @default(USER)
+  project ProjectUser[]
+
+  @@unique([userId])
 }
 
 model Session {
@@ -51,7 +54,6 @@ model User {
   image         String?    @db.Text
   accounts      Account[]
   sessions      Session[]
-  roles         RoleType   @default(USER)
   UserData      UserData[]
 }
 
@@ -94,7 +96,7 @@ model Project {
   description   String         @db.VarChar(255)
   version       String         @db.VarChar(10)
   namespace     String         @db.VarChar(50)
-  users         UserData[]
+  users         ProjectUser[]
   items         Item[]
   Recipes       Recipes[]
   notifications Notification[]
@@ -122,6 +124,24 @@ model Notification {
   updatedAt DateTime? @updatedAt
   Project   Project?  @relation(fields: [projectId], references: [id])
   projectId String?
+}
+
+model ProjectUser {
+  role      ProjectRole @default(USER)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime?   @updatedAt
+  Project   Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String
+  UserData  UserData    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+
+  @@id([projectId, userId])
+}
+
+enum ProjectRole {
+  OWNER
+  ADMIN
+  USER
 }
 
 enum RoleType {

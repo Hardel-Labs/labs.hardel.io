@@ -2,6 +2,7 @@ import NextAuth, { NextAuthOptions } from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import prisma from '@libs/prisma';
+import UserDataRepository from '@repositories/UserData';
 
 export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(prisma),
@@ -23,24 +24,36 @@ export const authOptions: NextAuthOptions = {
                 token.accessToken = account.access_token;
             }
 
-            if (user?.roles) {
-                token.roles = user.roles;
+            if (user) {
+                token.id = user.id;
             }
 
-            user && (token.id = user.id);
+            if (token.id) {
+                token.userData = await new UserDataRepository(prisma.userData).getByUserId(token.id);
+            }
+
+            // console.log('test', token);
             return token;
         },
         async session({ session, token }) {
+            if (token?.id) {
+                session.id = token.id;
+            }
+
             if (token?.accessToken) {
                 session.accessToken = token.accessToken;
             }
 
-            if (token?.roles) {
-                session.user.roles = token.roles;
+            if (token?.userData) {
+                session.userData = token.userData;
             }
 
-            session.id = token.id;
             return session;
+        }
+    },
+    events: {
+        async createUser({ user }) {
+            await new UserDataRepository(prisma.userData).create(user.id);
         }
     }
 };
