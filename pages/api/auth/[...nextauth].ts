@@ -32,7 +32,6 @@ export const authOptions: NextAuthOptions = {
                 token.userData = await new UserDataRepository(prisma.userData).getByUserId(token.id);
             }
 
-            // console.log('test', token);
             return token;
         },
         async session({ session, token }) {

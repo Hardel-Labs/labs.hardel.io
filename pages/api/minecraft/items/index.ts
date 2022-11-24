@@ -21,36 +21,44 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         }
     }
 
-    if (method === 'GET') {
-        const limit = req.query.limit as string;
-        const page = req.query.page as string;
-        const data = await getItems(limit, page);
+    switch (method) {
+        case 'GET': {
+            const limit = req.query.limit as string;
+            const page = req.query.page as string;
+            const data = await getItems(limit, page);
 
-        res.status(data.request.statusCode).json(data);
-    } else if (method === 'PUT') {
-        const errors = new RestHelper(req, res)
-            .checkIsVariableIsDefined(minecraftId, 'minecraftId')
-            .checkIsVariableIsDefined(name, 'name')
-            .checkIsVariableIsDefined(categories, 'categories')
-            .checkIsVariableIsDefined(update, 'update')
-            .checkMaxLength(minecraftId, 80)
-            .checkMaxLength(name, 80)
-            .isCorrectMinecraftId(minecraftId)
-            .isArray(categories)
-            .checkErrors();
+            res.status(data.request.statusCode).json(data);
+            break;
+        }
+        case 'PUT': {
+            const errors = new RestHelper(req, res)
+                .checkIsVariableIsDefined(minecraftId, 'minecraftId')
+                .checkIsVariableIsDefined(name, 'name')
+                .checkIsVariableIsDefined(categories, 'categories')
+                .checkIsVariableIsDefined(update, 'update')
+                .checkMaxLength(minecraftId, 80)
+                .checkMaxLength(name, 80)
+                .isCorrectMinecraftId(minecraftId)
+                .isArray(categories)
+                .checkErrors();
 
-        if (errors) return;
+            if (errors) return;
 
-        const parsedCategories = JSON.parse(categories) as number[];
-        const data = await upsertItems(update, id, minecraftId, name, parsedCategories, tag);
-        res.status(data.request.statusCode).json(data);
-    } else if (method === 'DELETE') {
-        const errors = new RestHelper(req, res).checkIsVariableIsDefined(id, 'id').checkIsNumber(id, 'id').checkErrors();
-        if (errors) return;
+            const parsedCategories = JSON.parse(categories) as number[];
+            const data = await upsertItems(update, id, minecraftId, name, parsedCategories, tag);
+            res.status(data.request.statusCode).json(data);
+            break;
+        }
+        case 'DELETE': {
+            const errors = new RestHelper(req, res).checkIsVariableIsDefined(id, 'id').checkIsNumber(id, 'id').checkErrors();
+            if (errors) return;
 
-        const data = await deleteItem(id);
-        res.status(data.request.statusCode).json(data);
+            const data = await deleteItem(id);
+            res.status(data.request.statusCode).json(data);
+            break;
+        }
+        default: {
+            new RestHelper(req, res).addError(RestErrorType.MethodNotAllowed, 'Method not allowed').checkErrors();
+        }
     }
-
-    new RestHelper(req, res).addError(RestErrorType.MethodNotAllowed, 'Method not allowed').checkErrors();
 }
