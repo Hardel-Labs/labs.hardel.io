@@ -113,27 +113,35 @@ export default function Header({ session }: Props) {
                             <ul className="py-1" aria-labelledby="user-menu-button">
                                 <li className={'w-11/12 mx-auto my-1'}>
                                     <Link href="#" className="block w-full text-start py-2 px-4 text-sm text-white hover:bg-secondary/20 hover:text-white  rounded">
-                                        Dashboard
+                                        Profile
                                     </Link>
                                 </li>
                                 <li className={'w-11/12 mx-auto my-1'}>
-                                    <Link href="#" className="block w-full text-start py-2 px-4 text-sm text-white hover:bg-secondary/20  hover:text-white  rounded">
+                                    <Link href="#" className="block w-full text-start py-2 px-4 text-sm text-white hover:bg-secondary/20  hover:text-white rounded">
                                         Settings
-                                    </Link>
-                                </li>
-                                <li className={'w-11/12 mx-auto my-1'}>
-                                    <Link href="#" className="block w-full text-start py-2 px-4 text-sm text-white hover:bg-secondary/20 hover:text-white rounded">
-                                        Earnings
                                     </Link>
                                 </li>
                                 <li className={'w-11/12 mx-auto my-1'}>
                                     <button
                                         onClick={() => signOut()}
-                                        className="block w-full text-start py-2 px-4 text-sm text-white hover:bg-secondary/20 hover:text-white  rounded"
+                                        className="block w-full text-start py-2 px-4 text-sm text-white hover:bg-secondary/20 hover:text-white rounded"
                                     >
                                         Sign out
                                     </button>
                                 </li>
+                                {session.userData.roles === 'ADMIN' && (
+                                    <>
+                                        <hr className={'border-gray-600 w-9/12 mx-auto my-3'} />
+                                        <li className={'w-11/12 mx-auto my-1'}>
+                                            <Link
+                                                href={'/dashboard'}
+                                                className="block w-full text-start py-2 px-4 text-sm text-white hover:bg-secondary/20 hover:text-white  rounded"
+                                            >
+                                                Dashboard
+                                            </Link>
+                                        </li>
+                                    </>
+                                )}
                             </ul>
                         </div>
                     )}

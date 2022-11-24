@@ -13,6 +13,7 @@ import React from 'react';
 import getCategories from '@libs/request/server/minecraft/category/get';
 import TooltipContextProvider from '@components/minecraft/ItemTooltip/TooltipContext';
 import { MinecraftCategoryData } from '@definitions/minecraft';
+import DrawerManager from '@main/tools/crafting/DrawerManager';
 
 async function getData() {
     const categories = await getCategories();
@@ -67,6 +68,7 @@ export default async function Page() {
                         </div>
                     </div>
                     <ItemTooltip />
+                    <DrawerManager />
                 </CraftingContextProvider>
             </TooltipContextProvider>
         </DNDContextProvider>

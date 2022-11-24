@@ -24,7 +24,7 @@ export default function Drawer(props: Props) {
 
     return (
         <>
-            {props.isOpened && <div className={'fixed top-0 right-0 h-screen w-screen bg-black/30 z-40'} onClick={() => props.onClose?.()} />}
+            {props.isOpened && <div className={'fixed top-0 right-0 h-screen w-screen bg-black/30 z-50'} onClick={() => props.onClose?.()} />}
             <div ref={ref} className={'fixed z-50 top-0 right-0 h-screen overflow-hidden transition-all duration-300 ease-in-out'} style={{ width: props.isOpened ? 650 : 0 }}>
                 <div className={'py-4 h-full w-[650px]'}>
                     <div className={'glassmorphism h-full flex flex-col rounded-br-none rounded-tr-none p-4'}>

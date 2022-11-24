@@ -47,7 +47,7 @@ export default function InventoryManager(props: Props) {
                 </div>
                 <input
                     type="text"
-                    className="bg-zinc-900 w-full text-sm border-2 border-solid border-white/20 rounded-xl px-4 py-1 text-white focus:outline-none focus:border-gold"
+                    className="bg-zinc-800 w-full text-sm border-2 border-solid border-white/20 rounded-md px-4 py-1 text-white focus:outline-none focus:border-gold"
                     placeholder="Search an item"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
