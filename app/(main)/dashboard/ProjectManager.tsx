@@ -8,11 +8,11 @@ import Drawer from '@components/drawer';
 import CreateProject from '@components/drawer/container/CreateProject';
 import useSWR from 'swr';
 import fetcher from '@libs/request/client/fetcher';
-import { ProjectData } from '@repositories/Project';
 import HardelLoader from '@components/loader/HardelLoader';
+import { ReadablePersonalProjectData } from '@definitions/project';
 
-export default function ProjectManager(props: { basePath?: string }) {
-    const { data, error } = useSWR<ProjectData[]>('/api/projects', fetcher);
+export default function ProjectManager() {
+    const { data, error } = useSWR<ReadablePersonalProjectData[]>('/api/projects', fetcher);
     const [open, setOpen] = React.useState(false);
     const [search, setSearch] = React.useState('');
 
@@ -33,7 +33,7 @@ export default function ProjectManager(props: { basePath?: string }) {
             {data && (
                 <div className={'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'}>
                     {display?.map((project) => (
-                        <ProjectCard basePath={props.basePath} key={project.id} project={project} />
+                        <ProjectCard key={project.id} project={project} />
                     ))}
                 </div>
             )}
