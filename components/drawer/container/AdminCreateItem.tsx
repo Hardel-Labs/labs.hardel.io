@@ -94,7 +94,7 @@ export default function AdminCreateItem(props: Props) {
         <div>
             <div>
                 <div className={'mb-4'}>
-                    <p className="text-xl pl-1 mb-0 font-bold">Items Name</p>
+                    <p className="text-xl pl-1 mb-0 font-bold">Name</p>
                     <small className="text-sm text-gray-400">The name of the item displayed only on the website.</small>
                 </div>
                 <FormInput type={'text'} placeholder={'Name'} value={name} onChange={(e) => setName(e.target.value)} />
@@ -102,7 +102,7 @@ export default function AdminCreateItem(props: Props) {
             </div>
             <div>
                 <div className={'mb-4'}>
-                    <p className="text-xl mb-0 font-bold">Items ID</p>
+                    <p className="text-xl mb-0 font-bold">ID</p>
                     <small className="text-sm text-gray-400">The ID of the item for minecraft</small>
                 </div>
                 <FormInput type={'text'} placeholder={'ID'} value={minecraftId} onChange={(e) => setMinecraftId(e.target.value)} />
@@ -111,7 +111,7 @@ export default function AdminCreateItem(props: Props) {
             <div>
                 <div className={'mb-4 flex justify-between items-center'}>
                     <div>
-                        <p className="text-xl mb-0 font-bold">Items Asset</p>
+                        <p className="text-xl mb-0 font-bold">Asset</p>
                         <small className="text-sm text-gray-400">The asset of the item, basically the image</small>
                     </div>
                     <Image src={displayPreview} alt={''} className={'w-8 h-8'} width={100} height={100} />
@@ -121,7 +121,7 @@ export default function AdminCreateItem(props: Props) {
             </div>
             <div>
                 <div className={'mb-4'}>
-                    <p className="text-xl mb-0 font-bold">Items Categories</p>
+                    <p className="text-xl mb-0 font-bold">Categories</p>
                     <small className="text-sm text-gray-400">The categories of the item, you can select multiple</small>
                 </div>
                 <Select options={options} values={categories} onChange={setCategories} />
@@ -129,7 +129,7 @@ export default function AdminCreateItem(props: Props) {
             </div>
             <div>
                 <div className={'mb-4'}>
-                    <p className="text-xl mb-0 font-bold">Items Tags</p>
+                    <p className="text-xl mb-0 font-bold">Tags</p>
                     <small className="text-sm text-gray-400">The tags of the item, so the nbt data</small>
                 </div>
                 <FormInput type={'text'} placeholder={'Tags'} value={tags} onChange={(e) => setTags(e.target.value)} />
