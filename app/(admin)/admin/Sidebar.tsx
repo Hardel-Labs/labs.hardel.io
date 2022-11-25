@@ -38,18 +38,18 @@ export default function Sidebar() {
                     <div className={'flex flex-auto flex-col gap-y-4 overflow-y-auto w-full'}>
                         <SidebarCategory title={'Generation :'}>
                             <SidebarLink href={'/'} icon={<Settings />} title={'Home Page'} />
-                            <SidebarLink href={'/dashboard'} icon={<Settings />} title={'Dashboard'} />
-                            <SidebarLink href={'/dashboard/users'} icon={<Settings />} title={'Users'} />
+                            <SidebarLink href={'/admin/dashboard'} icon={<Settings />} title={'Dashboard'} />
+                            <SidebarLink href={'/admin/dashboard/users'} icon={<Settings />} title={'Users'} />
                         </SidebarCategory>
                         <SidebarCategory title={'Project :'}>
-                            <SidebarLink href={'/dashboard/project'} icon={<Settings />} title={'General'} />
-                            <SidebarLink href={'/dashboard/project/notification'} icon={<Settings />} title={'Notification'} />
+                            <SidebarLink href={'/admin/dashboard/project'} icon={<Settings />} title={'General'} />
+                            <SidebarLink href={'/admin/dashboard/project/notification'} icon={<Settings />} title={'Notification'} />
                         </SidebarCategory>
                         <SidebarCategory title={'Crafting :'}>
-                            <SidebarLink href={'/dashboard/crafting'} icon={<Settings />} title={'Configuration'} />
-                            <SidebarLink href={'/dashboard/crafting/items'} icon={<Settings />} title={'Items'} />
-                            <SidebarLink href={'/dashboard/crafting/recipes'} icon={<Settings />} title={'Recipes'} />
-                            <SidebarLink href={'/dashboard/crafting/category'} icon={<Settings />} title={'Category'} />
+                            <SidebarLink href={'/admin/dashboard/crafting'} icon={<Settings />} title={'Configuration'} />
+                            <SidebarLink href={'/admin/dashboard/crafting/items'} icon={<Settings />} title={'Items'} />
+                            <SidebarLink href={'/admin/dashboard/crafting/recipes'} icon={<Settings />} title={'Recipes'} />
+                            <SidebarLink href={'/admin/dashboard/crafting/category'} icon={<Settings />} title={'Category'} />
                         </SidebarCategory>
                     </div>
                 </div>

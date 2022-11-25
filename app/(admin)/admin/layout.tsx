@@ -13,7 +13,7 @@ const inter = Inter({
 });
 
 const seven = local({
-    src: [{ path: '../../public/fonts/seven/minecraft.ttf' }, { path: '../../public/fonts/seven/minecraft.woff' }],
+    src: [{ path: '../../../public/fonts/seven/minecraft.ttf' }, { path: '../../../public/fonts/seven/minecraft.woff' }],
     variable: '--font-seven'
 });
 
