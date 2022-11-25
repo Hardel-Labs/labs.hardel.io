@@ -27,7 +27,7 @@ export default function Sidebar() {
         (menu?: string) => {
             if (menu === activeMenu) {
                 setActiveMenu(undefined);
-                setComponent(undefined);
+                setTimeout(() => setComponent(undefined), 300);
                 setWidth(0);
                 return;
             }
