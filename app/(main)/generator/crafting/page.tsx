@@ -6,17 +6,17 @@ import Arrow from '@images/design/minecraft/arrow.webp';
 import getCategories from '@libs/request/server/minecraft/category/get';
 import { MinecraftCategoryData } from '@definitions/minecraft';
 
-import CraftingOptions from '@main/tools/crafting/(component)/CraftingOptions';
-import CodePreview from '@main/tools/crafting/(component)/CodePreview';
-import CraftingContextProvider from '@main/tools/crafting/(component)/CraftingContext';
-import DrawerManager from '@main/tools/crafting/(component)/DrawerManager';
-import InventoryManager from '@main/tools/crafting/(component)/InventoryManager';
-import CraftingGroupButton from '@main/tools/crafting/(component)/CraftingGroupButton';
+import CraftingOptions from '@main/generator/crafting/(component)/CraftingOptions';
+import CodePreview from '@main/generator/crafting/(component)/CodePreview';
+import CraftingContextProvider from '@main/generator/crafting/(component)/CraftingContext';
+import DrawerManager from '@main/generator/crafting/(component)/DrawerManager';
+import InventoryManager from '@main/generator/crafting/(component)/InventoryManager';
+import CraftingGroupButton from '@main/generator/crafting/(component)/CraftingGroupButton';
 import DNDContextProvider from '@components/dnd/DNDContext';
 import ItemTooltip from '@components/minecraft/ItemTooltip';
 import TooltipContextProvider from '@components/minecraft/ItemTooltip/TooltipContext';
 import DroppableMinecraftSlot from '@components/minecraft/DroppableMinecraftSlot';
-import DrawerContextProvider from '@main/tools/crafting/(component)/DrawerContext';
+import DrawerContextProvider from '@main/generator/crafting/(component)/DrawerContext';
 
 async function getData() {
     const categories = await getCategories();

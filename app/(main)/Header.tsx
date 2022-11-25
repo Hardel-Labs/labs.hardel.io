@@ -134,7 +134,7 @@ export default function Header({ session }: Props) {
                                         <hr className={'border-gray-600 w-9/12 mx-auto my-3'} />
                                         <li className={'w-11/12 mx-auto my-1'}>
                                             <Link
-                                                href={'/dashboard'}
+                                                href={'/admin/dashboard'}
                                                 className="block w-full text-start py-2 px-4 text-sm text-white hover:bg-secondary/20 hover:text-white  rounded"
                                             >
                                                 Dashboard

@@ -1,8 +1,8 @@
 import React from 'react';
-import Sidebar from '@main/tools/(Sidebar)/Sidebar';
-import ProjectContextProvider from '@main/tools/ProjectContext';
+import Sidebar from '@main/generator/(Sidebar)/Sidebar';
+import ProjectContextProvider from '@main/generator/ProjectContext';
 
-export default async function ToolsLayout({ children }: { children: React.ReactNode }) {
+export default async function GeneratorLayout({ children }: { children: React.ReactNode }) {
     return (
         <ProjectContextProvider>
             <div className={'flex relative'}>

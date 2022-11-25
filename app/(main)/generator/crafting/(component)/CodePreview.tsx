@@ -4,7 +4,7 @@ import CodeBlock from '@components/codeblock/CodeBlock';
 import { Recipe } from '@definitions/minecraft';
 import { useContext, useMemo } from 'react';
 import { makeShapelessRecipes } from '@libs/minecraft/crafting/shapeless';
-import { CraftingContext } from '@main/tools/crafting/(component)/CraftingContext';
+import { CraftingContext } from '@main/generator/crafting/(component)/CraftingContext';
 import { RecipeType } from '@libs/constant';
 import { makeShapedExactRecipes } from '@libs/minecraft/crafting/shapedExact';
 import { makeShapedRecipes } from '@libs/minecraft/crafting/shaped';

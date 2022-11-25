@@ -7,9 +7,9 @@ import Settings from '@icons/Common/Settings';
 import Notifications from '@icons/Common/Notifications';
 import Download from '@icons/Download';
 import Menu from '@icons/Menu';
-import SidebarNotifications from '@main/tools/(Sidebar)/SidebarNotification';
-import SidebarSettings from '@main/tools/(Sidebar)/SidebarSettings';
-import SidebarProject from '@main/tools/(Sidebar)/SidebarProject';
+import SidebarNotifications from '@main/generator/(Sidebar)/SidebarNotification';
+import SidebarSettings from '@main/generator/(Sidebar)/SidebarSettings';
+import SidebarProject from '@main/generator/(Sidebar)/SidebarProject';
 
 const optionsMenu = [
     { menu: 'settings', component: <SidebarSettings /> },

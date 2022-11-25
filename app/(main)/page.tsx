@@ -33,7 +33,7 @@ export default function Home() {
                 <div className={'container w-10/12 mx-auto'}>
                     <div className={'grid grid-cols-1 md:grid-cols-5 gap-8'}>
                         <div className={'md:col-span-2 bg-transparent self-center rounded-royal'}>
-                            <Link href={'/tools/crafting'}>
+                            <Link href={'/generator/crafting'}>
                                 <Image
                                     src={CraftingCover}
                                     alt={'Crafting Cover'}
@@ -66,7 +66,7 @@ export default function Home() {
                     </div>
                     <hr className={'my-10'} />
                     <div className={'w-full flex justify-center mt-12'}>
-                        <Link href={'/tools/crafting'}>
+                        <Link href={'/generator/crafting'}>
                             <RainbowButton className={'mx-4'}>Try it Now</RainbowButton>
                         </Link>
                         <WhiteButton className={'mx-4'}>View changelog</WhiteButton>
