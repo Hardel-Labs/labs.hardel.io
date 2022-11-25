@@ -12,15 +12,15 @@ import React from 'react';
 export default function Home() {
     return (
         <>
-            <section className={'background-grid h-[100vh] overflow-hidden relative z-10 border-b-gold border-b-8 border-solid'}>
-                <div className={'container mx-auto h-full flex flex-col justify-center items-center'}>
+            <section className={'height-view overflow-hidden relative z-10 border-b-gold border-b-8 border-solid'}>
+                <div className={'container h-full flex flex-col justify-center items-center'}>
                     <h1 className={'font-bold text-gold text-center'}>Hardel Labs</h1>
                     <hr />
                     <p className={'text-white w-fit text-2xl font-semibold text-center'}>Very simple and powerful tools to create data packs.</p>
                     <p className={'text-gray-400 text-sm text-center w-1/2'}>
                         Try now to create your first optimized and fast data pack without any knowledge in development and programming languages.
                     </p>
-                    <div className={'mt-8'}>
+                    <div className={'my-8'}>
                         <GoldButton className={'mx-4'}>Donation</GoldButton>
                         <RainbowButton className={'mx-4'}>Try Now</RainbowButton>
                         <WhiteButton className={'mx-4'}>Learn More</WhiteButton>

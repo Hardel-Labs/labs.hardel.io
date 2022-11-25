@@ -1,5 +1,5 @@
-import Switch from '@components/form/Switch';
 import React from 'react';
+import Switch from '@components/form/Switch';
 import WhiteButton from '@components/form/Button/White';
 import GoldButton from '@components/form/Button/Gold';
 import FormInput from '@components/form/input';

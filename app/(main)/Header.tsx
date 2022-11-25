@@ -18,7 +18,7 @@ export default function Header({ session }: Props) {
     const [collapsed, setCollapsed] = useState(true);
 
     return (
-        <nav className="bg-black/10 backdrop-blur-sm sticky relative z-40 px-4 py-2.5">
+        <nav className="bg-black/10 backdrop-blur-sm px-4 py-2.5">
             <div className="container flex flex-wrap justify-between items-center mx-auto">
                 <div className={'flex'}>
                     <Link href="/" className="flex items-center fill-white hover:fill-gold">
@@ -66,7 +66,7 @@ export default function Header({ session }: Props) {
                     <div className="relative mr-4">
                         <input
                             type="text"
-                            className="bg-black text-sm border-2 border-solid border-gray-800 rounded-xl px-4 py-1 text-white placeholder-gray-400 focus:outline-none focus:border-gold"
+                            className="bg-black text-sm border border-solid border-zinc-700 rounded-xl px-4 py-1 text-white placeholder-gray-400 focus:outline-none focus:border-gold"
                             placeholder="Search a command"
                         />
                         <div className="absolute top-0 right-0 mr-3 h-full flex items-center">

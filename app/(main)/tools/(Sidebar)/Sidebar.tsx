@@ -7,9 +7,9 @@ import Settings from '@icons/Common/Settings';
 import Notifications from '@icons/Common/Notifications';
 import Download from '@icons/Download';
 import Menu from '@icons/Menu';
-import SidebarNotifications from '@main/tools/SidebarNotification';
-import SidebarSettings from '@main/tools/SidebarSettings';
-import SidebarProject from '@main/tools/SidebarProject';
+import SidebarNotifications from '@main/tools/(Sidebar)/SidebarNotification';
+import SidebarSettings from '@main/tools/(Sidebar)/SidebarSettings';
+import SidebarProject from '@main/tools/(Sidebar)/SidebarProject';
 
 const optionsMenu = [
     { menu: 'settings', component: <SidebarSettings /> },
@@ -45,7 +45,7 @@ export default function Sidebar() {
 
     return (
         <div className={'relative z-50'}>
-            <div className={'mt-[73px] sticky top-0 left-0 h-screen bg-black/10 backdrop-blur-sm flex'}>
+            <div className={'sticky top-0 left-0 h-screen bg-black/10 backdrop-blur-sm flex'}>
                 <div className={'h-full flex flex-col justify-between w-16 border-r border-gold border-solid'}>
                     <div className={'flex flex-col gap-y-4 items-center p-4 overflow-y-auto'}>
                         <Menu className={'w-full h-auto fill-gray-600 hover:fill-white transition cursor-pointer'} />
