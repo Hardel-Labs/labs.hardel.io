@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { MinecraftItemData } from '@definitions/minecraft';
 import React, { useContext } from 'react';
 import Draggable from '@components/dnd/Draggable';
-import { CraftingContext } from '@main/tools/crafting/CraftingContext';
+import { CraftingContext } from '@main/tools/crafting/(component)/CraftingContext';
 import { TooltipContext } from '@components/minecraft/ItemTooltip/TooltipContext';
 
 type Props = {
