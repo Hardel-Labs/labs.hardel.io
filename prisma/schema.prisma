@@ -96,6 +96,7 @@ model Project {
   description   String         @db.VarChar(255)
   version       String         @db.VarChar(10)
   namespace     String         @db.VarChar(50)
+  asset         String         @default("project/default.webp")
   users         ProjectUser[]
   items         Item[]
   Recipes       Recipes[]
