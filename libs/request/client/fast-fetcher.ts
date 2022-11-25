@@ -113,22 +113,21 @@ export default class FastFetcher {
         }
     }
 
-    fetching(callback?: (success: boolean) => void) {
-        fetch(this.url, {
+    async fetching<T>(callback?: (success: boolean) => void): Promise<RestRequest<T>> {
+        const data = await fetch(this.url, {
             method: this.method,
             headers: this.headers,
             body: this.bodyParser()
-        })
-            .then((res) => res.json())
-            .then((rest: RestRequest<any>) => {
-                if (rest.request.success) {
-                    this.mutateUrl && this.mutateUrl.map((url: string) => mutate(url));
-                    callback && callback(true);
-                }
-            })
-            .catch((err) => {
-                console.error(err);
-                callback && callback(false);
-            });
+        });
+        const rest: RestRequest<T> = await data.json();
+
+        if (rest.request.success) {
+            this.mutateUrl && this.mutateUrl.map((url: string) => mutate(url));
+            callback && callback(true);
+        } else {
+            callback && callback(false);
+        }
+
+        return rest;
     }
 }

@@ -1,14 +1,17 @@
 import { Item, Notification, PrismaClient, Project, ProjectRole, ProjectUser, Recipes } from '@prisma/client';
 import { SafeNumber } from '@definitions/global';
+import { PersonalProjectData, ReadablePersonalProjectData, ReadableProject, ReadableProjectData } from '@definitions/project';
+import ItemRepository from '@repositories/Items';
+import prisma from '@libs/prisma';
 
 export type ProjectCreateData = Omit<Project, 'id' | 'createdAt' | 'updatedAt'> | Project;
-export type ProjectData = (Project & { items: Item[]; Recipes: Recipes[]; notifications: Notification[]; users: ProjectUser[] }) | Project;
+export type ProjectData = Project & { items?: Item[]; recipes?: Recipes[]; notifications?: Notification[]; users?: ProjectUser[] };
 
 export default class ProjectRepository {
     constructor(private readonly prisma: PrismaClient['project']) {}
 
-    async findAll(include?: boolean): Promise<ProjectData[]> {
-        return await this.prisma.findMany({
+    async findAll(include?: boolean): Promise<ReadableProject[]> {
+        const responses = await this.prisma.findMany({
             include: {
                 items: include,
                 Recipes: include,
@@ -16,21 +19,12 @@ export default class ProjectRepository {
                 users: include
             }
         });
+
+        return this.projectsToReadableData(responses);
     }
 
-    async findProjectWithUser(projectId: string) {
-        return await this.prisma.findUniqueOrThrow({
-            where: {
-                id: projectId
-            },
-            include: {
-                users: true
-            }
-        });
-    }
-
-    async findPaginated(limit?: SafeNumber, page?: SafeNumber, include?: boolean): Promise<ProjectData[]> {
-        return await this.prisma.findMany({
+    async findPaginated(limit?: SafeNumber, page?: SafeNumber, include?: boolean): Promise<ReadableProject[]> {
+        const responses = await this.prisma.findMany({
             include: {
                 items: include,
                 Recipes: include,
@@ -40,10 +34,12 @@ export default class ProjectRepository {
             take: limit ? Number(limit) : undefined,
             skip: page && limit ? (Number(page) + 1) * Number(limit) : 0
         });
+
+        return this.projectsToReadableData(responses);
     }
 
-    async findOne(id: string, include?: boolean): Promise<ProjectData | null> {
-        return await this.prisma.findUnique({
+    async findOne(id: string, include?: boolean): Promise<ReadableProject> {
+        const responses = await this.prisma.findUniqueOrThrow({
             where: { id },
             include: {
                 items: include,
@@ -52,10 +48,12 @@ export default class ProjectRepository {
                 users: include
             }
         });
+
+        return this.projectToReadableData(responses);
     }
 
-    async findByUserId(userId: string, include?: boolean): Promise<ProjectData[]> {
-        return await this.prisma.findMany({
+    async findByUserId(userId: string, include?: boolean): Promise<ReadablePersonalProjectData[]> {
+        const responses = await this.prisma.findMany({
             where: {
                 users: {
                     some: {
@@ -67,13 +65,47 @@ export default class ProjectRepository {
                 items: include,
                 Recipes: include,
                 notifications: include,
-                users: include
+                users: true
             }
         });
+
+        return this.projectsToReadablePersonalData(responses, userId);
     }
 
-    async connectItem(projectId: string, itemId: number): Promise<Project> {
-        return await this.prisma.update({
+    async selectProject(projectId: string, userId: string): Promise<ReadableProject> {
+        await prisma.projectUser.updateMany({
+            where: {
+                userId,
+                projectId
+            },
+            data: {
+                isSelected: false
+            }
+        });
+
+        await prisma.projectUser.update({
+            where: {
+                projectId_userId: {
+                    projectId,
+                    userId
+                }
+            },
+            data: {
+                isSelected: true
+            }
+        });
+
+        const response = await this.prisma.findUniqueOrThrow({
+            where: {
+                id: projectId
+            }
+        });
+
+        return this.projectToReadableData(response);
+    }
+
+    async connectItem(projectId: string, itemId: number): Promise<ReadableProject> {
+        const responses = await this.prisma.update({
             where: {
                 id: projectId
             },
@@ -85,10 +117,12 @@ export default class ProjectRepository {
                 }
             }
         });
+
+        return this.projectToReadableData(responses);
     }
 
-    async connectRecipe(projectId: string, recipeId: number): Promise<Project> {
-        return await this.prisma.update({
+    async connectRecipe(projectId: string, recipeId: number): Promise<ReadableProject> {
+        const responses = await this.prisma.update({
             where: {
                 id: projectId
             },
@@ -100,10 +134,12 @@ export default class ProjectRepository {
                 }
             }
         });
+
+        return this.projectToReadableData(responses);
     }
 
-    async connectUser(projectId: string, userId: string, role: ProjectRole): Promise<Project> {
-        return await this.prisma.update({
+    async connectUser(projectId: string, userId: string, role: ProjectRole): Promise<ReadableProject> {
+        const responses = await this.prisma.update({
             where: {
                 id: projectId
             },
@@ -116,10 +152,12 @@ export default class ProjectRepository {
                 }
             }
         });
+
+        return this.projectToReadableData(responses);
     }
 
-    async createNotification(projectId: string, title: string, message: string, asset: string): Promise<Project> {
-        return await this.prisma.update({
+    async createNotification(projectId: string, title: string, message: string, asset: string): Promise<ReadableProject> {
+        const responses = await this.prisma.update({
             where: {
                 id: projectId
             },
@@ -133,6 +171,8 @@ export default class ProjectRepository {
                 }
             }
         });
+
+        return this.projectToReadableData(responses);
     }
 
     async count() {
@@ -151,13 +191,14 @@ export default class ProjectRepository {
         });
     }
 
-    async create(userId: string, data: ProjectCreateData): Promise<Project> {
+    async create(userId: string, data: Omit<ProjectCreateData, 'asset'>): Promise<ReadableProject> {
         const user = await this.countByUser(userId);
-        if (user >= 10) throw new Error('You can only have 5 projects at a time');
+        if (user >= 10) throw new Error('You can only have 10 projects at a time');
 
-        return await this.prisma.create({
+        const project = await this.prisma.create({
             data: {
                 ...data,
+                asset: '',
                 users: {
                     create: {
                         role: 'OWNER',
@@ -166,13 +207,26 @@ export default class ProjectRepository {
                 }
             }
         });
+
+        const projectId = project.id;
+        const asset = `project/${projectId}/icon.webp`;
+        await this.prisma.update({
+            where: {
+                id: projectId
+            },
+            data: {
+                asset
+            }
+        });
+
+        return this.projectToReadableData({ ...project, asset });
     }
 
-    async updateUserRole(projectId: string, userId: string, role: ProjectRole): Promise<Project> {
+    async updateUserRole(projectId: string, userId: string, role: ProjectRole): Promise<ReadableProject> {
         const hasPermission = await this.hasPermission(projectId, userId, [ProjectRole.ADMIN, ProjectRole.OWNER]);
         if (!hasPermission) throw new Error('You are not allowed to update this project');
 
-        return await this.prisma.update({
+        const response = await this.prisma.update({
             where: {
                 id: projectId
             },
@@ -192,33 +246,130 @@ export default class ProjectRepository {
                 }
             }
         });
+
+        return this.projectToReadableData(response);
     }
 
-    async update(projectId: string, userId: string, data: Partial<Project>): Promise<Project> {
+    async update(projectId: string, userId: string, data: Partial<Project>): Promise<ReadableProject> {
         const hasPermission = await this.hasPermission(projectId, userId, [ProjectRole.ADMIN, ProjectRole.OWNER]);
         if (!hasPermission) throw new Error('You are not allowed to update this project');
 
-        return await this.prisma.update({
+        const response = await this.prisma.update({
             where: {
                 id: projectId
             },
             data
         });
+
+        return this.projectToReadableData(response);
     }
 
-    async delete(projectId: string, userId: string): Promise<Project> {
+    async delete(projectId: string, userId: string): Promise<ReadableProject> {
         const hasPermission = await this.hasPermission(projectId, userId, [ProjectRole.ADMIN, ProjectRole.OWNER]);
         if (!hasPermission) throw new Error('You are not allowed to delete this project');
 
-        return await this.prisma.delete({
+        const response = await this.prisma.delete({
             where: {
                 id: projectId
             }
         });
+
+        return this.projectToReadableData(response);
     }
 
     async hasPermission(projectId: string, userId: string, role: ProjectRole[]): Promise<boolean> {
-        const project = await this.findProjectWithUser(projectId);
+        const project = await this.prisma.findUniqueOrThrow({
+            where: {
+                id: projectId
+            },
+            include: {
+                users: true
+            }
+        });
+
         return project.users.some((user) => user.userId === userId && role.includes(user.role));
+    }
+
+    /**
+     * Transforms "ProjectUser" to readable data usable by the client
+     * @param userData
+     */
+    private projectToPersonalData(userData: ProjectUser): PersonalProjectData {
+        return {
+            role: userData.role,
+            joinedAt: userData.createdAt,
+            isSelected: userData.isSelected,
+            userId: userData.userId
+        };
+    }
+
+    /**
+     * Transforms "Project" to readable data usable by the client
+     * Include a full and correct asset url
+     * And also include correct Item data using MinecraftItemData type.
+     * @param project
+     */
+    private projectToReadableProjectData(project: ProjectData): ReadableProjectData {
+        return {
+            ...project,
+            asset: `${process.env.ASSET_PREFIX}/${project.asset}`,
+            items: new ItemRepository(prisma.item).itemsToData(project?.items ?? []),
+            recipes: project?.recipes ?? [],
+            notifications: project?.notifications ?? []
+        };
+    }
+
+    /**
+     * Transforms multiple generic project into a readable project
+     * Includes all users and their roles of the project
+     * Include readable asset url.
+     * @param projects
+     */
+    projectsToReadableData(projects: ProjectData[]): ReadableProject[] {
+        return projects.map((project) => this.projectToReadableData(project));
+    }
+
+    /**
+     * Transforms a generic project into a readable project
+     * Includes all users and their roles of the project
+     * Include readable asset url.
+     * @param project
+     */
+    projectToReadableData(project: ProjectData): ReadableProject {
+        const readableProjectData = this.projectToReadableProjectData(project);
+        const personals = project.users?.map((user) => this.projectToPersonalData(user));
+
+        return {
+            ...readableProjectData,
+            users: personals ?? []
+        };
+    }
+
+    /**
+     * Transforms multiples "Project" and UserData to readable data usable by the client
+     * Project Data and User Data are merged together
+     * @param projects
+     * @param userId
+     */
+    projectsToReadablePersonalData(projects: ProjectData[], userId: string): ReadablePersonalProjectData[] {
+        return projects.map((project) => this.projectToReadablePersonalData(project, userId));
+    }
+
+    /**
+     * Transforms only one "Project" and UserData to readable data usable by the client
+     * Project Data and User Data are merged together
+     * @param project
+     * @param userId
+     */
+    projectToReadablePersonalData(project: ProjectData, userId: string): ReadablePersonalProjectData {
+        const userData = project.users?.find((user) => user.userId === userId);
+        if (!userData) throw new Error('User not found in project');
+
+        const projectData = this.projectToReadableProjectData(project);
+        const personalData = this.projectToPersonalData(userData);
+        return {
+            ...projectData,
+            ...personalData
+        };
     }
 }

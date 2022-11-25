@@ -3,6 +3,8 @@ import { RestErrorType } from '@libs/constant';
 import FormValidator from '@libs/form-checker';
 import { ApiPagination, ErrorRestResponse, RestRequest, SuccessRestResponse } from '@definitions/api';
 import { SafeNumber } from '@definitions/global';
+import { unstable_getServerSession } from 'next-auth/next';
+import { authOptions } from '@session';
 
 export default class RestHelper<T> extends FormValidator {
     restErrors: ErrorRestResponse = {
@@ -112,6 +114,27 @@ export default class RestHelper<T> extends FormValidator {
         }
 
         return false;
+    }
+
+    async getUserId(): Promise<string | null> {
+        if (!this.request || !this.response) {
+            this.addError(RestErrorType.InternalServerError, 'No request or response provided');
+            return null;
+        }
+
+        const session = await unstable_getServerSession(this.request, this.response, authOptions);
+        if (!session) {
+            this.addError(RestErrorType.Unauthorized, 'Unauthorized the session was not found');
+            return null;
+        }
+
+        const userId = session.id;
+        if (!userId) {
+            this.addError(RestErrorType.Unauthorized, 'Unauthorized the user id was not found');
+            return null;
+        }
+
+        return userId;
     }
 
     send() {

@@ -4,7 +4,7 @@ export default function FormInput(props: React.InputHTMLAttributes<HTMLInputElem
     return (
         <input
             {...props}
-            className={`bg-transparent w-full text-sm mb-8 border-2 border-solid border-white/20 rounded-md px-4 py-2 text-white focus:outline-none focus:border-gold ${props.className}`}
+            className={`bg-transparent w-full text-sm border-2 border-solid border-white/20 rounded-md px-4 py-2 text-white focus:outline-none focus:border-gold ${props.className}`}
         />
     );
 }

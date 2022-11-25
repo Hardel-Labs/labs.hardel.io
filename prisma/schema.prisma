@@ -128,13 +128,14 @@ model Notification {
 }
 
 model ProjectUser {
-  role      ProjectRole @default(USER)
-  createdAt DateTime    @default(now())
-  updatedAt DateTime?   @updatedAt
-  Project   Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  projectId String
-  UserData  UserData    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String
+  role       ProjectRole @default(USER)
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime?   @updatedAt
+  Project    Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId  String
+  UserData   UserData    @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  userId     String
+  isSelected Boolean     @default(false)
 
   @@id([projectId, userId])
 }

@@ -60,7 +60,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         case 'PUT': {
             const errors = new RestHelper(req, res)
                 .checkIsVariableIsDefined(name, 'name')
-                .checkIsVariableIsDefined(asset, 'asset')
                 .checkIsVariableIsDefined(description, 'description')
                 .checkIsVariableIsDefined(namespace, 'namespace')
                 .checkIsVariableIsDefined(version, 'version')
@@ -72,7 +71,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
             if (errors) return;
 
-            const data = await createProject(userId, { asset, name, description, version, namespace });
+            const data = await createProject(userId, { name, description, version, namespace });
             res.status(data.request.statusCode).json(data);
             break;
         }

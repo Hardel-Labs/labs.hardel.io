@@ -5,13 +5,13 @@ import { RestErrorType } from '@libs/constant';
 import ProjectRepository from '@repositories/Project';
 import { ReadableProject } from '@definitions/project';
 
-const deleteProject = async (projectId: string, userId: string): Promise<RestRequest<ReadableProject>> => {
+const selectProject = async (projectId: string, userId: string): Promise<RestRequest<ReadableProject>> => {
     try {
-        const data = await new ProjectRepository(prisma.project).delete(projectId, userId);
+        const data = await new ProjectRepository(prisma.project).selectProject(projectId, userId);
         return new RestHelper().setData(data).getResponse();
     } catch (error) {
         return new RestHelper().addError(RestErrorType.InternalServerError, 'An error has occurred.').getResponse();
     }
 };
 
-export default deleteProject;
+export default selectProject;

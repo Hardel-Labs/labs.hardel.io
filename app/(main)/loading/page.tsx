@@ -2,8 +2,8 @@ import HardelLetter from '@icons/logo/HardelLetter';
 
 export default function LoadingPage() {
     return (
-        <div className={'w-full height-view flex justify-center items-center'}>
-            <div className={'animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gold flex justify-between items-center'}>
+        <div className={'w-full height-view flex justify-center items-center border-b-gold border-b-8 border-solid'}>
+            <div className={'mb-8 animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gold flex justify-between items-center'}>
                 <HardelLetter className={'w-32 h-32 fill-zinc-500'} />
             </div>
         </div>

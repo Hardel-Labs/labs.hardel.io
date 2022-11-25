@@ -20,17 +20,4 @@ export default class UserDataRepository {
             where: { userId }
         });
     }
-
-    async getProjects(userId: string): Promise<UserData> {
-        return await this.prisma.findUniqueOrThrow({
-            where: { userId },
-            include: {
-                project: {
-                    include: {
-                        Project: true
-                    }
-                }
-            }
-        });
-    }
 }

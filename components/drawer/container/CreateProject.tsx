@@ -1,91 +1,96 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import FormInput from '@components/form/input';
 import WhiteButton from '@components/form/Button/White';
-import RedButton from '@components/form/Button/Red';
+import React from 'react';
 import { useRouter } from 'next/navigation';
-import { deleteVanillaCategory, upsertVanillaCategory } from '@libs/request/client/minecraft/category';
-import SelectItem from '@components/form/Select/item';
-
-export type AdminCategoryDefaultValue = {
-    name: string;
-    id: number;
-    asset: string;
-};
+import FileInput from '@components/form/FileInput';
+import { createProject, uploadProjectAsset } from '@libs/request/client/project';
+import { removeSpacesAndSpecialCharacters } from '@libs/utils';
+import { Project } from '@prisma/client';
+import HardelLoader from '@components/loader/HardelLoader';
 
 type Props = {
     onClose: () => void;
-    isCreating: boolean;
-    defaultValues?: AdminCategoryDefaultValue;
 };
 
-export default function AdminCategory(props: Props) {
+export default function CreateProject(props: Props) {
     const router = useRouter();
-    const [name, setName] = useState('Yay');
-    const [itemMinecraftId, setItemMinecraftId] = useState<string | undefined>('minecraft:stone');
+    const [name, setName] = React.useState('');
+    const [description, setDescription] = React.useState('');
+    const [version, setVersion] = React.useState('1.19.x');
+    const [asset, setAsset] = React.useState<File | undefined>();
+    const [pending, setPending] = React.useState(false);
 
     const sendData = async () => {
-        if (!name || !itemMinecraftId) return;
+        if (!asset) return;
 
-        await upsertVanillaCategory(name, itemMinecraftId, props.defaultValues?.id, (success) => {
-            if (success) {
-                setName('Yay');
-                setItemMinecraftId('minecraft:stone');
-                router.refresh();
-                props.onClose();
-            }
-        });
-    };
-
-    const handleDelete = async () => {
-        if (props.defaultValues?.id) {
-            await deleteVanillaCategory(props.defaultValues.id, (success) => {
+        setPending(true);
+        const namespace = removeSpacesAndSpecialCharacters(name).toLowerCase();
+        const insertedData = await createProject<Project>({ name, description, version, namespace });
+        if (insertedData.request.success) {
+            const project = insertedData.data as Project;
+            await uploadProjectAsset(project.id, asset, (success) => {
                 if (success) {
-                    router.refresh();
+                    setName('');
+                    setDescription('');
+                    setAsset(undefined);
+                    setPending(false);
                     props.onClose();
+                    router.refresh();
                 }
             });
         }
+
+        setPending(false);
     };
-
-    useEffect(() => {
-        if (props.defaultValues) {
-            const { name, asset } = props.defaultValues;
-            let newAsset = asset;
-            if (newAsset.startsWith('https://')) {
-                const split = newAsset.split('/');
-                const fileName = split[split.length - 1];
-                newAsset = fileName.split('.')[0];
-            }
-
-            setName(name);
-            setItemMinecraftId('minecraft:' + newAsset);
-        }
-    }, [props.defaultValues]);
 
     return (
         <div>
             <div>
                 <div className={'mb-4'}>
                     <p className="text-xl pl-1 mb-0 font-bold">Name</p>
-                    <small className="text-sm text-gray-400">The name will be displayed on the website.</small>
+                    <small className="text-sm text-gray-400">Enter a name for your project</small>
                 </div>
-                <FormInput type={'text'} placeholder={'Name'} value={name} onChange={(e) => setName(e.target.value)} />
+                <FormInput placeholder={'Name'} value={name} onChange={(e) => setName(e.target.value)} />
                 <hr />
             </div>
+
             <div>
                 <div className={'mb-4'}>
-                    <p className="text-xl mb-0 font-bold">Asset</p>
-                    <small className="text-sm text-gray-400">The asset will be displayed depending on the id of the item.</small>
+                    <p className="text-xl pl-1 mb-0 font-bold">Description</p>
+                    <small className="text-sm text-gray-400">The description can be changed later</small>
                 </div>
-                <SelectItem value={itemMinecraftId} onChange={(item) => setItemMinecraftId(item?.minecraftId)} />
+                <FormInput placeholder={'Description'} value={description} onChange={(e) => setDescription(e.target.value)} />
+                <hr />
+            </div>
+
+            <div>
+                <div className={'mb-4'}>
+                    <p className="text-xl pl-1 mb-0 font-bold">Asset</p>
+                    <small className="text-sm text-gray-400">The asset of minecraft data pack</small>
+                </div>
+                <FileInput onChange={(file) => setAsset(file)} />
+                <hr />
+            </div>
+
+            <div>
+                <div className={'mb-4'}>
+                    <p className="text-xl pl-1 mb-0 font-bold">Version</p>
+                    <small className="text-sm text-gray-400">The version of minecraft data pack</small>
+                </div>
+                <FormInput disabled placeholder={'Version'} value={version} onChange={(e) => setVersion(e.target.value)} />
                 <hr />
             </div>
 
             <div className={'flex justify-end w-full gap-x-2 mt-4'}>
-                {!props.isCreating && <RedButton onClick={() => handleDelete()}>Delete Category</RedButton>}
-                <WhiteButton onClick={() => sendData()}>{props.isCreating ? 'Create' : 'Update'}</WhiteButton>
+                {pending ? (
+                    <div className={'p-4'}>
+                        <HardelLoader />
+                    </div>
+                ) : (
+                    <WhiteButton onClick={() => sendData()}>Create</WhiteButton>
+                )}
             </div>
         </div>
     );

@@ -36,12 +36,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const project = await repo.hasPermission(projectId, userId, [ProjectRole.OWNER]);
     if (!project) return;
 
-    const destination = `project/${projectId}/asset`;
-    return await uploadAsset(destination, file, {
+    const destination = `project/${projectId}`;
+    const response = await uploadAsset(destination, file, {
         height: 64,
         width: 64,
         filename: 'icon'
     });
+    res.status(response.request.statusCode).json(response);
 }
 
 export const config = {

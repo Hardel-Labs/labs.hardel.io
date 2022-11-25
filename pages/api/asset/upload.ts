@@ -1,14 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import formidable from 'formidable';
-import { PutObjectCommandOutput } from '@aws-sdk/client-s3';
 import AuthMiddleware from '@libs/request/server/auth-middleware';
 import { RoleType } from '@prisma/client';
 import formidableParser from '@libs/request/server/formidable-parser';
 import RestHelper from '@libs/request/server/form-checker';
 import { RestErrorType } from '@libs/constant';
-import uploadAsset from '@libs/aws/upload';
+import uploadAsset, { AssetUploadOutput } from '@libs/aws/upload';
+import { RestRequest } from '@definitions/api';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<PutObjectCommandOutput | { error: string }>) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse<RestRequest<AssetUploadOutput>>) {
     const auth = await AuthMiddleware(req, res, { role: RoleType.ADMIN });
     if (!auth.isAuthenticated || !auth.hasRole) {
         new RestHelper(req, res).addError(RestErrorType.Unauthorized, 'You have not the permission to access this resource').checkErrors();
@@ -28,7 +28,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         return;
     }
 
-    return uploadAsset(form.fields.path as string, file);
+    const response = await uploadAsset(form.fields.path as string, file);
+    res.status(response.request.statusCode).json(response);
 }
 
 export const config = {

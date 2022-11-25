@@ -2,9 +2,10 @@ import { RestRequest } from '@definitions/api';
 import RestHelper from '@libs/request/server/form-checker';
 import prisma from '@libs/prisma';
 import { RestErrorType } from '@libs/constant';
-import ProjectRepository, { ProjectData } from '@repositories/Project';
+import ProjectRepository from '@repositories/Project';
+import { ReadablePersonalProjectData, ReadableProject } from '@definitions/project';
 
-const getProjects = async (): Promise<RestRequest<ProjectData>> => {
+const getProjects = async (): Promise<RestRequest<ReadableProject[]>> => {
     try {
         const data = await new ProjectRepository(prisma.project).findAll(false);
         return new RestHelper().setData(data).getResponse();
@@ -13,7 +14,7 @@ const getProjects = async (): Promise<RestRequest<ProjectData>> => {
     }
 };
 
-const getProjectsAllData = async (): Promise<RestRequest<ProjectData>> => {
+const getProjectsAllData = async (): Promise<RestRequest<ReadableProject[]>> => {
     try {
         const data = await new ProjectRepository(prisma.project).findAll(true);
         return new RestHelper().setData(data).getResponse();
@@ -22,7 +23,7 @@ const getProjectsAllData = async (): Promise<RestRequest<ProjectData>> => {
     }
 };
 
-const getOneProject = async (id: string): Promise<RestRequest<ProjectData>> => {
+const getOneProject = async (id: string): Promise<RestRequest<ReadableProject>> => {
     try {
         const data = await new ProjectRepository(prisma.project).findOne(id);
         return new RestHelper().setData(data).getResponse();
@@ -31,7 +32,7 @@ const getOneProject = async (id: string): Promise<RestRequest<ProjectData>> => {
     }
 };
 
-const getProjectByUserId = async (userId: string): Promise<RestRequest<ProjectData[]>> => {
+const getProjectByUserId = async (userId: string): Promise<RestRequest<ReadablePersonalProjectData[]>> => {
     try {
         const data = await new ProjectRepository(prisma.project).findByUserId(userId);
         return new RestHelper().setData(data).getResponse();

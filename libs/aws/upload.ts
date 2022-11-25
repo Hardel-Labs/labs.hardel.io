@@ -33,7 +33,6 @@ export default async function uploadAsset(destination: string, file: formidable.
             if (!newImage) {
                 return new RestHelper().addError(RestErrorType.InternalServerError, 'The image could not be processed').getResponse();
             }
-
             await S3.send(
                 new PutObjectCommand({
                     Bucket: process.env.R2_BUCKET_NAME,
@@ -42,17 +41,10 @@ export default async function uploadAsset(destination: string, file: formidable.
                 })
             );
 
-            return new RestHelper()
-                .setData({
-                    url: `${process.env.ASSET_PREFIX}/${destination}/${filename}`,
-                    width: resizeWidth,
-                    height: resizeHeight,
-                    filename
-                })
-                .getResponse();
+            return new RestHelper().setData({ url: `${process.env.ASSET_PREFIX}/${destination}/${filename}` }).getResponse();
+        } else {
+            return new RestHelper().addError(RestErrorType.InternalServerError, 'File or Destination is missing').getResponse();
         }
-
-        return new RestHelper().addError(RestErrorType.InternalServerError, 'File or Destination is missing').getResponse();
     } catch (error) {
         return new RestHelper().addError(RestErrorType.InternalServerError, 'The file was not uploaded').getResponse();
     }

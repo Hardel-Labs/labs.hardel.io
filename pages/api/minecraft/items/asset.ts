@@ -29,7 +29,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const destination = `minecraft/items/vanilla`;
     const filename = minecraftId.split(':')[1];
-    return await uploadAsset(destination, file, { filename });
+    const response = await uploadAsset(destination, file, { filename });
+    res.status(response.request.statusCode).json(response);
 }
 
 export const config = {
