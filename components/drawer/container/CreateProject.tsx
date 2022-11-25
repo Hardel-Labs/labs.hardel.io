@@ -2,13 +2,17 @@
 
 import FormInput from '@components/form/input';
 import WhiteButton from '@components/form/Button/White';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import FileInput from '@components/form/FileInput';
 import { createProject, uploadProjectAsset } from '@libs/request/client/project';
 import { removeSpacesAndSpecialCharacters } from '@libs/utils';
 import { Project } from '@prisma/client';
 import HardelLoader from '@components/loader/HardelLoader';
+import SimpleSelect from '@components/form/Select/simple';
+import { VERSION } from '@libs/constant';
+import DefaultItem from '@images/design/item_placeholder.webp';
+import Image from 'next/image';
 
 type Props = {
     onClose: () => void;
@@ -18,31 +22,38 @@ export default function CreateProject(props: Props) {
     const router = useRouter();
     const [name, setName] = React.useState('');
     const [description, setDescription] = React.useState('');
-    const [version, setVersion] = React.useState('1.19.x');
+    const [version, setVersion] = React.useState<string | undefined>('1.19.x');
     const [asset, setAsset] = React.useState<File | undefined>();
     const [pending, setPending] = React.useState(false);
 
+    const displayPreview = useMemo(() => {
+        return asset ? URL.createObjectURL(asset) : DefaultItem;
+    }, [asset]);
+
     const sendData = async () => {
-        if (!asset) return;
+        if (!asset || !version) return;
 
         setPending(true);
         const namespace = removeSpacesAndSpecialCharacters(name).toLowerCase();
         const insertedData = await createProject<Project>({ name, description, version, namespace });
-        if (insertedData.request.success) {
-            const project = insertedData.data as Project;
-            await uploadProjectAsset(project.id, asset, (success) => {
-                if (success) {
-                    setName('');
-                    setDescription('');
-                    setAsset(undefined);
-                    setPending(false);
-                    props.onClose();
-                    router.refresh();
-                }
-            });
+        if (!insertedData.request.success) {
+            setPending(false);
+            return;
         }
 
+        const project = insertedData.data as Project;
+        const uploadedAsset = await uploadProjectAsset(project.id, asset);
+        if (!uploadedAsset.request.success) {
+            setPending(false);
+            return;
+        }
+
+        setName('');
+        setDescription('');
+        setAsset(undefined);
         setPending(false);
+        props.onClose();
+        router.refresh();
     };
 
     return (
@@ -66,9 +77,12 @@ export default function CreateProject(props: Props) {
             </div>
 
             <div>
-                <div className={'mb-4'}>
-                    <p className="text-xl pl-1 mb-0 font-bold">Asset</p>
-                    <small className="text-sm text-gray-400">The asset of minecraft data pack</small>
+                <div className={'mb-4 flex justify-between items-center'}>
+                    <div>
+                        <p className="text-xl pl-1 mb-0 font-bold">Asset</p>
+                        <small className="text-sm text-gray-400">The asset of minecraft data pack</small>
+                    </div>
+                    <Image src={displayPreview} alt={''} className={'w-8 h-8 rounded-full'} width={100} height={100} />
                 </div>
                 <FileInput onChange={(file) => setAsset(file)} />
                 <hr />
@@ -77,9 +91,9 @@ export default function CreateProject(props: Props) {
             <div>
                 <div className={'mb-4'}>
                     <p className="text-xl pl-1 mb-0 font-bold">Version</p>
-                    <small className="text-sm text-gray-400">The version of minecraft data pack</small>
+                    <small className="text-sm text-gray-400">The version of minecraft data pack currently supported (Only 1.19.x for the moment)</small>
                 </div>
-                <FormInput disabled placeholder={'Version'} value={version} onChange={(e) => setVersion(e.target.value)} />
+                <SimpleSelect options={VERSION} values={'1.19.x'} onChange={(value) => setVersion(value)} />
                 <hr />
             </div>
 

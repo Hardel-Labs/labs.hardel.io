@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import FormInput from '@components/form/input';
-import Select, { Option } from '@components/form/Select';
+import SelectMultiple, { Option } from '@components/form/Select/multiple';
 import FileInput from '@components/form/FileInput';
 import WhiteButton from '@components/form/Button/White';
 import fetcher from '@libs/request/client/fetcher';
@@ -124,7 +124,7 @@ export default function AdminCreateItem(props: Props) {
                     <p className="text-xl mb-0 font-bold">Categories</p>
                     <small className="text-sm text-gray-400">The categories of the item, you can select multiple</small>
                 </div>
-                <Select options={options} values={categories} onChange={setCategories} />
+                <SelectMultiple options={options} values={categories} onChange={setCategories} />
                 <hr />
             </div>
             <div>
