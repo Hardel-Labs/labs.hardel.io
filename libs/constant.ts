@@ -1,4 +1,5 @@
 import { SlotData } from '@definitions/minecraft';
+import { Option } from '@components/form/Select/multiple';
 
 export enum RecipeType {
     SHAPED = 'minecraft:crafting_shaped',
@@ -28,3 +29,37 @@ export enum RestErrorType {
 }
 
 export const DEFAULT_SLOT_VALUE: SlotData[] = [{ id: 'crafting:result', count: 1 }];
+
+export const AGO_SINCE = [
+    {
+        name: 'minutes',
+        value: 60
+    },
+    {
+        name: 'hours',
+        value: 60 * 60
+    },
+    {
+        name: 'days',
+        value: 60 * 60 * 24
+    },
+    {
+        name: 'weeks',
+        value: 60 * 60 * 24 * 7
+    },
+    {
+        name: 'months',
+        value: 60 * 60 * 24 * 30
+    },
+    {
+        name: 'years',
+        value: 60 * 60 * 24 * 365
+    }
+];
+
+export const VERSION: Option[] = [
+    {
+        id: '1.19.x',
+        name: '1.19.x'
+    }
+];
