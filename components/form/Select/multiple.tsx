@@ -17,7 +17,7 @@ type Props = {
     options: Option[];
 };
 
-export default function Select(props: Props) {
+export default function SelectMultiple(props: Props) {
     const [value, setValue] = useState<string>('');
     const [options, setOptions] = useState<string[]>([]);
     const [open, setOpen] = useState<boolean>(false);
