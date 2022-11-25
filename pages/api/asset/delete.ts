@@ -1,18 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import AuthMiddleware from '@libs/request/server/auth-middleware';
 import { RoleType } from '@prisma/client';
-import { DeleteObjectCommand, DeleteObjectCommandOutput, S3Client } from '@aws-sdk/client-s3';
+import { DeleteObjectCommand, DeleteObjectCommandOutput } from '@aws-sdk/client-s3';
 import RestHelper from '@libs/request/server/form-checker';
 import { RestErrorType } from '@libs/constant';
-
-const S3 = new S3Client({
-    region: 'auto',
-    endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
-    credentials: {
-        accessKeyId: process.env.R2_KEY_ID as string,
-        secretAccessKey: process.env.R2_SECRET_KEY as string
-    }
-});
+import S3 from '@libs/aws/client';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<DeleteObjectCommandOutput | { error: string }>) {
     const auth = await AuthMiddleware(req, res, { role: RoleType.ADMIN });
