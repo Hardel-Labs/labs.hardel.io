@@ -12,7 +12,7 @@ export default function Header(props: Props) {
     return (
         <nav className={'flex justify-between p-4 m-4'}>
             <div>
-                <Link href="/" className="flex items-center fill-white hover:fill-gold">
+                <Link href={'/admin/dashboard'} className="flex items-center fill-white hover:fill-gold">
                     <HardelLetter className="self-center w-10 h-10" />
                     <span className="text-xl font-semibold whitespace-nowrap">ardel</span>
                 </Link>

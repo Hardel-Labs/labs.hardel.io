@@ -1,7 +1,7 @@
 import React from 'react';
 import TooltipContextProvider from '@components/minecraft/ItemTooltip/TooltipContext';
 import ItemTooltip from '@components/minecraft/ItemTooltip';
-import ItemsManager from '@admin/dashboard/crafting/items/ItemsManager';
+import ItemsManager from '@admin/admin/dashboard/crafting/items/ItemsManager';
 import getItems from '@libs/request/server/minecraft/items/get';
 import { MinecraftItemData } from '@definitions/minecraft';
 

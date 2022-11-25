@@ -4,9 +4,9 @@ import local from '@next/font/local';
 import React from 'react';
 import { unstable_getServerSession } from 'next-auth/next';
 import { authOptions } from '@session';
-import Sidebar from '@admin/Sidebar';
-import Footer from '@admin/Footer';
-import Header from '@admin/Header';
+import Sidebar from '@admin/admin/Sidebar';
+import Footer from '@admin/admin/Footer';
+import Header from '@admin/admin/Header';
 
 const inter = Inter({
     subsets: ['latin']
