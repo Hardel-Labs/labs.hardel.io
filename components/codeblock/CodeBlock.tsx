@@ -1,6 +1,6 @@
 import HighlightSection from '@components/codeblock/HighlightSection';
 import FileCopy from '@icons/Common/FileCopy';
-import Download from '@icons/Download';
+import Download from '@icons/Common/Download';
 
 export default function CodeBlock(props: { children: string; language: string; title?: string }) {
     return (
