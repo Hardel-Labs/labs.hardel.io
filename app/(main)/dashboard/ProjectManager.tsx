@@ -20,6 +20,7 @@ export default function ProjectManager() {
 
     return (
         <>
+            <hr className={'mb-8'} />
             <div className={'flex mb-8'}>
                 <div className={'flex flex-auto'}>
                     <FormInput type={'text'} placeholder="Search a project" value={search} onChange={(e) => setSearch(e.target.value)} />
