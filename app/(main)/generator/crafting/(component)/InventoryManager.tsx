@@ -55,9 +55,11 @@ export default function InventoryManager(props: Props) {
             </div>
             <div className={'mb-4'}>
                 <GroupButtonContainer>
-                    <GroupButtonItem onSelect={() => setType(InventoryType.SEARCH)} title={'Search'} defaultChecked={true} />
-                    <GroupButtonItem onSelect={() => setType(InventoryType.VANILLA)} title={'Vanilla'} />
-                    <GroupButtonItem onSelect={() => setType(InventoryType.CUSTOM)} title={'Custom'} />
+                    <GroupButtonItem onSelect={() => setType(InventoryType.SEARCH)} defaultChecked={true}>
+                        Search
+                    </GroupButtonItem>
+                    <GroupButtonItem onSelect={() => setType(InventoryType.VANILLA)}>Vanilla</GroupButtonItem>
+                    <GroupButtonItem onSelect={() => setType(InventoryType.CUSTOM)}>Custom</GroupButtonItem>
                 </GroupButtonContainer>
             </div>
             <hr />

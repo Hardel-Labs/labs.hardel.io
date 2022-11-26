@@ -24,9 +24,11 @@ export default function CraftingGroupButton() {
     return (
         <div className={'flex justify-start mt-4 pl-4 gap-x-4'}>
             <GroupButtonContainer>
-                <GroupButtonItem onSelect={() => handle(RecipeType.SHAPELESS, false)} title={'Shapeless'} defaultChecked={true} />
-                <GroupButtonItem onSelect={() => handle(RecipeType.SHAPED, false)} title={'Shaped'} />
-                <GroupButtonItem onSelect={() => handle(RecipeType.SHAPED, true)} title={'Exactly pattern'} />
+                <GroupButtonItem onSelect={() => handle(RecipeType.SHAPELESS, false)} defaultChecked={true}>
+                    Shapeless
+                </GroupButtonItem>
+                <GroupButtonItem onSelect={() => handle(RecipeType.SHAPED, false)}>Shaped</GroupButtonItem>
+                <GroupButtonItem onSelect={() => handle(RecipeType.SHAPED, true)}>Exactly pattern</GroupButtonItem>
             </GroupButtonContainer>
 
             <Counter max={64} min={1} value={count} onChange={handleChange} step={1} />

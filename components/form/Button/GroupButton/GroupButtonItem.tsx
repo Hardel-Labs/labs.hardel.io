@@ -5,7 +5,7 @@ import React, { useCallback, useContext, useEffect } from 'react';
 import { GroupButtonContext } from '@components/form/Button/GroupButton/GroupButtonContainer';
 
 type Props = {
-    title: string;
+    children: string;
     defaultChecked?: boolean;
     className?: string;
     style?: React.CSSProperties;
@@ -32,7 +32,7 @@ export default function GroupButtonItem(props: Props) {
     return (
         <button onClick={handleClick} className={'z-50'} style={props.style}>
             <span ref={refInner} className={'text-sm font-normal cursor-pointer transition px-4 hover:opacity-80'}>
-                {props.title}
+                {props.children}
             </span>
         </button>
     );
