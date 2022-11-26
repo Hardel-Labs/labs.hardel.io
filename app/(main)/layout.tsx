@@ -32,7 +32,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <body className={'min-h-screen flex flex-col justify-between background-grid'}>
                 <div className={[seven.variable, minecraft.variable, inter.className].join(' ')}>
                     <Header session={session} />
-                    <main className={'relative'}>{children}</main>
+                    <main>{children}</main>
                 </div>
                 <Footer />
             </body>

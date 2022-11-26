@@ -41,4 +41,13 @@ const getProjectByUserId = async (userId: string): Promise<RestRequest<ReadableP
     }
 };
 
-export { getProjects, getProjectsAllData, getOneProject, getProjectByUserId };
+const getSelectedProject = async (userId: string): Promise<RestRequest<ReadablePersonalProjectData>> => {
+    try {
+        const data = await new ProjectRepository(prisma.project).findSelectedProject(userId);
+        return new RestHelper().setData(data).getResponse();
+    } catch (error) {
+        return new RestHelper().addError(RestErrorType.InternalServerError, 'An error occurred while fetching project.').getResponse();
+    }
+};
+
+export { getProjects, getProjectsAllData, getOneProject, getProjectByUserId, getSelectedProject };

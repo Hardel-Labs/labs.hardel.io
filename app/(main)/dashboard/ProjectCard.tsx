@@ -4,18 +4,22 @@ import InvitationBadge from '@components/badge/Invitation';
 import React from 'react';
 import { clx, timeSince } from '@libs/utils';
 import { ReadablePersonalProjectData } from '@definitions/project';
+import { selectProject } from '@libs/request/client/project';
 
 type Props = {
     project: ReadablePersonalProjectData;
 };
 
 export default function ProjectCard(props: Props) {
+    const handleSelect = async () => await selectProject(props.project.id);
+
     return (
         <div
             className={clx(
                 'bg-black/50 border flex flex-col rounded-xl py-4 px-6 hover:scale-90 transition ease-in-out duration-300 cursor-pointer',
                 props.project.isSelected ? 'border-gold' : 'border-zinc-700'
             )}
+            onClick={() => handleSelect()}
         >
             <div>
                 <div className={'flex justify-between items-center'}>

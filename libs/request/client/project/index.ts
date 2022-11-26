@@ -22,5 +22,5 @@ export const uploadProjectAsset = async (projectId: string, asset: File, callbac
 };
 
 export const selectProject = async (projectId: string, callback?: (success: boolean) => void) => {
-    return await new FastFetcher('/api/projects/select', 'POST').appendMutateUrl('/api/projects').setBody({ projectId }).fetching(callback);
+    return await new FastFetcher('/api/projects/select', 'POST').appendMutateUrl('/api/projects/select').appendMutateUrl('/api/projects').setBody({ projectId }).fetching(callback);
 };

@@ -75,8 +75,7 @@ export default class ProjectRepository {
     async selectProject(projectId: string, userId: string): Promise<ReadableProject> {
         await prisma.projectUser.updateMany({
             where: {
-                userId,
-                projectId
+                userId
             },
             data: {
                 isSelected: false
@@ -102,6 +101,24 @@ export default class ProjectRepository {
         });
 
         return this.projectToReadableData(response);
+    }
+
+    async findSelectedProject(userId: string): Promise<ReadablePersonalProjectData> {
+        const response = await this.prisma.findFirstOrThrow({
+            where: {
+                users: {
+                    some: {
+                        userId,
+                        isSelected: true
+                    }
+                }
+            },
+            include: {
+                users: true
+            }
+        });
+
+        return this.projectToReadablePersonalData(response, userId);
     }
 
     async connectItem(projectId: string, itemId: number): Promise<ReadableProject> {
