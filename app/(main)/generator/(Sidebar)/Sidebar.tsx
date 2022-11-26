@@ -1,15 +1,13 @@
 'use client';
 
 import React, { useCallback, useEffect } from 'react';
-import Image from 'next/image';
-import HarionLogo from '@images/harion.webp';
 import Settings from '@icons/Common/Settings';
 import Notifications from '@icons/Common/Notifications';
-import Download from '@icons/Download';
-import Menu from '@icons/Menu';
+import Download from '@icons/Common/Download';
 import SidebarNotifications from '@main/generator/(Sidebar)/SidebarNotification';
 import SidebarSettings from '@main/generator/(Sidebar)/SidebarSettings';
 import SidebarProject from '@main/generator/(Sidebar)/SidebarProject';
+import Members from '@icons/Common/Members';
 
 const optionsMenu = [
     { menu: 'settings', component: <SidebarSettings /> },
@@ -46,18 +44,13 @@ export default function Sidebar() {
     return (
         <div className={'relative z-50'}>
             <div className={'sticky top-0 left-0 h-screen bg-black/10 backdrop-blur-sm flex'}>
-                <div className={'h-full flex flex-col justify-between w-16 border-r border-gold border-solid'}>
-                    <div className={'flex flex-col gap-y-4 items-center p-4 overflow-y-auto'}>
-                        <Menu className={'w-full h-auto fill-gray-600 hover:fill-white transition cursor-pointer'} />
+                <div className={'h-full flex flex-col justify-between p-4 w-16 border-r border-gold border-solid'}>
+                    <div className={'flex flex-col gap-y-8'}>
                         <Download className={'w-full h-auto fill-gray-600 hover:fill-white transition cursor-pointer'} />
-                    </div>
-                    <div className={'flex flex-col gap-y-8 items-center p-4'}>
-                        <div onClick={() => openMenu('project')}>
-                            <Image src={HarionLogo} alt={'Logo Project'} className={'rounded-2xl opacity-50 hover:opacity-100 transition cursor-pointer'} width={50} height={50} />
-                        </div>
-                    </div>
-                    <div className={'flex flex-col gap-y-8 items-center p-4'}>
                         <Notifications className={'w-full h-auto fill-gray-600 hover:fill-white transition cursor-pointer'} onClick={() => openMenu('notification')} />
+                        <Members className={'w-full h-auto fill-gray-600 hover:fill-white transition cursor-pointer'} onClick={() => openMenu('project')} />
+                    </div>
+                    <div className={'flex flex-col gap-y-8'}>
                         <Settings className={'w-full h-auto fill-gray-600 hover:fill-white transition cursor-pointer'} onClick={() => openMenu('settings')} />
                     </div>
                 </div>
