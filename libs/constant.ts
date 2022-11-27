@@ -59,7 +59,7 @@ export const AGO_SINCE = [
 
 export const VERSION: Option[] = [
     {
-        id: '1.19.x',
+        value: '1.19.x',
         name: '1.19.x'
     }
 ];

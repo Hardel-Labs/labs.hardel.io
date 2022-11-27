@@ -25,7 +25,7 @@ export default function SimpleSelect(props: Props) {
 
     const handleSet = (option: Option) => {
         setSelected(option);
-        props.onChange?.(option.id);
+        props.onChange?.(option.value);
     };
 
     const handleRemove = () => {
@@ -34,7 +34,7 @@ export default function SimpleSelect(props: Props) {
     };
 
     useEffect(() => {
-        setSelected(props.options.find((option) => option.id === props.values));
+        setSelected(props.options.find((option) => option.value === props.values));
     }, [props.options, props.values]);
 
     return (

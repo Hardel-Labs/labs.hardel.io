@@ -6,7 +6,7 @@ import Cross from '@icons/Common/Cross';
 import ArrowBottom from '@icons/Common/ArrowBottom';
 
 export type Option = {
-    id: string;
+    value: string;
     name: string;
     shortName?: string;
 };
@@ -25,17 +25,17 @@ export default function SelectMultiple(props: Props) {
     useClickOutside(ref, () => setOpen(false));
 
     const displayedOptions = useMemo(() => {
-        return props.options.filter((option) => !props.values?.find((value) => value === option.id)).filter((option) => option.name.toLowerCase().includes(value.toLowerCase()));
+        return props.options.filter((option) => !props.values?.find((value) => value === option.value)).filter((option) => option.name.toLowerCase().includes(value.toLowerCase()));
     }, [props.options, props.values, value]);
 
     const handleAdd = (option: Option) => {
-        setOptions([...options, option.id]);
-        props.onChange?.([...options, option.id]);
+        setOptions([...options, option.value]);
+        props.onChange?.([...options, option.value]);
     };
 
     const handleRemove = (option: Option) => {
-        setOptions(options.filter((o) => o !== option.id));
-        props.onChange?.(options.filter((o) => o !== option.id));
+        setOptions(options.filter((o) => o !== option.value));
+        props.onChange?.(options.filter((o) => o !== option.value));
     };
 
     const handleRemoveAll = () => {
@@ -55,7 +55,7 @@ export default function SelectMultiple(props: Props) {
                     <div className={'flex'}>
                         <div className={'flex gap-x-1'}>
                             {props.options
-                                .filter((option) => options.find((o) => o === option.id))
+                                .filter((option) => options.find((o) => o === option.value))
                                 .map((option, index) => (
                                     <div key={index} className={'flex items-center justify-center bg-white/10 rounded-md px-2'}>
                                         <span className={'text-white text-sm'}>{option.shortName ?? option.name}</span>

@@ -15,7 +15,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         <SettingsLinks href={'/dashboard/settings/members'}>Members</SettingsLinks>
                         <SettingsLinks href={'/dashboard/settings/limit'}>Limitation</SettingsLinks>
                     </div>
-                    <div className={'flex flex-1 ml-6'}>{children}</div>
+                    <div className={'flex flex-col flex-1 ml-6'}>{children}</div>
                 </div>
             </div>
         </section>

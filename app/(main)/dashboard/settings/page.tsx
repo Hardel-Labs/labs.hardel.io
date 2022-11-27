@@ -64,7 +64,7 @@ export default function Settings() {
                     <h1 className={'text-2xl text-white'}>Project Version</h1>
                     <hr />
                     <p className={'text-zinc-400 text-base'}>Its the minecraft version of your project, you can change it here, the modification will be applied to all users.</p>
-                    <SimpleSelect options={VERSION} values={VERSION[0].id} />
+                    <SimpleSelect options={VERSION} values={VERSION[0].value} />
                 </div>
                 <div className={'bg-zinc-900 rounded-b-md px-6 py-4 border-zinc-600 border-t'}>
                     <div className={'flex flex-row justify-between items-center'}>
