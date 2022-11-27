@@ -1,6 +1,6 @@
 import HardelLoader from '@components/loader/HardelLoader';
 
-export default function Settings() {
+export default function About() {
     return (
         <div>
             <h1 className={'text-4xl font-bold text-gold'}>Pages under construction.</h1>

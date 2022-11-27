@@ -4,6 +4,7 @@ import SimpleSelect from '@components/form/Select/simple';
 import Image from 'next/image';
 import Harion from '@images/harion.webp';
 import SmallSelect from '@components/form/Select/SmallSelect';
+import { ROLES } from '@libs/constant';
 
 const tempusers = [
     {
@@ -28,7 +29,7 @@ const tempusers = [
     }
 ];
 
-export default function Settings() {
+export default function Members() {
     return (
         <div className={'flex flex-col gap-y-8'}>
             <div className={'rounded-md w-full bg-black/50 border-zinc-600 border'}>
@@ -38,12 +39,7 @@ export default function Settings() {
                     <p className={'text-zinc-400 text-base'}>Invite new members to your project, use the email address of the person you want to invite.</p>
                     <div className={'flex flex-row gap-x-2'}>
                         <FormInput placeholder={'hardel@exemple.com'} />
-                        <SimpleSelect
-                            options={[
-                                { name: 'Admin', value: 'admin' },
-                                { name: 'Member', value: 'member' }
-                            ]}
-                        />
+                        <SimpleSelect options={ROLES} />
                     </div>
                 </div>
                 <div className={'bg-zinc-900 rounded-b-md px-6 py-4 border-zinc-600 border-t'}>
@@ -70,12 +66,7 @@ export default function Settings() {
                             </div>
                         </div>
                         <div className={'flex items-center gap-x-6'}>
-                            <SmallSelect
-                                options={[
-                                    { name: 'Admin', value: 'admin' },
-                                    { name: 'Member', value: 'member' }
-                                ]}
-                            />
+                            <SmallSelect options={ROLES} />
                             <div className={'text-zinc-400 hover:text-red-700 transition cursor-pointer select-none'}>Remove</div>
                         </div>
                     </div>
