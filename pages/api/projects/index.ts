@@ -19,7 +19,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     }
 
     const userId = session.id;
-    if (new RestHelper(req, res).checkIsVariableIsDefined(userId, 'id').checkErrors()) return;
+    const errors = new RestHelper(req, res).checkIsVariableIsDefined(userId, 'id').checkErrors();
+    if (errors) {
+        new RestHelper(req, res).addError(RestErrorType.Unauthorized, 'You are not logged in').send();
+        return;
+    }
 
     switch (method) {
         case 'GET': {
@@ -31,7 +35,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             const errors = new RestHelper(req, res).checkIsVariableIsDefined(projectId, 'projectId').checkErrors();
             if (errors) return;
 
-            const data = await deleteProject(userId, projectId);
+            const data = await deleteProject(projectId, userId);
             res.status(data.request.statusCode).json(data);
             break;
         }
@@ -46,7 +50,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
             if (errors) return;
 
-            const data = await updateProject(userId, projectId, {
+            const data = await updateProject(projectId, userId, {
                 name,
                 asset,
                 description,
