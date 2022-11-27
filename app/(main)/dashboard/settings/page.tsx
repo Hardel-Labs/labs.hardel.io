@@ -12,6 +12,7 @@ import fetcher from '@libs/request/client/fetcher';
 import { ReadablePersonalProjectData } from '@definitions/project';
 import Image from 'next/image';
 import DefaultItem from '@images/design/item_placeholder.webp';
+import CopyField from '@components/form/CopyField';
 
 type State = {
     name?: string;
@@ -47,6 +48,8 @@ export default function Settings() {
 
         const currentState = { ...state } as { [index: string]: any };
         const field = currentState[fieldName];
+
+        if (!field) return;
 
         if (field instanceof File) {
             await uploadProjectAsset(project.id, field, (success) => {
@@ -154,6 +157,7 @@ export default function Settings() {
                     <h1 className={'text-2xl text-white'}>Project Identifiant</h1>
                     <hr />
                     <p className={'text-zinc-400 text-base'}>Its a unique identifier for your project, you can use it to contact the support team if you have any problem.</p>
+                    <CopyField>{project?.id ?? 'Bip Bop I am searching.'}</CopyField>
                 </div>
                 <div className={'bg-zinc-900 rounded-b-md px-6 py-4 border-zinc-600 border-t'}>
                     <div className={'flex flex-row justify-between items-center'}>
