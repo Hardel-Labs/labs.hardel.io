@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import Harion from '@images/harion.webp';
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { Session } from 'next-auth';
 import Link from 'next/link';
 import { signIn, signOut } from 'next-auth/react';
@@ -27,6 +27,10 @@ export default function Header({ session }: Props) {
     const ref = useRef<HTMLDivElement>(null);
     UseClickOutside(ref, () => setIsOpen(false));
 
+    const displayedData = useMemo(() => {
+        return project ?? session?.project;
+    }, [project, session]);
+
     return (
         <>
             <nav className="bg-black/10 backdrop-blur-sm px-4 py-2.5 min-h-[70px] flex items-center">
@@ -40,11 +44,11 @@ export default function Header({ session }: Props) {
                         {session?.userData ? (
                             <>
                                 <Slash />
-                                {project && (
+                                {displayedData && (
                                     <>
                                         <Link href={'/'} className={'flex gap-x-2 h-[40px] items-center'}>
-                                            <Image className={'h-[40px] w-[40px] rounded-md'} src={project.asset} alt={'Project icon'} width={32} height={32} />
-                                            <span className={'text-zinc-300 text-lg font-bold ml-2'}>{project.name}</span>
+                                            <Image className={'h-[40px] w-[40px] rounded-md'} src={displayedData.asset} alt={'Project icon'} width={32} height={32} />
+                                            <span className={'text-zinc-300 text-lg font-bold ml-2'}>{displayedData.name}</span>
                                             <ArrowBottom className={'h-[25px] fill-zinc-300 mt-[3px]'} />
                                         </Link>
                                         <Slash />
