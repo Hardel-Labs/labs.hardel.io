@@ -39,7 +39,7 @@ export default function Header({ session }: Props) {
 
                         {session?.userData ? (
                             <>
-                                <Slash className={'stroke-zinc-700 h-[40px] w-[40px]'} />
+                                <Slash />
                                 {project && (
                                     <>
                                         <Link href={'/'} className={'flex gap-x-2 h-[40px] items-center'}>
@@ -47,7 +47,7 @@ export default function Header({ session }: Props) {
                                             <span className={'text-zinc-300 text-lg font-bold ml-2'}>{project.name}</span>
                                             <ArrowBottom className={'h-[25px] fill-zinc-300 mt-[3px]'} />
                                         </Link>
-                                        <Slash className={'stroke-zinc-700 h-[40px] w-[40px]'} />
+                                        <Slash />
                                         <div className={'flex gap-x-2'}>
                                             <DashboardLink href={'/dashboard'}>Overview</DashboardLink>
                                             <DashboardLink href={'/dashboard/teams'}>Teams</DashboardLink>
