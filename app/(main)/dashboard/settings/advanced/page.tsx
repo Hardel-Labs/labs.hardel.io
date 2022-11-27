@@ -1,5 +1,6 @@
 import FormInput from '@components/form/input';
 import WhiteButton from '@components/form/Button/White';
+import RedButton from '@components/form/Button/Red';
 
 export default function Advanced() {
     return (
@@ -20,6 +21,23 @@ export default function Advanced() {
                     <div className={'flex flex-row justify-between items-center'}>
                         <p className={'text-zinc-400 text-base font-bold mb-0'}>This action is irreversible</p>
                         <WhiteButton>Transfer</WhiteButton>
+                    </div>
+                </div>
+            </div>
+
+            <div className={'rounded-md w-full bg-black/50 border-red-700 border'}>
+                <div className={'p-8'}>
+                    <h1 className={'text-2xl text-white'}>Delete this project</h1>
+                    <hr />
+                    <p className={'text-zinc-400 text-base'}>
+                        Deleting the project will delete all the data associated with it, including all the users and their data. This action is irreversible, please be careful.
+                    </p>
+                    <FormInput placeholder={'Project Name'} />
+                </div>
+                <div className={'bg-zinc-900 rounded-b-md px-6 py-4 border-zinc-500 border-t'}>
+                    <div className={'flex flex-row justify-between items-center'}>
+                        <p className={'text-zinc-400 text-base font-bold mb-0'}>This action is irreversible, all data will be lost.</p>
+                        <RedButton>Delete</RedButton>
                     </div>
                 </div>
             </div>
