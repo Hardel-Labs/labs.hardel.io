@@ -121,6 +121,28 @@ export default class ProjectRepository {
         return this.projectToReadablePersonalData(response, userId);
     }
 
+    async sessionProject(userId: string): Promise<ReadablePersonalProjectData | null> {
+        const response = await this.prisma.findFirst({
+            where: {
+                users: {
+                    some: {
+                        userId,
+                        isSelected: true
+                    }
+                }
+            },
+            include: {
+                users: true
+            }
+        });
+
+        if (!response) {
+            return null;
+        }
+
+        return this.projectToReadablePersonalData(response, userId);
+    }
+
     async connectItem(projectId: string, itemId: number): Promise<ReadableProject> {
         const responses = await this.prisma.update({
             where: {

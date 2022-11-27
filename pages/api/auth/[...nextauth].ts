@@ -3,6 +3,7 @@ import GithubProvider from 'next-auth/providers/github';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import prisma from '@libs/prisma';
 import UserDataRepository from '@repositories/UserData';
+import ProjectRepository from '@repositories/Project';
 
 export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(prisma),
@@ -30,6 +31,7 @@ export const authOptions: NextAuthOptions = {
 
             if (token.id) {
                 token.userData = await new UserDataRepository(prisma.userData).getByUserId(token.id);
+                token.project = await new ProjectRepository(prisma.project).sessionProject(token.id);
             }
 
             return token;
@@ -45,6 +47,10 @@ export const authOptions: NextAuthOptions = {
 
             if (token?.userData) {
                 session.userData = token.userData;
+            }
+
+            if (token?.project) {
+                session.project = token.project;
             }
 
             return session;
