@@ -38,7 +38,7 @@ export default function AdminCreateItem(props: Props) {
         return (
             data?.map((category) => ({
                 name: category.name,
-                id: category.id.toString(),
+                value: category.id.toString(),
                 shortName: category.name.length > 5 ? category.name.substring(0, 5).trim() + '...' : category.name
             })) || []
         );
