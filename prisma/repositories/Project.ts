@@ -336,7 +336,7 @@ export default class ProjectRepository {
     private projectToPersonalData(userData: ProjectUser): PersonalProjectData {
         return {
             role: userData.role,
-            joinedAt: userData.createdAt,
+            joinedAt: userData.createdAt.getTime(),
             isSelected: userData.isSelected,
             userId: userData.userId
         };
@@ -351,10 +351,20 @@ export default class ProjectRepository {
     private projectToReadableProjectData(project: ProjectData): ReadableProjectData {
         return {
             ...project,
+            createdAt: project.createdAt.getTime(),
+            updatedAt: project.updatedAt?.getTime(),
             asset: `${process.env.ASSET_PREFIX}/${project.asset}`,
             items: new ItemRepository(prisma.item).itemsToData(project?.items ?? []),
             recipes: project?.recipes ?? [],
-            notifications: project?.notifications ?? []
+            notifications: project?.notifications ?? [],
+            users:
+                project?.users?.map((user) => {
+                    return {
+                        role: user.role,
+                        joinedAt: user.createdAt.getTime(),
+                        userId: user.userId
+                    };
+                }) ?? []
         };
     }
 

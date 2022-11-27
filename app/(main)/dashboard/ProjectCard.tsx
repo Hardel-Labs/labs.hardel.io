@@ -39,7 +39,7 @@ export default function ProjectCard(props: Props) {
             <div className={'flex-auto flex flex-col justify-between'}>
                 <p className={'text-sm text-gray-500'}>{props.project.description}</p>
                 <div className={'text-sm text-gray-300'}>
-                    <span>{timeSince(props.project?.updatedAt ?? props.project?.createdAt ?? new Date())}</span>
+                    <span>{timeSince(new Date(props.project?.updatedAt ?? new Date(props.project?.createdAt ?? new Date())))}</span>
                 </div>
             </div>
         </div>

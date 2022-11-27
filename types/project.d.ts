@@ -11,19 +11,24 @@ type ReadableProjectData = {
     items: MinecraftItemData[];
     recipes: any[];
     notifications: any[];
-    createdAt?: Date;
-    updatedAt?: Date | null;
+    createdAt?: number;
+    updatedAt?: number | null;
+    users: {
+        userId: string;
+        role: ProjectRole;
+        joinedAt: number;
+    }[];
 };
 
 export type ReadablePersonalProjectData = ReadableProjectData & PersonalProjectData;
 
 export type PersonalProjectData = {
-    joinedAt?: Date;
+    joinedAt?: number;
     role: ProjectRole;
     isSelected: boolean;
     userId: string;
 };
 
-export type ReadableProject = ReadableProjectData & {
+export type ReadableProject = Omit<ReadableProjectData, 'users'> & {
     users: PersonalProjectData[];
 };
