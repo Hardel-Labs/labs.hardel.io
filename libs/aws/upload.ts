@@ -41,7 +41,7 @@ export default async function uploadAsset(destination: string, file: formidable.
                 })
             );
 
-            return new RestHelper().setData({ url: `${process.env.ASSET_PREFIX}/${destination}/${filename}` }).getResponse();
+            return new RestHelper().setData({ url: `${process.env.ASSET_PREFIX}/${destination}/${filename}.webp` }).getResponse();
         } else {
             return new RestHelper().addError(RestErrorType.InternalServerError, 'File or Destination is missing').getResponse();
         }
