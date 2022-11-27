@@ -1,11 +1,11 @@
 import '@styles/global.scss';
 import { Inter } from '@next/font/google';
-import Header from '@main/Header';
 import Footer from '@main/Footer';
 import React from 'react';
+import local from '@next/font/local';
+import Header from '@main/(Header)';
 import { unstable_getServerSession } from 'next-auth/next';
 import { authOptions } from '@session';
-import local from '@next/font/local';
 
 const inter = Inter({
     subsets: ['latin']
