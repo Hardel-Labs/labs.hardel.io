@@ -4,7 +4,7 @@ import sharp from 'sharp';
 import RestHelper from '@libs/request/server/form-checker';
 import { RestErrorType } from '@libs/constant';
 import S3 from '@libs/aws/client';
-import { PutObjectCommand } from '@aws-sdk/client-s3';
+import { DeleteObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3';
 import { randomString } from '@libs/utils';
 import { RestRequest } from '@definitions/api';
 
@@ -33,15 +33,24 @@ export default async function uploadAsset(destination: string, file: formidable.
             if (!newImage) {
                 return new RestHelper().addError(RestErrorType.InternalServerError, 'The image could not be processed').getResponse();
             }
+
+            const key = `${destination}/${filename}.webp`;
+            await S3.send(
+                new DeleteObjectCommand({
+                    Bucket: process.env.R2_BUCKET_NAME,
+                    Key: key
+                })
+            );
+
             await S3.send(
                 new PutObjectCommand({
                     Bucket: process.env.R2_BUCKET_NAME,
-                    Key: `${destination}/${filename}.webp`,
+                    Key: key,
                     Body: newImage
                 })
             );
 
-            return new RestHelper().setData({ url: `${process.env.ASSET_PREFIX}/${destination}/${filename}.webp` }).getResponse();
+            return new RestHelper().setData({ url: `${process.env.ASSET_PREFIX}/${key}` }).getResponse();
         } else {
             return new RestHelper().addError(RestErrorType.InternalServerError, 'File or Destination is missing').getResponse();
         }
