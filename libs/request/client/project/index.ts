@@ -6,7 +6,14 @@ export const deleteProject = async (projectId: string, callback?: (success: bool
 };
 
 export const updateProject = async (projectId: string, data: Partial<ProjectCreateData>, callback?: (success: boolean) => void) => {
-    return await new FastFetcher('/api/projects', 'POST').appendMutateUrl('/api/projects').setBody(data).fetching(callback);
+    return await new FastFetcher('/api/projects', 'POST')
+        .appendMutateUrl('/api/projects/select')
+        .appendMutateUrl('/api/projects')
+        .setBody({
+            projectId,
+            ...data
+        })
+        .fetching(callback);
 };
 
 export const createProject = async <T>(data: Omit<ProjectCreateData, 'asset'>, callback?: (success: boolean) => void) => {
@@ -18,7 +25,7 @@ export const uploadProjectAsset = async (projectId: string, asset: File, callbac
     formData.append('projectId', projectId);
     formData.append('asset', asset);
 
-    return await new FastFetcher('/api/projects/asset', 'POST').appendMutateUrl('/api/projects').setFormData(formData).fetching(callback);
+    return await new FastFetcher('/api/projects/asset', 'POST').appendMutateUrl('/api/projects/select').appendMutateUrl('/api/projects').setFormData(formData).fetching(callback);
 };
 
 export const selectProject = async (projectId: string, callback?: (success: boolean) => void) => {
