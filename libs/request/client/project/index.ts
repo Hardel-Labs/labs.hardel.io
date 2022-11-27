@@ -2,7 +2,7 @@ import FastFetcher from '@libs/request/client/fast-fetcher';
 import { ProjectCreateData } from '@repositories/Project';
 
 export const deleteProject = async (projectId: string, callback?: (success: boolean) => void) => {
-    return await new FastFetcher('/api/projects', 'DELETE').appendMutateUrl('/api/projects').setBody({ projectId }).fetching(callback);
+    return await new FastFetcher('/api/projects', 'DELETE').appendMutateUrl('/api/projects/select').appendMutateUrl('/api/projects').setBody({ projectId }).fetching(callback);
 };
 
 export const updateProject = async (projectId: string, data: Partial<ProjectCreateData>, callback?: (success: boolean) => void) => {
