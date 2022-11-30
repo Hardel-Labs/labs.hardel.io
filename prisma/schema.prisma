@@ -1,12 +1,11 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider             = "mysql"
-  url                  = env("DATABASE_URL")
-  referentialIntegrity = "prisma"
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model Account {
@@ -26,6 +25,7 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model UserData {
@@ -41,9 +41,11 @@ model UserData {
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique
-  userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String
+
+  @@index([userId])
 }
 
 model User {
@@ -55,6 +57,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   UserData      UserData[]
+  Activity      Activity[]
 }
 
 model VerificationToken {
@@ -73,12 +76,15 @@ model Item {
   tag         String?
   custom      Boolean    @default(false)
   categories  Category[]
-  Recipes     Recipes?   @relation(fields: [recipesId], references: [id])
-  recipesId   Int?
+  recipes     Recipes?   @relation(fields: [recipesId], references: [id])
+  recipesId   String?
   createdAt   DateTime   @default(now())
   updatedAt   DateTime?  @updatedAt
   Project     Project?   @relation(fields: [projectId], references: [id])
   projectId   String?
+
+  @@index([recipesId])
+  @@index([projectId])
 }
 
 model Category {
@@ -91,22 +97,22 @@ model Category {
 }
 
 model Project {
-  id            String         @id @default(cuid())
-  name          String         @db.VarChar(50)
-  description   String         @db.VarChar(255)
-  version       String         @db.VarChar(10)
-  namespace     String         @db.VarChar(50)
-  asset         String         @default("project/default.webp")
-  users         ProjectUser[]
-  items         Item[]
-  Recipes       Recipes[]
-  notifications Notification[]
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime?      @updatedAt
+  id          String        @id @default(cuid())
+  name        String        @db.VarChar(50)
+  description String        @db.VarChar(255)
+  version     String        @db.VarChar(10)
+  namespace   String        @db.VarChar(50)
+  asset       String        @default("project/default.webp")
+  users       ProjectUser[]
+  items       Item[]
+  Recipes     Recipes[]
+  activities  Activity[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime?     @updatedAt
 }
 
 model Recipes {
-  id        Int       @id @default(autoincrement())
+  id        String    @id @default(cuid())
   name      String    @db.VarChar(50)
   type      String    @db.VarChar(30)
   items     Item[]
@@ -114,17 +120,23 @@ model Recipes {
   updatedAt DateTime? @updatedAt
   Project   Project?  @relation(fields: [projectId], references: [id])
   projectId String?
+
+  @@index([projectId])
 }
 
-model Notification {
-  id        Int       @id @default(autoincrement())
-  title     String    @db.VarChar(50)
-  message   String    @db.VarChar(255)
-  asset     String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime? @updatedAt
-  Project   Project?  @relation(fields: [projectId], references: [id])
+model Activity {
+  id        String       @id @default(cuid())
+  message   String       @db.VarChar(100)
+  asset     String?
+  createdAt DateTime     @default(now())
+  createdBy User?        @relation(fields: [userId], references: [id])
+  userId    String
+  Project   Project?     @relation(fields: [projectId], references: [id], onDelete: Cascade)
   projectId String?
+  action    ActivityType @default(INFO)
+
+  @@index([userId])
+  @@index([projectId])
 }
 
 model ProjectUser {
@@ -136,8 +148,11 @@ model ProjectUser {
   UserData   UserData    @relation(fields: [userId], references: [userId], onDelete: Cascade)
   userId     String
   isSelected Boolean     @default(false)
+  isInvited  Boolean     @default(false)
 
   @@id([projectId, userId])
+  @@index([projectId])
+  @@index([userId])
 }
 
 enum ProjectRole {
@@ -149,4 +164,10 @@ enum ProjectRole {
 enum RoleType {
   USER
   ADMIN
+}
+
+enum ActivityType {
+  CREATE
+  INFO
+  DELETE
 }

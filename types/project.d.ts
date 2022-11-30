@@ -1,5 +1,5 @@
 import { MinecraftItemData } from '@definitions/minecraft';
-import { ProjectRole } from '@prisma/client';
+import { Activity, ProjectRole, User } from '@prisma/client';
 
 type ReadableProjectData = {
     id: string;
@@ -10,7 +10,7 @@ type ReadableProjectData = {
     asset: string;
     items: MinecraftItemData[];
     recipes: any[];
-    notifications: any[];
+    activities: any[];
     createdAt?: number;
     updatedAt?: number | null;
     users: {
@@ -27,8 +27,38 @@ export type PersonalProjectData = {
     role: ProjectRole;
     isSelected: boolean;
     userId: string;
+    isInvited: boolean;
 };
 
 export type ReadableProject = Omit<ReadableProjectData, 'users'> & {
     users: PersonalProjectData[];
+};
+
+type MemberData = {
+    id: string;
+    email: string;
+    name: string;
+    image: string;
+    role: ProjectRole;
+    joinedAt: number;
+    isInvited: boolean;
+};
+
+export type MembersData = {
+    members: MemberData[];
+    self: PersonalProjectData;
+    projectId: string;
+};
+
+type ReadableActivityData = Activity & { createdBy: User | null };
+
+export type OutputActivities = {
+    month: number;
+    year: number;
+    data: [
+        {
+            day: number;
+            activities: ReadableActivityData[];
+        }
+    ];
 };

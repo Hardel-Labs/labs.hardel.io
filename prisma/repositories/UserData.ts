@@ -1,4 +1,4 @@
-import { PrismaClient, UserData } from '@prisma/client';
+import { PrismaClient, User, UserData } from '@prisma/client';
 
 export default class UserDataRepository {
     constructor(private readonly prisma: PrismaClient['userData']) {}
@@ -18,6 +18,22 @@ export default class UserDataRepository {
     async getByUserId(userId: string): Promise<UserData> {
         return await this.prisma.findUniqueOrThrow({
             where: { userId }
+        });
+    }
+
+    async getAllPersonalData(userId: string): Promise<UserData & Partial<User>> {
+        return await this.prisma.findUniqueOrThrow({
+            where: { userId },
+            include: {
+                user: {
+                    select: {
+                        email: true,
+                        id: true,
+                        image: true,
+                        name: true
+                    }
+                }
+            }
         });
     }
 }
