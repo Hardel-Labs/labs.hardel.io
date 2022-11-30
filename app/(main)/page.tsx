@@ -59,7 +59,7 @@ export default function Home() {
                                 <div className={'flex flex-col gap-y-6'}>
                                     <Check>Free</Check>
                                     <Check>Open Source</Check>
-                                    <Check>Fast and optimized datapacks</Check>
+                                    <Check>Fast and optimized data packs</Check>
                                 </div>
                             </div>
                         </div>
