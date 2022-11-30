@@ -9,6 +9,7 @@ type Props = {
 
 export default function Navigation({ session }: Props) {
     const sessionRole = session?.project?.role;
+
     return (
         <>
             <SettingsLinks href={'/dashboard/settings'}>General</SettingsLinks>

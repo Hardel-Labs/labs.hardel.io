@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import FormInput from '@components/form/input';
 import WhiteButton from '@components/form/Button/White';
 import ProjectCard from '@main/dashboard/ProjectCard';
@@ -16,7 +16,9 @@ export default function ProjectManager() {
     const [open, setOpen] = React.useState(false);
     const [search, setSearch] = React.useState('');
 
-    const display = data?.filter((project) => project.name.toLowerCase().includes(search.toLowerCase()));
+    const display = useMemo(() => {
+        return data?.filter((project) => project.name.toLowerCase().includes(search.toLowerCase()));
+    }, [data, search]);
 
     return (
         <>
@@ -32,8 +34,8 @@ export default function ProjectManager() {
             </div>
             {data && (
                 <div className={'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'}>
-                    {display?.map((project) => (
-                        <ProjectCard key={project.id} project={project} />
+                    {display?.map((project, index) => (
+                        <ProjectCard key={index} project={project} />
                     ))}
                 </div>
             )}
