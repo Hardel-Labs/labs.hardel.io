@@ -1,11 +1,11 @@
 import Link from 'next/link';
-import { signIn } from 'next-auth/react';
-import RainbowButton from '@components/form/Button/Rainbow';
 import HardelLetter from '@icons/logo/HardelLetter';
 import Search from '@icons/Common/Search';
 import UserDropdown from '@main/(Header)/UserDropdown';
 import SelectedProject from '@main/(Header)/SelectedProject';
 import { Session } from 'next-auth';
+import LoginButton from '@main/(Header)/LoginButton';
+import Slash from '@icons/Slash';
 
 type Props = {
     session: Session | null;
@@ -21,12 +21,12 @@ export default function Header({ session }: Props) {
                             <HardelLetter className="self-center w-10 h-10" />
                             <span className="text-xl font-semibold whitespace-nowrap">ardel</span>
                         </Link>
-
+                        <Slash />
                         {session?.userData ? (
                             <SelectedProject session={session} />
                         ) : (
-                            <div className="hidden block ml-8 justify-between items-center w-full md:flex md:w-auto md:order-1" id="mobile-menu-2">
-                                <ul className="apple-system flex flex-col px-4 mt-4 text-white font-semibold md:flex-row md:space-x-4 md:mt-0 md:text-[14px]">
+                            <div className="justify-between items-center w-full md:flex md:w-auto md:order-1">
+                                <ul className="flex flex-col text-white font-semibold md:flex-row md:space-x-4 md:mt-0 md:text-[14px]">
                                     <li>
                                         <Link href={'/'} className="block py-2 pl-3 text-white md:bg-transparent md:p-0">
                                             Home
@@ -73,7 +73,7 @@ export default function Header({ session }: Props) {
                                 <Search className="w-4 h-4 fill-white" />
                             </div>
                         </div>
-                        {session?.user ? <UserDropdown session={session} /> : <RainbowButton onClick={() => signIn()}>Log in</RainbowButton>}
+                        {session?.user ? <UserDropdown session={session} /> : <LoginButton />}
                     </div>
                 </div>
             </nav>

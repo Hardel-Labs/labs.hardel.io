@@ -32,7 +32,10 @@ export default function UserDropdown({ session }: Props) {
             {session?.user && (
                 <div
                     ref={ref}
-                    className={clx('bg-black/90 backdrop-blur-[1rem] absolute top-[72px] right-2 z-[50] text-base list-none rounded-xl shadow-2xl', isOpen ? 'block' : 'hidden')}
+                    className={clx(
+                        'bg-black/90 backdrop-blur-[1rem] absolute top-[72px] right-2 z-[50] border border-zinc-700 text-base list-none rounded-xl shadow-2xl',
+                        isOpen ? 'block' : 'hidden'
+                    )}
                 >
                     <div className="py-3 px-4 w-max">
                         <div className="flex items-center w-fit">
