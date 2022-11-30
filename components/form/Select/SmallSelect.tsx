@@ -7,7 +7,7 @@ import { Option } from '@components/form/Select/multiple';
 
 type Props = {
     onChange?: (values: string | undefined) => void;
-    values?: string;
+    defaultValue?: string;
     options: Option[];
 };
 
@@ -23,8 +23,8 @@ export default function SmallSelect(props: Props) {
     };
 
     useEffect(() => {
-        setSelected(props.options.find((option) => option.value === props.values) || props.options[0]);
-    }, [props.options, props.values]);
+        setSelected(props.options.find((option) => option.value === props.defaultValue) || props.options[0]);
+    }, [props.options, props.defaultValue]);
 
     return (
         <div ref={ref} className={'relative w-full'}>
