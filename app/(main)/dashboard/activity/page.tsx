@@ -1,14 +1,71 @@
-import HardelLetter from '@icons/logo/HardelLetter';
+import React from 'react';
+import ActivitiesMonth from '@main/dashboard/activity/ActivitiesMonth';
+import ActivityDay from '@main/dashboard/activity/ActivityDay';
+import ActivityItem from '@main/dashboard/activity/ActivityItem';
+import { getAllActivities } from '@libs/request/server/project/activity/get';
+import { unstable_getServerSession } from 'next-auth/next';
+import { authOptions } from '@session';
+import { OutputActivities } from '@definitions/project';
+import Slash from '@icons/Slash';
+import Checked from '@icons/mark/Checked';
+import Unchecked from '@icons/mark/Unchecked';
+import Info from '@icons/mark/Info';
 
-export default function Activity() {
+const getData = async (id?: string) => {
+    if (!id) throw new Error('No id provided');
+
+    const response = await getAllActivities(id);
+    if (!response.request.success) throw new Error("Couldn't get data");
+    return response.data as OutputActivities[];
+};
+
+export default async function ActivityPage() {
+    const session = await unstable_getServerSession(authOptions);
+    const data = await getData(session?.project?.id);
+
     return (
-        <div className={'w-full height-view flex flex-col justify-center items-center border-b-gold border-b-8 border-solid'}>
-            <h1 className={'text-4xl font-bold text-gold'}>Pages under construction.</h1>
-            <p className={'text-xl font-bold my-4 text-white'}>We are working hard to bring you the best experience.</p>
-            <hr />
-            <div className={'mb-8 mt-4 animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gold flex justify-between items-center'}>
-                <HardelLetter className={'w-32 h-32 fill-zinc-500'} />
+        <section className={'min-height-view flex flex-col border-b-gold border-b-8 border-solid'}>
+            <div className={'py-10 px-[150px] w-full'}>
+                <div className={'flex gap-x-4'}>
+                    <h1 className={'text-4xl font-bold text-gold'}>Dashboard</h1>
+                    <Slash />
+                    <span className={'text-4xl font-bold text-zinc-200'}>Activity</span>
+                </div>
+                <hr className={'mb'} />
+                <div className={'8 flex justify-between items-center'}>
+                    <div className={'bold text-xl text-zinc-400'}>Legend</div>
+                    <div className={'flex gap-x-4'}>
+                        <div className={'flex gap-x-2 items-center'}>
+                            <Checked className={'w-4 h-4 fill-green-500'} />
+                            <span>New feature</span>
+                        </div>
+                        <Slash />
+                        <div className={'flex gap-x-2 items-center'}>
+                            <Unchecked className={'w-4 h-4 fill-red-500'} />
+                            <span>Removed feature</span>
+                        </div>
+                        <Slash />
+                        <div className={'flex gap-x-2 items-center'}>
+                            <Info className={'w-4 h-4 fill-blue-500'} />
+                            <span>Changed feature or information</span>
+                        </div>
+                    </div>
+                </div>
+                <hr className={'mb-8'} />
+                {data.map((element, index) => (
+                    <ActivitiesMonth key={index} month={element.month} years={element.year}>
+                        {element.data.map((month, index) => (
+                            <ActivityDay key={index} day={month.day}>
+                                {month.activities.map((activity, index) => (
+                                    <ActivityItem key={index} data={activity}>
+                                        {activity.message}
+                                    </ActivityItem>
+                                ))}
+                            </ActivityDay>
+                        ))}
+                    </ActivitiesMonth>
+                ))}
             </div>
-        </div>
+        </section>
     );
 }
