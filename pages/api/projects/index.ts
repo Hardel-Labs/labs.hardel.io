@@ -5,23 +5,14 @@ import { getProjectByUserId } from '@libs/request/server/project/get';
 import deleteProject from '@libs/request/server/project/delete';
 import createProject from '@libs/request/server/project/create';
 import { RestErrorType } from '@libs/constant';
-import { unstable_getServerSession } from 'next-auth/next';
-import { authOptions } from '@session';
 import updateProject from '@libs/request/server/project/update';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<RestRequest<any>>) {
     const method = req.method;
     const { projectId, name, asset, description, namespace, version } = req.body;
-    const session = await unstable_getServerSession(req, res, authOptions);
-    if (!session) {
-        new RestHelper(req, res).addError(RestErrorType.Unauthorized, 'You are not logged in').send();
-        return;
-    }
-
-    const userId = session.id;
-    const errors = new RestHelper(req, res).checkIsVariableIsDefined(userId, 'id').checkErrors();
-    if (errors) {
-        new RestHelper(req, res).addError(RestErrorType.Unauthorized, 'You are not logged in').send();
+    const userId = await new RestHelper(req, res).getUserId();
+    if (!userId) {
+        new RestHelper(req, res).addError(RestErrorType.Unauthorized, 'User not found').send();
         return;
     }
 
