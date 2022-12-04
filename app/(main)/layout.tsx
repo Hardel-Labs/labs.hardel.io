@@ -1,11 +1,11 @@
 import '@styles/global.scss';
 import { Inter } from '@next/font/google';
 import Footer from '@main/Footer';
-import React from 'react';
+import React, { Suspense } from 'react';
 import local from '@next/font/local';
 import Header from '@main/(Header)';
-import { unstable_getServerSession } from 'next-auth/next';
-import { authOptions } from '@session';
+import LoadingHeader from '@main/(Header)/LoadingHeader';
+import { preloadSession } from '@libs/session';
 
 const inter = Inter({
     subsets: ['latin']
@@ -22,7 +22,7 @@ const minecraft = local({
 });
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-    const session = await unstable_getServerSession(authOptions);
+    preloadSession();
 
     return (
         <html lang="en">
@@ -31,7 +31,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </head>
             <body className={'min-h-screen flex flex-col justify-between background-grid'}>
                 <div className={[seven.variable, minecraft.variable, inter.className].join(' ')}>
-                    <Header session={session} />
+                    <Suspense fallback={<LoadingHeader />}>
+                        {/* @ts-ignore */}
+                        <Header />
+                    </Suspense>
                     <main>{children}</main>
                 </div>
                 <Footer />
