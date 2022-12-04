@@ -1,5 +1,6 @@
 import { UserData } from '@prisma/client';
 import { ReadablePersonalProjectData } from '@definitions/project';
+import { Session } from 'next-auth';
 
 declare module 'next-auth' {
     /**
@@ -22,3 +23,7 @@ declare module 'next-auth/jwt' {
         id: string;
     }
 }
+
+type AsyncSessionProps = {
+    session: Promise<Session | null>;
+};
