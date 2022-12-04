@@ -1,27 +1,15 @@
-import React from 'react';
-import ActivitiesMonth from '@main/dashboard/activity/ActivitiesMonth';
-import ActivityDay from '@main/dashboard/activity/ActivityDay';
-import ActivityItem from '@main/dashboard/activity/ActivityItem';
-import { getAllActivities } from '@libs/request/server/project/activity/get';
+import React, { Suspense } from 'react';
 import { unstable_getServerSession } from 'next-auth/next';
 import { authOptions } from '@session';
-import { OutputActivities } from '@definitions/project';
 import Slash from '@icons/Slash';
 import Checked from '@icons/mark/Checked';
 import Unchecked from '@icons/mark/Unchecked';
 import Info from '@icons/mark/Info';
+import ActivityManager from '@main/dashboard/activity/ActivityManager';
+import LoadingActivity from '@main/dashboard/activity/LoadingActivity';
 
-const getData = async (id?: string) => {
-    if (!id) throw new Error('No id provided');
-
-    const response = await getAllActivities(id);
-    if (!response.request.success) throw new Error("Couldn't get data");
-    return response.data as OutputActivities[];
-};
-
-export default async function ActivityPage() {
-    const session = await unstable_getServerSession(authOptions);
-    const data = await getData(session?.project?.id);
+export default function ActivityPage() {
+    const session = unstable_getServerSession(authOptions);
 
     return (
         <section className={'min-height-view flex flex-col border-b-gold border-b-8 border-solid'}>
@@ -52,19 +40,10 @@ export default async function ActivityPage() {
                     </div>
                 </div>
                 <hr className={'mb-8'} />
-                {data.map((element, index) => (
-                    <ActivitiesMonth key={index} month={element.month} years={element.year}>
-                        {element.data.map((month, index) => (
-                            <ActivityDay key={index} day={month.day}>
-                                {month.activities.map((activity, index) => (
-                                    <ActivityItem key={index} data={activity}>
-                                        {activity.message}
-                                    </ActivityItem>
-                                ))}
-                            </ActivityDay>
-                        ))}
-                    </ActivitiesMonth>
-                ))}
+                <Suspense fallback={<LoadingActivity />}>
+                    {/* @ts-ignore */}
+                    <ActivityManager session={session} />
+                </Suspense>
             </div>
         </section>
     );
