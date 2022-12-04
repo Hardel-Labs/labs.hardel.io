@@ -1,11 +1,11 @@
 'use client';
 
-import Image from 'next/image';
 import { MinecraftItemData } from '@definitions/minecraft';
 import React, { useContext } from 'react';
 import Draggable from '@components/dnd/Draggable';
 import { CraftingContext } from '@main/generator/crafting/(component)/CraftingContext';
 import { TooltipContext } from '@components/minecraft/ItemTooltip/TooltipContext';
+import LoadingImage from '@components/LoadingImage';
 
 type Props = {
     item: MinecraftItemData;
@@ -30,7 +30,9 @@ export default function DraggableMinecraftItem(props: Props) {
                 onClick: handleClick
             }}
         >
-            <div>{props.item.image && <Image alt={''} src={props.item.image} height={64} width={64} className={'w-full h-full pixelated'} />}</div>
+            <div>
+                <LoadingImage alt={'Minecraft Item'} src={props.item.image} height={64} width={64} className={'w-full h-full pixelated'} />
+            </div>
         </Draggable>
     );
 }
