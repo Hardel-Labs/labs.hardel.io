@@ -1,3 +1,4 @@
+'use client';
 import Image from 'next/image';
 import Harion from '@images/harion.webp';
 import InvitationBadge from '@components/badge/Invitation';
@@ -39,7 +40,7 @@ export default function ProjectCard(props: Props) {
         <>
             <div
                 className={clx(
-                    'bg-black/50 border flex flex-col rounded-xl py-4 px-6 90 transition ease-in-out duration-300',
+                    'bg-black/50 border flex flex-col rounded-xl py-4 px-6 transition ease-in-out duration-300',
                     props.project.isSelected ? 'border-gold' : 'border-zinc-700 hover:border-white',
                     props.project.isInvited ? 'cursor-pointer' : ''
                 )}
