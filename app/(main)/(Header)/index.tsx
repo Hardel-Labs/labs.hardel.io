@@ -3,15 +3,13 @@ import HardelLetter from '@icons/logo/HardelLetter';
 import Search from '@icons/Common/Search';
 import UserDropdown from '@main/(Header)/UserDropdown';
 import SelectedProject from '@main/(Header)/SelectedProject';
-import { Session } from 'next-auth';
 import LoginButton from '@main/(Header)/LoginButton';
 import Slash from '@icons/Slash';
+import { getSession } from '@libs/session';
 
-type Props = {
-    session: Session | null;
-};
+export default async function Header() {
+    const session = await getSession();
 
-export default function Header({ session }: Props) {
     return (
         <>
             <nav className="bg-black/10 relative z-20 backdrop-blur-sm px-4 py-2.5 min-h-[70px] flex items-center">
