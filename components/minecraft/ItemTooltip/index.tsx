@@ -34,13 +34,15 @@ export default function ItemTooltip() {
                     <div className={styles.textTooltip}>
                         <div className={styles.name}>{hoveredItem.name}</div>
                         <div className={styles.lore}>{hoveredItem.minecraftId}</div>
-                        <div className={styles.categories}>
-                            {hoveredItem.categories?.map((category, index) => (
-                                <div key={index} className={styles.category}>
-                                    {category.name}
-                                </div>
-                            ))}
-                        </div>
+                        {hoveredItem.categories && hoveredItem.categories?.length > 0 && (
+                            <div className={styles.categories}>
+                                {hoveredItem.categories?.map((category, index) => (
+                                    <div key={index} className={styles.category}>
+                                        {category.name}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
             )}
