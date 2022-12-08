@@ -17,6 +17,9 @@ module.exports = {
             fontFamily: {
                 seven: ['var(--font-seven)'],
                 minecraft: ['var(--font-minecraft)']
+            },
+            gridTemplateColumns: {
+                craft: 'repeat(auto-fill, minmax(420px, 1fr))'
             }
         }
     },
