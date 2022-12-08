@@ -4,8 +4,8 @@ import { getSession } from '@libs/session';
 import ProjectManager from '@main/dashboard/ProjectManager';
 import ButtonProject from '@main/dashboard/ButtonProject';
 import SearchProject from '@main/dashboard/SearchProject';
-import SearchContext from '@main/dashboard/SearchContext';
 import LoadedProject from '@main/dashboard/LoadedProject';
+import SearchContext from '@components/context/SearchContext';
 
 export default function Dashboard() {
     const session = getSession();

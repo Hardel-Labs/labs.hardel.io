@@ -1,7 +1,7 @@
 'use client';
 import FormInput from '@components/form/input';
 import React from 'react';
-import { SearchProjectContext } from '@main/dashboard/SearchContext';
+import { SearchProjectContext } from '@components/context/SearchContext';
 
 export default function SearchProject() {
     const { search, setSearch } = React.useContext(SearchProjectContext);

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext } from 'react';
+import React, { createContext, useMemo } from 'react';
 import { MinecraftItemData, SlotData } from '@definitions/minecraft';
 import { DEFAULT_SLOT_VALUE, RecipeType } from '@libs/constant';
 
@@ -12,6 +12,7 @@ type CraftingContextData = {
     exactPattern: boolean;
     setExactPattern: (exactPattern: boolean) => void;
     setResultCount: (count: number) => void;
+    resultCount: number;
     setSlots: (slots: SlotData[]) => void;
     selectedItem: MinecraftItemData | undefined;
     setSelectedItem: (item: MinecraftItemData | undefined) => void;
@@ -45,8 +46,14 @@ export default function CraftingContextProvider(props: { children: React.ReactNo
         setSlots((slots) => slots.map((slot) => (slot.id === 'crafting:result' ? { ...slot, count } : slot)));
     };
 
+    const resultCount = useMemo(() => {
+        return slots.find((slot) => slot.id === 'crafting:result')?.count ?? 1;
+    }, [slots]);
+
     return (
-        <CraftingContext.Provider value={{ slots, setSlotItem, recipeType, setRecipeType, exactPattern, setExactPattern, setResultCount, setSlots, selectedItem, setSelectedItem }}>
+        <CraftingContext.Provider
+            value={{ slots, setSlotItem, recipeType, setRecipeType, exactPattern, setExactPattern, setResultCount, resultCount, setSlots, selectedItem, setSelectedItem }}
+        >
             {props.children}
         </CraftingContext.Provider>
     );

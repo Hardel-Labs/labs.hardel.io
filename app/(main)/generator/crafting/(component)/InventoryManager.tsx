@@ -9,6 +9,7 @@ import GroupButtonContainer from '@components/form/Button/GroupButton/GroupButto
 import GroupButtonItem from '@components/form/Button/GroupButton/GroupButtonItem';
 import { InventoryType } from '@libs/constant';
 import DraggableMinecraftItem from '@components/minecraft/DraggableMinecraftItem';
+import FormInput from '@components/form/input';
 
 type Props = {
     categories: Array<MinecraftCategoryData>;
@@ -45,13 +46,7 @@ export default function InventoryManager(props: Props) {
                         Add new item
                     </RainbowButton>
                 </div>
-                <input
-                    type="text"
-                    className="bg-zinc-800 w-full text-sm border-2 border-solid border-white/20 rounded-md px-4 py-1 text-white focus:outline-none focus:border-gold"
-                    placeholder="Search an item"
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                />
+                <FormInput type="text" placeholder="Search an item" value={search} onChange={(e) => setSearch(e.target.value)} />
             </div>
             <div className={'mb-4'}>
                 <GroupButtonContainer>

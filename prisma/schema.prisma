@@ -69,21 +69,19 @@ model VerificationToken {
 }
 
 model Item {
-  id          Int        @id @default(autoincrement())
-  minecraftId String     @db.VarChar(80)
-  name        String     @db.VarChar(80)
-  asset       String     @default("vanilla/missing.webp")
+  id          Int          @id @default(autoincrement())
+  minecraftId String       @db.VarChar(80)
+  name        String       @db.VarChar(80)
+  asset       String       @default("vanilla/missing.webp")
   tag         String?
-  custom      Boolean    @default(false)
+  custom      Boolean      @default(false)
   categories  Category[]
-  recipes     Recipes?   @relation(fields: [recipesId], references: [id])
-  recipesId   String?
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime?  @updatedAt
-  Project     Project?   @relation(fields: [projectId], references: [id])
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime?    @updatedAt
+  Project     Project?     @relation(fields: [projectId], references: [id], onDelete: Cascade)
   projectId   String?
+  Ingredient  Ingredient[]
 
-  @@index([recipesId])
   @@index([projectId])
 }
 
@@ -112,16 +110,31 @@ model Project {
 }
 
 model Recipes {
-  id        String    @id @default(cuid())
-  name      String    @db.VarChar(50)
-  type      String    @db.VarChar(30)
-  items     Item[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime? @updatedAt
-  Project   Project?  @relation(fields: [projectId], references: [id])
-  projectId String?
+  id        String       @id @default(cuid())
+  name      String       @db.VarChar(50)
+  type      String       @db.VarChar(70)
+  custom    Boolean      @default(false)
+  exactly   Boolean      @default(false)
+  items     Ingredient[]
+  Project   Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String
+  createdAt DateTime     @default(now())
+  updatedAt DateTime?    @updatedAt
 
   @@index([projectId])
+}
+
+model Ingredient {
+  id        Int      @id @default(autoincrement())
+  slot      String   @db.VarChar(50)
+  count     Int
+  item      Item     @relation(fields: [itemId], references: [id])
+  itemId    Int
+  Recipes   Recipes? @relation(fields: [recipesId], references: [id], onDelete: Cascade)
+  recipesId String?
+
+  @@index([itemId])
+  @@index([recipesId])
 }
 
 model Activity {

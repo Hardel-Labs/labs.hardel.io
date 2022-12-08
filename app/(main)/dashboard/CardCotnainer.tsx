@@ -3,7 +3,7 @@
 import { ReadablePersonalProjectData } from '@definitions/project';
 import React, { useMemo } from 'react';
 import ProjectCard from '@main/dashboard/ProjectCard';
-import { SearchProjectContext } from '@main/dashboard/SearchContext';
+import { SearchProjectContext } from '@components/context/SearchContext';
 
 type Props = {
     data: ReadablePersonalProjectData[];

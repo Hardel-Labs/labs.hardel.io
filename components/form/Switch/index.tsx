@@ -23,7 +23,7 @@ export default function Switch(props: Props) {
                     </span>
                 </span>
             </span>
-            {props.label}
+            <p className={'mb-0 ml-4 font-bold'}>{props.label}</p>
         </label>
     );
 }

@@ -53,3 +53,22 @@ export type ShapedRecipe = {
 };
 
 export type Recipe = ShapelessRecipe | ShapedRecipe;
+
+type ReadableRecipeData = {
+    id: string;
+    name: string;
+    type: string;
+    exactlyPlaced: boolean;
+    custom: boolean;
+    projectId: string;
+    items: ReadableIngredientData[];
+    createdAt?: number;
+    updatedAt?: number;
+};
+
+type ReadableIngredientData = {
+    id: number;
+    slot: string;
+    count: number;
+    item: MinecraftItemData;
+};
