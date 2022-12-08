@@ -1,14 +1,14 @@
 import HighlightSection from '@components/codeblock/HighlightSection';
-import FileCopy from '@icons/Common/FileCopy';
-import Download from '@icons/Common/Download';
+import ButtonCopy from '@components/codeblock/ButtonCopy';
+import ButtonDownload from '@components/codeblock/ButtonDownload';
 
 export default function CodeBlock(props: { children: string; language: string; title?: string }) {
     return (
         <div className={'relative z-10 w-full px-4 pt-4 mt-10 glassmorphism'}>
             <div className={'absolute z-10 top-0 right-0 m-4'}>
                 <div className={'flex flex-col gap-y-4'}>
-                    <FileCopy className={'w-12 h-12 p-2 hover:bg-black/30 cursor-pointer transition bg-black/10 border border-white/20 rounded-md fill-zinc-400 cursor-pointer'} />
-                    <Download className={'w-12 h-12 p-2 hover:bg-black/30 cursor-pointer transition bg-black/10 border border-white/20 rounded-md fill-zinc-400 cursor-pointer'} />
+                    <ButtonCopy snippet={props.children} />
+                    <ButtonDownload snippet={props.children} />
                 </div>
             </div>
             <div className={'flex h-4 mr-16'}>
