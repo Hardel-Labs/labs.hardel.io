@@ -1,16 +1,31 @@
 import { SlotData } from '@definitions/minecraft';
 import { Option } from '@components/form/Select/multiple';
+import { RecipeType } from '@prisma/client';
 
-export enum RecipeType {
-    SHAPED = 'minecraft:crafting_shaped',
-    SHAPELESS = 'minecraft:crafting_shapeless',
-    SMELTING = 'minecraft:smelting',
-    BLASTING = 'minecraft:blasting',
-    SMOKING = 'minecraft:smoking',
-    CAMPFIRE = 'minecraft:campfire_cooking',
-    STONE_CUTTING = 'minecraft:stonecutting',
-    SMITHING = 'minecraft:smithing'
-}
+export const recipeTypeToValue = (type: RecipeType): string => {
+    switch (type) {
+        case RecipeType.SHAPED:
+            return 'minecraft:crafting_shaped';
+        case RecipeType.EXACT_SHAPED:
+            return 'minecraft:crafting_shaped';
+        case RecipeType.SHAPELESS:
+            return 'minecraft:crafting_shapeless';
+        case RecipeType.SMELTING:
+            return 'minecraft:smelting';
+        case RecipeType.BLASTING:
+            return 'minecraft:blasting';
+        case RecipeType.SMOKING:
+            return 'minecraft:smoking';
+        case RecipeType.CAMPFIRE:
+            return 'minecraft:campfire_cooking';
+        case RecipeType.STONE_CUTTING:
+            return 'minecraft:stonecutting';
+        case RecipeType.SMITHING:
+            return 'minecraft:smithing';
+        default:
+            return 'minecraft:crafting_shaped';
+    }
+};
 
 export enum InventoryType {
     SEARCH = 'search',

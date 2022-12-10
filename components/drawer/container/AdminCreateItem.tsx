@@ -47,26 +47,22 @@ export default function AdminCreateItem(props: Props) {
     const sendData = async () => {
         const parsedCategories = categories.map((category) => Number(category));
         await assetUploadItem(minecraftId, asset);
-        await upsertVanillaItem(!props.isCreating, name, minecraftId, tags, parsedCategories, props.defaultValues?.id, (success) => {
-            if (success) {
-                setName('');
-                setMinecraftId('');
-                setAsset(undefined);
-                setTags('');
-                setCategories([]);
-                router.refresh();
-                props.onClose();
-            }
+        await upsertVanillaItem(!props.isCreating, name, minecraftId, tags, parsedCategories, props.defaultValues?.id).then(() => {
+            setName('');
+            setMinecraftId('');
+            setAsset(undefined);
+            setTags('');
+            setCategories([]);
+            router.refresh();
+            props.onClose();
         });
     };
 
     const handleDelete = async () => {
         if (props.defaultValues?.id) {
-            await deleteVanillaItem(props.defaultValues?.id, (success) => {
-                if (success) {
-                    router.refresh();
-                    props.onClose();
-                }
+            await deleteVanillaItem(props.defaultValues?.id).then(() => {
+                router.refresh();
+                props.onClose();
             });
         }
     };

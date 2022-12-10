@@ -12,7 +12,7 @@ import React from 'react';
 export default function Home() {
     return (
         <>
-            <section className={'height-view overflow-hidden relative z-10 border-b-gold border-b-8 border-solid'}>
+            <section className={'height-view overflow-hidden relative z-10 border-b-gold border-b-8 border-solid flex justify-center'}>
                 <div className={'container h-full flex flex-col justify-center items-center'}>
                     <h1 className={'font-bold text-gold text-center'}>Hardel Labs</h1>
                     <hr />

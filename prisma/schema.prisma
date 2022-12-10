@@ -112,9 +112,8 @@ model Project {
 model Recipes {
   id        String       @id @default(cuid())
   name      String       @db.VarChar(50)
-  type      String       @db.VarChar(70)
+  type      RecipeType   @default(SHAPELESS)
   custom    Boolean      @default(false)
-  exactly   Boolean      @default(false)
   items     Ingredient[]
   Project   Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
   projectId String
@@ -183,4 +182,16 @@ enum ActivityType {
   CREATE
   INFO
   DELETE
+}
+
+enum RecipeType {
+  SHAPED
+  EXACT_SHAPED
+  SHAPELESS
+  SMELTING
+  BLASTING
+  SMOKING
+  CAMPFIRE
+  STONE_CUTTING
+  SMITHING
 }

@@ -1,14 +1,13 @@
 import { ReadableRecipeData } from '@definitions/minecraft';
+import { RecipeType } from '@prisma/client';
 
 const grid = 3;
 export const randomPlacement = (data: ReadableRecipeData): ReadableRecipeData => {
-    if (data.exactlyPlaced) return data;
-
     let newData = { ...data };
     const { type, items } = newData;
 
     switch (type) {
-        case 'minecraft:crafting_shapeless': {
+        case RecipeType.SHAPELESS: {
             const placement: Array<string> = Array.from({ length: 9 }, (_, index) => `crafting:${index}`);
             for (const item of items) {
                 if (item.slot === 'crafting:result') continue;
@@ -19,7 +18,7 @@ export const randomPlacement = (data: ReadableRecipeData): ReadableRecipeData =>
             }
             break;
         }
-        case 'minecraft:crafting_shaped': {
+        case RecipeType.SHAPED: {
             const itemsPositions = items.filter((item) => item.slot !== 'crafting:result').map((item) => parseInt(item.slot.split(':')[1]));
             const { length, height } = getLengthAndHeight(itemsPositions, grid);
             const possiblePositions = possibilities(length, height, grid);

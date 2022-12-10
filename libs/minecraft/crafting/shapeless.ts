@@ -1,5 +1,6 @@
 import { MinecraftItemData, SlotData } from '@definitions/minecraft';
-import { RecipeType } from '@libs/constant';
+import { RecipeType } from '@prisma/client';
+import { recipeTypeToValue } from '@libs/constant';
 
 /**
  * Transforms ingredients into a shapeless recipe
@@ -16,7 +17,7 @@ export const makeShapelessRecipes = (ingredients: SlotData[], result?: SlotData)
     }
 
     return {
-        type: RecipeType.SHAPELESS,
+        type: recipeTypeToValue(RecipeType.SHAPELESS),
         ingredients: ingredientsItem,
         result: {
             item: result?.item?.minecraftId,

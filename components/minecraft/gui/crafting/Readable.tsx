@@ -13,8 +13,15 @@ import { deleteRecipe } from '@libs/request/client/project/recipe';
 import { ToastContext } from '@components/toast/ToastContainer';
 import HardelLoader from '@components/loader/HardelLoader';
 import { clx } from '@libs/utils';
+import { RecipeType } from '@prisma/client';
 
-export default function CraftingTableGUI(props: { title: string; data: ReadableRecipeData }) {
+type Props = {
+    title: string;
+    data: ReadableRecipeData;
+    onEdit?: () => void;
+};
+
+export default function CraftingTableGUI(props: Props) {
     const { addPromiseToast } = useContext(ToastContext);
     const [recipe, setRecipe] = React.useState(props.data);
     const [loading, setLoading] = React.useState(false);
@@ -40,7 +47,13 @@ export default function CraftingTableGUI(props: { title: string; data: ReadableR
                 setLoading(false);
             });
 
-        addPromiseToast(promise, 'Processing...', 'Successfully recipe deleted', 'Failed to delete recipe', `The crafting recipe ${recipe.name} has been deleted successfully.`);
+        addPromiseToast(
+            promise,
+            'Processing...',
+            'Successfully recipe deleted',
+            'Failed to delete recipe',
+            `The crafting recipe ${recipe.name} has been deleted successfully.`
+        );
     };
 
     return (
@@ -59,7 +72,11 @@ export default function CraftingTableGUI(props: { title: string; data: ReadableR
             </div>
             <div className={'absolute bottom-4 right-4'}>
                 <p className={'text-sm text-zinc-500 border border-zinc-500 rounded-xl px-2 py-1 mb-0'}>
-                    {recipe.exactlyPlaced ? 'Exact Pattern' : recipe.type === 'minecraft:crafting_shapeless' ? 'Shapeless' : 'Shaped'}
+                    {recipe.type === RecipeType.EXACT_SHAPED
+                        ? 'Exact Pattern'
+                        : recipe.type === RecipeType.SHAPELESS
+                        ? 'Shapeless'
+                        : 'Shaped'}
                 </p>
             </div>
             <div className={'absolute bottom-4 left-4'}>
@@ -68,7 +85,7 @@ export default function CraftingTableGUI(props: { title: string; data: ReadableR
                         <HardelLoader className={'w-6 h-6'} />
                     ) : (
                         <>
-                            <Edit className={'w-6 h-6 fill-zinc-500 hover:fill-gold'} />
+                            <Edit className={'w-6 h-6 fill-zinc-500 hover:fill-gold'} onClick={() => props.onEdit?.()} />
                             <Trash className={'w-6 h-6 fill-zinc-500 hover:fill-red-700'} onClick={() => handleDelete()} />
                         </>
                     )}

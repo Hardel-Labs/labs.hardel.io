@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import Image from 'next/image';
 import Table from '@images/design/minecraft/custom_crafting_table.webp';
 
@@ -13,6 +13,7 @@ import DNDContextProvider from '@components/dnd/DNDContext';
 import Link from 'next/link';
 import MinecraftGrid from '@icons/MinecraftGrid';
 import DroppableCraftingTableGUI from '@components/minecraft/gui/crafting/Droppable';
+import InventoryLoading from '@main/generator/crafting/(component)/InventoryLoading';
 
 async function getData() {
     const categories = await getCategories();
@@ -24,7 +25,7 @@ async function getData() {
 }
 
 export default async function Page() {
-    const data = await getData();
+    const data = getData();
 
     return (
         <DNDContextProvider>
@@ -48,14 +49,21 @@ export default async function Page() {
                 <div className={'flex flex-col w-full md:w-1/2'}>
                     <div className={'pr-10 pl-5 my-10'}>
                         <div className={'glassmorphism px-10'}>
-                            <InventoryManager categories={data} />
+                            <Suspense fallback={<InventoryLoading />}>
+                                {/* @ts-ignore */}
+                                <InventoryManager categories={data} />
+                            </Suspense>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <Link href={'/generator/crafting/recipe'}>
-                <div className={'fixed z-20 bottom-8 right-8 w-16 h-16 rainbow-border rounded-full hover:scale-90 transition ease-in-out duration-200 cursor-pointer'}>
+            <Link prefetch={true} href={'/generator/crafting/recipe'}>
+                <div
+                    className={
+                        'fixed z-20 bottom-8 right-8 w-16 h-16 rainbow-border rounded-full hover:scale-90 transition ease-in-out duration-200 cursor-pointer'
+                    }
+                >
                     <div className={'flex justify-center items-center p-4'}>
                         <MinecraftGrid className={'w-full h-full fill-white'} />
                     </div>

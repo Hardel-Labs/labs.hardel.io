@@ -57,8 +57,7 @@ export type Recipe = ShapelessRecipe | ShapedRecipe;
 type ReadableRecipeData = {
     id: string;
     name: string;
-    type: string;
-    exactlyPlaced: boolean;
+    type: RecipeType;
     custom: boolean;
     projectId: string;
     items: ReadableIngredientData[];

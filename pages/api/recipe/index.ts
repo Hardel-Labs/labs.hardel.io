@@ -7,10 +7,11 @@ import { deleteRecipe } from '@libs/request/server/project/recipe/delete';
 import { updateRecipe } from '@libs/request/server/project/recipe/update';
 import { createRecipe } from '@libs/request/server/project/recipe/create';
 import ProjectRepository from '@repositories/Project';
+import { CreateRecipeData } from '@repositories/Recipe';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<RestRequest<any>>) {
     const method = req.method;
-    const { recipeId, data } = req.body;
+    const { recipeId, data } = req.body as { recipeId: string; data: Omit<CreateRecipeData, 'projectId'> };
     const userId = await new RestHelper(req, res).getUserId();
     if (!userId) {
         new RestHelper(req, res).addError(RestErrorType.Unauthorized, 'User not found').send();
@@ -36,7 +37,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             break;
         }
         case 'POST': {
-            const errors = new RestHelper(req, res).checkIsVariableIsDefined(recipeId, 'recipeId').checkIsVariableIsDefined(data, 'data').checkErrors();
+            const errors = new RestHelper(req, res)
+                .checkIsVariableIsDefined(recipeId, 'recipeId')
+                .checkIsVariableIsDefined(data, 'data')
+                .checkErrors();
 
             if (errors) return;
 

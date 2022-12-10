@@ -1,5 +1,5 @@
-import { mutate } from 'swr';
 import { RestRequest } from '@definitions/api';
+import { mutate } from 'swr';
 
 export default class FastFetcher {
     url: string;
@@ -113,21 +113,27 @@ export default class FastFetcher {
         }
     }
 
-    async fetching<T>(callback?: (success: boolean) => void): Promise<RestRequest<T>> {
-        const data = await fetch(this.url, {
-            method: this.method,
-            headers: this.headers,
-            body: this.bodyParser()
+    async fetching<T>(): Promise<RestRequest<T>> {
+        return new Promise((resolve, reject) => {
+            fetch(this.url, {
+                method: this.method,
+                headers: this.headers,
+                body: this.bodyParser()
+            })
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data: RestRequest<T>) => {
+                    if (data.request.success) {
+                        this.mutateUrl && this.mutateUrl.map((url: string) => mutate(url));
+                        resolve(data);
+                    } else {
+                        reject(data);
+                    }
+                })
+                .catch((error) => {
+                    reject(error);
+                });
         });
-        const rest: RestRequest<T> = await data.json();
-
-        if (rest.request.success) {
-            this.mutateUrl && this.mutateUrl.map((url: string) => mutate(url));
-            callback && callback(true);
-        } else {
-            callback && callback(false);
-        }
-
-        return rest;
     }
 }

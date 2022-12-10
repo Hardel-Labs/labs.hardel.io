@@ -1,12 +1,11 @@
-import { ActivityType, Ingredient, Item, PrismaClient, Recipes } from '@prisma/client';
+import { ActivityType, Ingredient, Item, PrismaClient, Recipes, RecipeType } from '@prisma/client';
 import { MinecraftItemData, ReadableRecipeData, SlotData } from '@definitions/minecraft';
 import ItemRepository from '@repositories/Items';
 import createActivity from '@libs/request/server/project/activity/create';
 
 export type CreateRecipeData = {
     name: string;
-    type: string;
-    exactly: boolean;
+    type: RecipeType;
     custom: boolean;
     items: SlotData[];
     projectId: string;
@@ -72,7 +71,6 @@ export default class RecipeRepository {
                 name: recipe.name,
                 type: recipe.type,
                 custom: recipe.custom,
-                exactly: recipe.exactly,
                 items: {
                     create: this.slotDataToIngredient(recipe.items)
                 }
@@ -101,22 +99,51 @@ export default class RecipeRepository {
         });
 
         createActivity(userId, projectId, '%user% deleted the recipe ' + response.name, ActivityType.DELETE);
+        return response;
     }
 
-    async updateIngredients(userId: string, projectId: string, recipeId: string, ingredients: SlotData[]) {
-        await prisma.ingredient.deleteMany({
+    async update(userId: string, projectId: string, recipeId: string, data: Omit<CreateRecipeData, 'projectId'>) {
+        const ingredientData = data.items;
+        await this.updateIngredients(userId, projectId, recipeId, ingredientData);
+        const response = await this.prisma.update({
             where: {
-                recipesId: recipeId
+                id: recipeId
+            },
+            data: {
+                type: data.type,
+                custom: data.custom,
+                name: data.name
+            },
+            include: {
+                items: {
+                    include: {
+                        item: true
+                    }
+                }
             }
         });
 
-        await prisma.ingredient.createMany({
-            data: this.slotDataToIngredient(ingredients)
+        return this.recipeToReadable(response);
+    }
+
+    async updateIngredients(userId: string, projectId: string, recipesId: string, ingredients: SlotData[]) {
+        await prisma.ingredient.deleteMany({
+            where: {
+                recipesId
+            }
         });
 
-        const recipe = await this.findOne(recipeId);
+        const ingredientData = this.slotDataToIngredient(ingredients);
+        await prisma.ingredient.createMany({
+            data: ingredientData.map((ingredient) => ({
+                ...ingredient,
+                recipesId
+            }))
+        });
 
-        createActivity(userId, projectId, '%user% updated the ingredients of the recipe ' + recipe.name, ActivityType.INFO);
+        const recipe = await this.findOne(recipesId);
+
+        createActivity(userId, projectId, '%user% updated the recipe ' + recipe.name, ActivityType.INFO);
     }
 
     async updateName(userId: string, projectId: string, recipeId: string, name: string) {
@@ -157,7 +184,6 @@ export default class RecipeRepository {
             name: data.name,
             type: data.type,
             custom: data.custom,
-            exactlyPlaced: data.exactly,
             projectId: data.projectId,
             createdAt: data.createdAt?.getTime(),
             updatedAt: data.updatedAt?.getTime(),

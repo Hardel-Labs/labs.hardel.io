@@ -1,7 +1,7 @@
 'use client';
 
 import styles from './index.module.scss';
-import React, { useState } from 'react';
+import React from 'react';
 
 type Props = {
     value: number;
@@ -12,17 +12,13 @@ type Props = {
 };
 
 export default function Counter(props: Props) {
-    const [value, setValue] = useState(props.min);
-
     const increment = () => {
-        const newValue = Math.min(value + props.step, props.max);
-        setValue(newValue);
+        const newValue = Math.min(props.value + props.step, props.max);
         props.onChange?.(newValue);
     };
 
     const decrement = () => {
-        const newValue = Math.max(value - props.step, props.min);
-        setValue(newValue);
+        const newValue = Math.max(props.value - props.step, props.min);
         props.onChange?.(newValue);
     };
 
@@ -31,8 +27,7 @@ export default function Counter(props: Props) {
             <span onClick={increment} className={styles.next}></span>
             <span onClick={decrement} className={styles.prev}></span>
             <div className={styles.box}>
-                {/*<input type="text" className={styles.input} value={value} onChange={handleChange} min={props.min} max={props.max} step={props.step} />*/}
-                <span className={styles.value}>{value}</span>
+                <span className={styles.value}>{props.value}</span>
             </div>
         </div>
     );

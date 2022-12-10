@@ -53,15 +53,15 @@ export default function Front() {
         if (!field) return;
 
         if (field instanceof File) {
-            await uploadProjectAsset(project.id, field, (success) => {
-                if (success) setState({ ...state, asset: null });
+            await uploadProjectAsset(project.id, field).then(() => {
+                setState({ ...state, asset: null });
             });
 
             return;
         }
 
-        await updateProject(project.id, { [fieldName]: field }, (success) => {
-            if (success) setState({ ...state, [fieldName]: null });
+        await updateProject(project.id, { [fieldName]: field }).then(() => {
+            setState({ ...state, [fieldName]: null });
         });
     };
 
@@ -71,7 +71,9 @@ export default function Front() {
                 <div className={'p-8'}>
                     <h1 className={'text-2xl text-white'}>Project Identifiant</h1>
                     <hr />
-                    <p className={'text-zinc-400 text-base'}>Its a unique identifier for your project, you can use it to contact the support team if you have any problem.</p>
+                    <p className={'text-zinc-400 text-base'}>
+                        Its a unique identifier for your project, you can use it to contact the support team if you have any problem.
+                    </p>
                     <CopyField>{project?.id ?? 'Bip Bop I am searching.'}</CopyField>
                 </div>
                 <div className={'bg-zinc-900 rounded-b-md px-6 py-4 border-zinc-600 border-t'}>
@@ -87,7 +89,9 @@ export default function Front() {
                         <div className={'p-8'}>
                             <h1 className={'text-2xl text-white'}>Project Name</h1>
                             <hr />
-                            <p className={'text-zinc-400 text-base'}>You can change the name of your project here, the modification will be applied to all users.</p>
+                            <p className={'text-zinc-400 text-base'}>
+                                You can change the name of your project here, the modification will be applied to all users.
+                            </p>
                             <FormInput placeholder={'Project Name'} name={'name'} onChange={onChange} value={state?.name ?? ''} />
                         </div>
                         <div className={'bg-zinc-900 rounded-b-md px-6 py-4 border-zinc-600 border-t'}>
@@ -102,8 +106,15 @@ export default function Front() {
                         <div className={'p-8'}>
                             <h1 className={'text-2xl text-white'}>Project Description</h1>
                             <hr />
-                            <p className={'text-zinc-400 text-base'}>You can change the description of your project here, be short and inventive 😁</p>
-                            <FormInput placeholder={'Project description'} name={'description'} onChange={onChange} value={state?.description ?? ''} />
+                            <p className={'text-zinc-400 text-base'}>
+                                You can change the description of your project here, be short and inventive 😁
+                            </p>
+                            <FormInput
+                                placeholder={'Project description'}
+                                name={'description'}
+                                onChange={onChange}
+                                value={state?.description ?? ''}
+                            />
                         </div>
                         <div className={'bg-zinc-900 rounded-b-md px-6 py-4 border-zinc-600 border-t'}>
                             <div className={'flex flex-row justify-between items-center'}>
@@ -118,12 +129,16 @@ export default function Front() {
                             <div className={'flex justify-between'}>
                                 <div>
                                     <h1 className={'text-2xl text-white'}>Project image</h1>
-                                    <p className={'text-zinc-400 text-base mb-4'}>You can change the image of your project here noted some rules:</p>
+                                    <p className={'text-zinc-400 text-base mb-4'}>
+                                        You can change the image of your project here noted some rules:
+                                    </p>
                                 </div>
                                 <Image src={preview} width={64} height={64} alt={'Project image'} className={'rounded-md w-16 h-16'} />
                             </div>
                             <ul className={'text-zinc-400 text-base list-disc list-inside mb-4'}>
-                                <li className={'text-zinc-400 text-base'}>The image must be in one of the following formats: png, jpg, jpeg, gif or webp.</li>
+                                <li className={'text-zinc-400 text-base'}>
+                                    The image must be in one of the following formats: png, jpg, jpeg, gif or webp.
+                                </li>
                                 <li className={'text-zinc-400 text-base'}>The image must not exceed 1MB</li>
                                 <li className={'text-zinc-400 text-base'}>The image will be automatically resized to 64x64 pixel</li>
                             </ul>
@@ -144,9 +159,14 @@ export default function Front() {
                             <h1 className={'text-2xl text-white'}>Project Version</h1>
                             <hr />
                             <p className={'text-zinc-400 text-base'}>
-                                Its the minecraft version of your project, you can change it here, the modification will be applied to all users.
+                                Its the minecraft version of your project, you can change it here, the modification will be applied to all
+                                users.
                             </p>
-                            <SimpleSelect options={VERSION} values={VERSION[0].value} onChange={(value) => setState({ ...state, version: value })} />
+                            <SimpleSelect
+                                options={VERSION}
+                                values={VERSION[0].value}
+                                onChange={(value) => setState({ ...state, version: value })}
+                            />
                         </div>
                         <div className={'bg-zinc-900 rounded-b-md px-6 py-4 border-zinc-600 border-t'}>
                             <div className={'flex flex-row justify-between items-center'}>
@@ -160,8 +180,15 @@ export default function Front() {
                         <div className={'p-8'}>
                             <h1 className={'text-2xl text-white'}>Project namespace</h1>
                             <hr />
-                            <p className={'text-zinc-400 text-base'}>A namespace represents in a data pack the folder where all technical data will be present.</p>
-                            <FormInput placeholder={'Project namespace'} name={'namespace'} onChange={onChange} value={state?.namespace ?? ''} />
+                            <p className={'text-zinc-400 text-base'}>
+                                A namespace represents in a data pack the folder where all technical data will be present.
+                            </p>
+                            <FormInput
+                                placeholder={'Project namespace'}
+                                name={'namespace'}
+                                onChange={onChange}
+                                value={state?.namespace ?? ''}
+                            />
                         </div>
                         <div className={'bg-zinc-900 rounded-b-md px-6 py-4 border-zinc-600 border-t'}>
                             <div className={'flex flex-row justify-between items-center'}>
@@ -179,13 +206,18 @@ export default function Front() {
                         <h1 className={'text-2xl text-white'}>Leave</h1>
                         <hr />
                         <p className={'text-zinc-400 text-base'}>
-                            You are about to leave this project, you will no longer be able to access it, you will also lose all your rights on it.
+                            You are about to leave this project, you will no longer be able to access it, you will also lose all your rights
+                            on it.
                         </p>
                     </div>
                     <div className={'bg-zinc-900 rounded-b-md px-6 py-4 border-zinc-500 border-t'}>
                         <div className={'flex flex-row justify-between items-center'}>
                             <p className={'text-zinc-400 text-base font-bold mb-0'}>This action is irreversible.</p>
-                            {project ? <RedButton onClick={async () => await leaveProject(project?.id)}>Leave</RedButton> : <RedButton disabled>Loading</RedButton>}
+                            {project ? (
+                                <RedButton onClick={async () => await leaveProject(project?.id)}>Leave</RedButton>
+                            ) : (
+                                <RedButton disabled>Loading</RedButton>
+                            )}
                         </div>
                     </div>
                 </div>

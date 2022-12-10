@@ -28,23 +28,19 @@ export default function AdminCategory(props: Props) {
     const sendData = async () => {
         if (!name || !itemMinecraftId) return;
 
-        await upsertVanillaCategory(name, itemMinecraftId, props.defaultValues?.id, (success) => {
-            if (success) {
-                setName('Yay');
-                setItemMinecraftId('minecraft:stone');
-                router.refresh();
-                props.onClose();
-            }
+        await upsertVanillaCategory(name, itemMinecraftId, props.defaultValues?.id).then(() => {
+            setName('Yay');
+            setItemMinecraftId('minecraft:stone');
+            router.refresh();
+            props.onClose();
         });
     };
 
     const handleDelete = async () => {
         if (props.defaultValues?.id) {
-            await deleteVanillaCategory(props.defaultValues.id, (success) => {
-                if (success) {
-                    router.refresh();
-                    props.onClose();
-                }
+            await deleteVanillaCategory(props.defaultValues.id).then(() => {
+                router.refresh();
+                props.onClose();
             });
         }
     };

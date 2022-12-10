@@ -1,5 +1,7 @@
 import { Recipe, ShapedRecipe, SlotData } from '@definitions/minecraft';
 import { makeShapedExactRecipes } from '@libs/minecraft/crafting/shapedExact';
+import { recipeTypeToValue } from '@libs/constant';
+import { RecipeType } from '@prisma/client';
 
 /**
  * Transforms ingredients and result into a shaped recipe
@@ -13,6 +15,9 @@ export const makeShapedRecipes = (ingredients: SlotData[], result?: SlotData): R
     if (shaped.pattern.length === 0 || shaped.pattern.find((patternLine) => patternLine.length !== shaped.pattern[0].length) !== undefined) {
         throw new Error('Invalid shaped recipe');
     }
+
+    // Change the type to shaped
+    shaped.type = recipeTypeToValue(RecipeType.SHAPED);
 
     // Remove left/right empty columns
     let startColIndex = shaped.pattern[0].length - 1;

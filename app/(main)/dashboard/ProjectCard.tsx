@@ -30,7 +30,7 @@ export default function ProjectCard(props: Props) {
 
     const handleSelect = async () => await selectProject(props.project.id);
 
-    const handleAccept = async () => await acceptProjectInvite(props.project.id, (success) => setModal(!success));
+    const handleAccept = async () => await acceptProjectInvite(props.project.id).then(() => setModal(false));
 
     const handleLeave = async () => await leaveProject(props.project.id);
 
@@ -50,7 +50,13 @@ export default function ProjectCard(props: Props) {
                     <div className={'flex justify-between items-center'}>
                         <div className="flex items-center w-fit">
                             <div className="flex-shrink-0">
-                                <Image className="rounded-full" width={32} height={32} src={props.project.asset ?? Harion} alt="user photo" />
+                                <Image
+                                    className="rounded-full"
+                                    width={32}
+                                    height={32}
+                                    src={props.project.asset ?? Harion}
+                                    alt="user photo"
+                                />
                             </div>
                             <div className="pl-3">
                                 <div className={'flex gap-x-2 items-center'}>
@@ -59,7 +65,9 @@ export default function ProjectCard(props: Props) {
                                         {props.project.role}
                                     </span>
                                 </div>
-                                <span className="block text-sm font-medium break-keep text-gray-500 truncate max-w-[12rem]">Version: {props.project.version}</span>
+                                <span className="block text-sm font-medium break-keep text-gray-500 truncate max-w-[12rem]">
+                                    Version: {props.project.version}
+                                </span>
                             </div>
                         </div>
                         {props.project.isInvited ? (
@@ -68,12 +76,20 @@ export default function ProjectCard(props: Props) {
                             <div className={'relative'}>
                                 <SettingsOption className={'w-6 h-6 cursor-pointer fill-white'} onClick={() => setOpen(!open)} />
                                 {open && (
-                                    <div ref={ref} className={'absolute -right-4 -top-5 bg-black border border-zinc-700 rounded-xl py-2 flex flex-col px-2 gap-y-2'}>
+                                    <div
+                                        ref={ref}
+                                        className={
+                                            'absolute -right-4 -top-5 bg-black border border-zinc-700 rounded-xl py-2 flex flex-col px-2 gap-y-2'
+                                        }
+                                    >
                                         <div onClick={() => handleSelect()} className={'px-4 cursor-pointer rounded-md hover:bg-zinc-800'}>
                                             Select
                                         </div>
                                         {props.project.role !== ProjectRole.OWNER && (
-                                            <div onClick={handleLeave} className={'px-4 cursor-pointer rounded-md hover:bg-zinc-800 text-red-500'}>
+                                            <div
+                                                onClick={handleLeave}
+                                                className={'px-4 cursor-pointer rounded-md hover:bg-zinc-800 text-red-500'}
+                                            >
                                                 Leaves
                                             </div>
                                         )}

@@ -19,16 +19,16 @@ export default function AdminAddItem(props: Props) {
     const sendData = async () => {
         if (!id || !props.categoryId) return;
 
-        await connectVanillaItemToCategory(props.categoryId, id, (success) => {
-            if (success) {
+        connectVanillaItemToCategory(props.categoryId, id)
+            .then(() => {
                 setItemMinecraftId(undefined);
                 router.refresh();
                 props.onClose();
-            }
-        });
-
-        router.refresh();
-        props.onClose();
+            })
+            .finally(() => {
+                router.refresh();
+                props.onClose();
+            });
     };
 
     return (

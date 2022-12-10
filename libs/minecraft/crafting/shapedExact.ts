@@ -1,5 +1,6 @@
 import { MinecraftItemData, RecipeKey, ShapedRecipe, ShapedRecipeLData, SlotData } from '@definitions/minecraft';
-import { RecipeType } from '@libs/constant';
+import { RecipeType } from '@prisma/client';
+import { recipeTypeToValue } from '@libs/constant';
 
 /**
  * Transforms ingredients and result into a shaped recipe
@@ -27,7 +28,7 @@ export const makeShapedExactRecipes = (ingredients: SlotData[], result?: SlotDat
     }
 
     return {
-        type: RecipeType.SHAPED,
+        type: recipeTypeToValue(RecipeType.EXACT_SHAPED),
         pattern: pattern,
         key: keyList,
         result: {
