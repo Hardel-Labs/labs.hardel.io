@@ -11,12 +11,14 @@ import WhiteButton from '@components/form/Button/White';
 import useClickOutside from '@libs/hooks/useClickOutside';
 import { ProjectRole } from '@prisma/client';
 import AcceptationModal from '@components/modal/Accept';
+import { useRouter } from 'next/navigation';
 
 type Props = {
     project: ReadablePersonalProjectData;
 };
 
 export default function ProjectCard(props: Props) {
+    const router = useRouter();
     const [open, setOpen] = React.useState(false);
     const [modal, setModal] = React.useState(false);
     const ref = React.useRef<HTMLDivElement>(null);
@@ -28,11 +30,20 @@ export default function ProjectCard(props: Props) {
         }
     };
 
-    const handleSelect = async () => await selectProject(props.project.id);
+    const handleSelect = async () => {
+        await selectProject(props.project.id);
+        router.refresh();
+    };
 
-    const handleAccept = async () => await acceptProjectInvite(props.project.id).then(() => setModal(false));
+    const handleAccept = async () => {
+        await acceptProjectInvite(props.project.id).then(() => setModal(false));
+        router.refresh();
+    };
 
-    const handleLeave = async () => await leaveProject(props.project.id);
+    const handleLeave = async () => {
+        await leaveProject(props.project.id);
+        router.refresh();
+    };
 
     const timeAgp = timeSince(new Date(props.project?.updatedAt ?? props.project?.createdAt ?? new Date()));
 
