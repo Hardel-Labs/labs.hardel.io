@@ -18,7 +18,7 @@ const seven = local({
 });
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-    const session = await unstable_getServerSession(authOptions);
+    const session = unstable_getServerSession(authOptions);
 
     return (
         <html lang="en">
@@ -31,7 +31,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                         <Sidebar />
                         <div className={'flex flex-auto flex-col justify-between min-h-screen relative'}>
                             <div>
-                                <Header data={session} />
+                                <Header session={session} />
                                 <section className={'px-4 md:px-8'}>
                                     <div className={'container'}>{children}</div>
                                 </section>

@@ -1,14 +1,10 @@
 import Link from 'next/link';
 import HardelLetter from '@icons/logo/HardelLetter';
-import Image from 'next/image';
-import Harion from '@images/harion.webp';
-import { Session } from 'next-auth';
+import { AsyncSessionProps } from '@definitions/next-auth';
+import { Suspense } from 'react';
+import StreamingAvatar from '@admin/admin/StreamingAvatar';
 
-type Props = {
-    data: Session | null;
-};
-
-export default function Header(props: Props) {
+export default function Header(props: AsyncSessionProps) {
     return (
         <nav className={'flex justify-between p-4 m-4'}>
             <div>
@@ -18,9 +14,16 @@ export default function Header(props: Props) {
                 </Link>
             </div>
 
-            <button type="button" className="w-8 h-8 flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300" id="user-menu-button">
+            <button
+                type="button"
+                className="w-8 h-8 flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300"
+                id="user-menu-button"
+            >
                 <span className="sr-only">Open user menu</span>
-                <Image className="rounded-full" width={32} height={32} src={props.data?.user?.image ?? Harion} alt="user photo" />
+                <Suspense fallback={<div className={'w-8 h-8 rounded bg-zinc-700 animate-pulse'} />}>
+                    {/* @ts-ignore */}
+                    <StreamingAvatar session={props.session} />
+                </Suspense>
             </button>
         </nav>
     );
