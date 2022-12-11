@@ -57,13 +57,13 @@ export default class CategoriesRepository {
                 id: category.id,
                 name: category.name,
                 minecraftId: category.categoryId,
-                asset: `${process.env.ASSET_PREFIX}/minecraft/items/${category.asset}`,
+                asset: `${process.env.ASSET_PREFIX}/minecraft/items/vanilla/${category.asset}`,
                 items: category.items.map((item) => {
                     return {
                         id: item.id,
                         minecraftId: item.minecraftId,
                         name: item.name,
-                        image: `${process.env.ASSET_PREFIX}/minecraft/items/${item.asset}`,
+                        image: `${process.env.ASSET_PREFIX}/minecraft/items/vanilla/${item.asset}`,
                         categories: item.categories?.map((category) => {
                             return {
                                 id: category.id,
