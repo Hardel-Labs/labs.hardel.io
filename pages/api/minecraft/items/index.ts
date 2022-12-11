@@ -16,7 +16,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     if (method !== 'GET') {
         const auth = await AuthMiddleware(req, res, { role: RoleType.ADMIN });
         if (!auth.isAuthenticated || !auth.hasRole) {
-            new RestHelper(req, res).addError(RestErrorType.Unauthorized, 'You have not the permission to access this resource').checkErrors();
+            new RestHelper(req, res)
+                .addError(RestErrorType.Unauthorized, 'You have not the permission to access this resource')
+                .checkErrors();
             return;
         }
     }
@@ -44,13 +46,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
             if (errors) return;
 
-            const parsedCategories = JSON.parse(categories) as number[];
+            const parsedCategories = JSON.parse(categories) as string[];
             const data = await upsertItems(update, id, minecraftId, name, parsedCategories, tag);
             res.status(data.request.statusCode).json(data);
             break;
         }
         case 'DELETE': {
-            const errors = new RestHelper(req, res).checkIsVariableIsDefined(id, 'id').checkIsNumber(id, 'id').checkErrors();
+            const errors = new RestHelper(req, res).checkIsVariableIsDefined(id, 'id').checkErrors();
             if (errors) return;
 
             const data = await deleteItem(id);

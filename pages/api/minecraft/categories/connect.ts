@@ -18,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
         if (errors) return;
 
-        const data = await new CategoriesRepository(prisma.category).connectItem(Number(categoryId), Number(itemId));
+        const data = await new CategoriesRepository(prisma.category).connectItem(categoryId, itemId);
         new RestHelper(req, res).setData(data).send();
     } catch (e) {
         new RestHelper(req, res).addError(RestErrorType.InternalServerError, 'No categories found or an error occurred').checkErrors();

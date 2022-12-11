@@ -5,25 +5,31 @@ import FormInput from '@components/form/input';
 import SelectMultiple, { Option } from '@components/form/Select/multiple';
 import FileInput from '@components/form/FileInput';
 import WhiteButton from '@components/form/Button/White';
-import fetcher from '@libs/request/client/fetcher';
-import useSWR from 'swr';
 import { Category } from '@prisma/client';
 import Image from 'next/image';
 import DefaultItem from '@images/design/item_placeholder.webp';
 import RedButton from '@components/form/Button/Red';
-import { assetUploadItem, deleteVanillaItem, upsertVanillaItem } from '@libs/request/client/minecraft/item';
 import { MinecraftItemData } from '@definitions/minecraft';
-import { useRouter } from 'next/navigation';
 
 type Props = {
     onClose: () => void;
     isCreating: boolean;
     defaultValues?: Partial<MinecraftItemData>;
+    defaultCategory?: Category[];
+    onSend?: (item: SendData) => void;
+    onDeleted?: (id: string) => void;
 };
 
-export default function AdminCreateItem(props: Props) {
-    const { data } = useSWR<Category[]>('/api/minecraft/categories/lite', fetcher);
-    const router = useRouter();
+export type SendData = {
+    id?: string;
+    name: string;
+    minecraftId: string;
+    asset: File;
+    tags: string;
+    categories: number[];
+};
+
+export default function BaseCreateItem(props: Props) {
     const [name, setName] = useState('');
     const [minecraftId, setMinecraftId] = useState('');
     const [asset, setAsset] = useState<File>();
@@ -36,36 +42,13 @@ export default function AdminCreateItem(props: Props) {
 
     const options: Option[] = useMemo(() => {
         return (
-            data?.map((category) => ({
+            props.defaultCategory?.map((category) => ({
                 name: category.name,
                 value: category.id.toString(),
                 shortName: category.name.length > 5 ? category.name.substring(0, 5).trim() + '...' : category.name
             })) || []
         );
-    }, [data]);
-
-    const sendData = async () => {
-        const parsedCategories = categories.map((category) => Number(category));
-        await assetUploadItem(minecraftId, asset);
-        await upsertVanillaItem(!props.isCreating, name, minecraftId, tags, parsedCategories, props.defaultValues?.id).then(() => {
-            setName('');
-            setMinecraftId('');
-            setAsset(undefined);
-            setTags('');
-            setCategories([]);
-            router.refresh();
-            props.onClose();
-        });
-    };
-
-    const handleDelete = async () => {
-        if (props.defaultValues?.id) {
-            await deleteVanillaItem(props.defaultValues?.id).then(() => {
-                router.refresh();
-                props.onClose();
-            });
-        }
-    };
+    }, [props.defaultCategory]);
 
     useEffect(() => {
         const { name, minecraftId, tag, categories } = props.defaultValues || {};
@@ -85,6 +68,32 @@ export default function AdminCreateItem(props: Props) {
             setCategories(categories.map((category) => category.id.toString()));
         }
     }, [props.defaultValues]);
+
+    const handleSend = () => {
+        const parsedCategories = categories.map((category) => Number(category));
+        if (!asset) {
+            return;
+        }
+
+        const sendData: SendData = {
+            id: props.defaultValues?.id,
+            name,
+            minecraftId,
+            asset,
+            tags,
+            categories: parsedCategories
+        };
+
+        props.onSend?.(sendData);
+    };
+
+    const handleDelete = () => {
+        if (!props.defaultValues?.id) {
+            return;
+        }
+
+        props.onDeleted?.(props.defaultValues?.id);
+    };
 
     return (
         <div>
@@ -134,7 +143,7 @@ export default function AdminCreateItem(props: Props) {
 
             <div className={'flex justify-end w-full gap-x-2 mt-4'}>
                 {!props.isCreating && <RedButton onClick={() => handleDelete()}>Delete Item</RedButton>}
-                <WhiteButton onClick={() => sendData()}>{props.isCreating ? 'Create Item' : 'Update Item'}</WhiteButton>
+                <WhiteButton onClick={() => handleSend()}>{props.isCreating ? 'Create Item' : 'Update Item'}</WhiteButton>
             </div>
         </div>
     );

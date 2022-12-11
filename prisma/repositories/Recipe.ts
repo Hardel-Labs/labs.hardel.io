@@ -11,7 +11,7 @@ export type CreateRecipeData = {
     projectId: string;
 };
 
-type CreateIngredientData = { slot: string; count: number; itemId: number };
+type CreateIngredientData = { slot: string; count: number; itemId: string };
 
 type RecipeData = Recipes & {
     items: (Ingredient & { item: Item })[];

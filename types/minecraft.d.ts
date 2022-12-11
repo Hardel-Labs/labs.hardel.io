@@ -1,5 +1,5 @@
 export type MinecraftItemData = {
-    id: number;
+    id: string;
     minecraftId: string;
     name: string;
     image: string;
@@ -9,7 +9,8 @@ export type MinecraftItemData = {
 };
 
 export type MinecraftCategoryData = {
-    id: number;
+    id: string;
+    minecraftId: string;
     name: string;
     asset: string;
     items: Array<MinecraftItemData>;

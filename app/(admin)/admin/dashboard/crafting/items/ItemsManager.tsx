@@ -5,7 +5,7 @@ import { MinecraftItemData } from '@definitions/minecraft';
 import Image from 'next/image';
 import React from 'react';
 import Drawer from '@components/drawer';
-import AdminCreateItem from '@components/drawer/container/AdminCreateItem';
+import AdminCreateItem from '@components/drawer/container/item/AdminCreateItem';
 import Harion from '@images/harion.webp';
 import FormInput from '@components/form/input';
 import MinecraftItem from '@components/minecraft/MinecraftItem';
@@ -45,7 +45,11 @@ export default function ItemsManager(props: { data: MinecraftItemData[] }) {
             {(items: MinecraftItemData[]) => (
                 <>
                     <div className={'my-10 flex gap-x-4'}>
-                        <div className={'flex flex-auto h-fit min-h-[250px] max-h-[400px] bg-black/20 border border-white/20 rounded-r-xl overflow-y-auto'}>
+                        <div
+                            className={
+                                'flex flex-auto h-fit min-h-[250px] max-h-[400px] bg-black/20 border border-white/20 rounded-r-xl overflow-y-auto'
+                            }
+                        >
                             <div className={'h-full p-4 flex flex-wrap items-start content-start'}>
                                 {items?.map((item, index) => (
                                     <MinecraftItem key={index} item={item} onClick={() => handleEdit(item)} />
@@ -53,7 +57,12 @@ export default function ItemsManager(props: { data: MinecraftItemData[] }) {
                             </div>
                         </div>
                     </div>
-                    <Drawer title={selectedDrawer.title} description={selectedDrawer.description} isOpened={isOpened} onClose={() => handleClose()}>
+                    <Drawer
+                        title={selectedDrawer.title}
+                        description={selectedDrawer.description}
+                        isOpened={isOpened}
+                        onClose={() => handleClose()}
+                    >
                         <AdminCreateItem onClose={() => handleClose()} isCreating={!isEdit} defaultValues={selectedItem} />
                     </Drawer>
                 </>

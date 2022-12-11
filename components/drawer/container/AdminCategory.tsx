@@ -10,7 +10,7 @@ import SelectItem from '@components/form/Select/item';
 
 export type AdminCategoryDefaultValue = {
     name: string;
-    id: number;
+    id: string;
     asset: string;
 };
 

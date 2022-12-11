@@ -1,5 +1,4 @@
 import { Category, Item, PrismaClient } from '@prisma/client';
-import { SafeNumber } from '@definitions/global';
 import { MinecraftCategoryData } from '@definitions/minecraft';
 
 export type CategoryCreateData = Omit<Category, 'id'> | Category;
@@ -14,24 +13,7 @@ export default class CategoriesRepository {
         });
     }
 
-    async findPaginated(limit?: SafeNumber, page?: SafeNumber, items?: boolean) {
-        return await this.prisma.findMany({
-            include: { items: items },
-            take: limit ? Number(limit) : undefined,
-            skip: page && limit ? (Number(page) + 1) * Number(limit) : 0
-        });
-    }
-
-    async findOne(id: number, items?: boolean) {
-        return await this.prisma.findUnique({
-            where: {
-                id
-            },
-            include: { items: items }
-        });
-    }
-
-    async connectItem(categoryId: number, itemId: number) {
+    async connectItem(categoryId: string, itemId: string) {
         return await this.prisma.update({
             where: {
                 id: categoryId
@@ -61,7 +43,8 @@ export default class CategoriesRepository {
                         categories: {
                             select: {
                                 id: true,
-                                name: true
+                                name: true,
+                                categoryId: true
                             }
                         }
                     }
@@ -73,6 +56,7 @@ export default class CategoriesRepository {
             return {
                 id: category.id,
                 name: category.name,
+                minecraftId: category.categoryId,
                 asset: `${process.env.ASSET_PREFIX}/minecraft/items/${category.asset}`,
                 items: category.items.map((item) => {
                     return {
@@ -83,7 +67,8 @@ export default class CategoriesRepository {
                         categories: item.categories?.map((category) => {
                             return {
                                 id: category.id,
-                                name: category.name
+                                name: category.name,
+                                minecraftId: category.categoryId
                             };
                         })
                     };
@@ -102,7 +87,7 @@ export default class CategoriesRepository {
         });
     }
 
-    async update(id: number, data: Partial<Item>) {
+    async update(id: string, data: Partial<Item>) {
         return await this.prisma.update({
             where: {
                 id
@@ -111,20 +96,24 @@ export default class CategoriesRepository {
         });
     }
 
-    async updateOrInsert(name: string, itemId: string, id?: SafeNumber) {
+    async updateOrInsert(name: string, itemId: string, categoryId: string, id?: string) {
         const assetUrl = itemId.startsWith('minecraft:') ? itemId.replace('minecraft:', '') : itemId;
         const url = 'vanilla/' + assetUrl + '.webp';
 
         if (id) {
-            return await this.update(+id, { name, asset: url });
+            return await this.update(id, { name, asset: url });
         } else {
             return await this.prisma.create({
-                data: { name, asset: url }
+                data: {
+                    name,
+                    asset: url,
+                    categoryId
+                }
             });
         }
     }
 
-    async delete(id: number) {
+    async delete(id: string) {
         return await this.prisma.delete({
             where: {
                 id
@@ -132,23 +121,20 @@ export default class CategoriesRepository {
         });
     }
 
-    async deleteAll() {
-        return await this.prisma.deleteMany();
-    }
-
-    itemsToData(categories: CategoryWithCategories): MinecraftCategoryData[] {
+    categoryToData(categories: CategoryWithCategories): MinecraftCategoryData[] {
         return categories.map((category) => {
             return {
                 id: category.id,
                 name: category.name,
-                asset: `${process.env.ASSET_PREFIX}/minecraft/items/${category.asset}`,
+                minecraftId: category.categoryId,
+                asset: `${process.env.ASSET_PREFIX}/minecraft/items/vanilla/${category.asset}`,
                 items:
                     category?.items?.map((item) => {
                         return {
                             id: item.id,
                             minecraftId: item.minecraftId,
                             name: item.name,
-                            image: `${process.env.ASSET_PREFIX}/minecraft/items/${item.asset}`
+                            image: `${process.env.ASSET_PREFIX}/minecraft/items/vanilla/${item.asset}`
                         };
                     }) ?? []
             };

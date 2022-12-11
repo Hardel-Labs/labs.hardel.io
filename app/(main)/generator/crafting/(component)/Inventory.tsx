@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import RainbowButton from '@components/form/Button/Rainbow';
 import Add from '@icons/Common/Add';
 import { MinecraftCategoryData } from '@definitions/minecraft';
@@ -10,13 +10,15 @@ import GroupButtonItem from '@components/form/Button/GroupButton/GroupButtonItem
 import { InventoryType } from '@libs/constant';
 import DraggableMinecraftItem from '@components/minecraft/DraggableMinecraftItem';
 import FormInput from '@components/form/input';
+import { DrawerContext } from '@main/generator/crafting/(component)/DrawerContext';
 
 type Props = {
     categories: Array<MinecraftCategoryData>;
 };
 
 export default function Inventory(props: Props) {
-    const [selected, setSelected] = React.useState<number>(props.categories[0].id);
+    const { setOpen } = useContext(DrawerContext);
+    const [selected, setSelected] = React.useState<string>(props.categories[0].id);
     const [search, setSearch] = React.useState<string>('');
     const [type, setType] = React.useState<InventoryType>(InventoryType.SEARCH);
 
@@ -36,12 +38,16 @@ export default function Inventory(props: Props) {
         }
     }, [type, props.categories, selected, search]);
 
+    const handleClicked = () => {
+        setOpen(true);
+    };
+
     return (
         <div className={'my-10'}>
             <div className={'mb-4'}>
                 <div className={'flex justify-between items-center mb-4'}>
                     <p className={'text-white text-2xl font-normal mb-0 font-minecraft'}>Minecraft Items</p>
-                    <RainbowButton className={'flex justify-center items-center'}>
+                    <RainbowButton className={'flex justify-center items-center'} onClick={() => handleClicked()}>
                         <Add className={'w-8 h-8 fill-white mr-2'} />
                         Add new item
                     </RainbowButton>

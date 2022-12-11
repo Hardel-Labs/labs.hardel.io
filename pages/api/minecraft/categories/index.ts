@@ -15,7 +15,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     if (method !== 'GET') {
         const auth = await AuthMiddleware(req, res, { role: RoleType.ADMIN });
         if (!auth.isAuthenticated || !auth.hasRole) {
-            new RestHelper(req, res).addError(RestErrorType.Unauthorized, 'You have not the permission to access this resource').checkErrors();
+            new RestHelper(req, res)
+                .addError(RestErrorType.Unauthorized, 'You have not the permission to access this resource')
+                .checkErrors();
             return;
         }
     }
@@ -27,7 +29,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             break;
         }
         case 'PUT': {
-            const errors = new RestHelper(req, res).checkIsVariableIsDefined(asset, 'asset').checkIsVariableIsDefined(name, 'name').checkMaxLength(name, 30).checkErrors();
+            const errors = new RestHelper(req, res)
+                .checkIsVariableIsDefined(asset, 'asset')
+                .checkIsVariableIsDefined(name, 'name')
+                .checkMaxLength(name, 30)
+                .checkErrors();
 
             if (errors) return;
             const putData = await upsertCategory(id, name, asset);

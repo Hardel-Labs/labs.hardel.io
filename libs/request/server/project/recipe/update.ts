@@ -18,17 +18,3 @@ export const updateRecipe = async (
         return new RestHelper().addError(RestErrorType.InternalServerError, 'Failed to update recipe').getResponse();
     }
 };
-
-export const updateName = async (
-    userId: string,
-    projectId: string,
-    recipeId: string,
-    name: string
-): Promise<RestRequest<ReadableProject>> => {
-    try {
-        const response = await new RecipeRepository(prisma.recipes).updateName(userId, projectId, recipeId, name);
-        return new RestHelper().setData(response).getResponse();
-    } catch (error) {
-        return new RestHelper().addError(RestErrorType.InternalServerError, 'Failed to update recipe').getResponse();
-    }
-};

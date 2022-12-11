@@ -8,13 +8,13 @@ import { connectVanillaItemToCategory } from '@libs/request/client/minecraft/cat
 
 type Props = {
     onClose: () => void;
-    categoryId?: number;
+    categoryId?: string;
 };
 
 export default function AdminAddItem(props: Props) {
     const router = useRouter();
     const [itemMinecraftId, setItemMinecraftId] = useState<string>();
-    const [id, setId] = useState<number>();
+    const [id, setId] = useState<string>();
 
     const sendData = async () => {
         if (!id || !props.categoryId) return;

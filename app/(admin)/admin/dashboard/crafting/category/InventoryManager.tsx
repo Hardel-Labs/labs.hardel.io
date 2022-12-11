@@ -7,7 +7,7 @@ import FormInput from '@components/form/input';
 import WhiteButton from '@components/form/Button/White';
 import { MinecraftCategoryData, MinecraftItemData } from '@definitions/minecraft';
 import Drawer, { DrawerProps } from '@components/drawer';
-import AdminCreateItem from '@components/drawer/container/AdminCreateItem';
+import AdminCreateItem from '@components/drawer/container/item/AdminCreateItem';
 import AdminCategory, { AdminCategoryDefaultValue } from '@components/drawer/container/AdminCategory';
 import AdminAddItem from '@components/drawer/container/AdminAddItem';
 
@@ -132,11 +132,20 @@ export default function InventoryManager({ data }: Props) {
                 <div className={'flex'}>
                     <div>
                         {data.map((category, index) => (
-                            <Category key={index} category={category} selected={selectedCategory?.id} onClick={() => handleSelectCategory(category)} />
+                            <Category
+                                key={index}
+                                category={category}
+                                selected={selectedCategory?.id}
+                                onClick={() => handleSelectCategory(category)}
+                            />
                         ))}
                     </div>
 
-                    <div className={'flex flex-auto min-h-[300px] max-h-[600px] bg-black/20 border border-white/20 rounded-r-xl overflow-y-auto'}>
+                    <div
+                        className={
+                            'flex flex-auto min-h-[300px] max-h-[600px] bg-black/20 border border-white/20 rounded-r-xl overflow-y-auto'
+                        }
+                    >
                         {!selectedCategory && search.length > 2 && displayItems?.length === 0 && (
                             <div className={'flex items-center justify-center w-full h-full p-4'}>
                                 <p className={'text-white text-center text-xl font-normal mb-0 minecraft'}>No results</p>

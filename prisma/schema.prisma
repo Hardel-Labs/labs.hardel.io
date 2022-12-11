@@ -69,7 +69,7 @@ model VerificationToken {
 }
 
 model Item {
-  id          Int          @id @default(autoincrement())
+  id          String       @id @default(cuid())
   minecraftId String       @db.VarChar(80)
   name        String       @db.VarChar(80)
   asset       String       @default("vanilla/missing.webp")
@@ -86,12 +86,13 @@ model Item {
 }
 
 model Category {
-  id        Int       @id @default(autoincrement())
-  name      String    @db.VarChar(30)
-  asset     String    @default("vanilla/missing.webp")
-  items     Item[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime? @updatedAt
+  id         String    @id @default(cuid())
+  name       String    @db.VarChar(30)
+  categoryId String    @db.VarChar(70)
+  asset      String    @default("vanilla/missing.webp")
+  items      Item[]
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime? @updatedAt
 }
 
 model Project {
@@ -128,7 +129,7 @@ model Ingredient {
   slot      String   @db.VarChar(50)
   count     Int
   item      Item     @relation(fields: [itemId], references: [id])
-  itemId    Int
+  itemId    String
   Recipes   Recipes? @relation(fields: [recipesId], references: [id], onDelete: Cascade)
   recipesId String?
 

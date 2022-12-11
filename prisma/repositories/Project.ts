@@ -1,5 +1,4 @@
 import { Activity, ActivityType, Item, PrismaClient, Project, ProjectRole, ProjectUser, Recipes } from '@prisma/client';
-import { SafeNumber } from '@definitions/global';
 import { MembersData, PersonalProjectData, ReadablePersonalProjectData, ReadableProject, ReadableProjectData } from '@definitions/project';
 import ItemRepository from '@repositories/Items';
 import prisma from '@libs/prisma';
@@ -23,27 +22,6 @@ export default class ProjectRepository {
                 users: include,
                 activities: include
             }
-        });
-
-        return this.projectsToReadableData(responses);
-    }
-
-    /**
-     * Get all project with pagination.
-     * @param limit
-     * @param page
-     * @param include
-     */
-    async findPaginated(limit?: SafeNumber, page?: SafeNumber, include?: boolean): Promise<ReadableProject[]> {
-        const responses = await this.prisma.findMany({
-            include: {
-                items: include,
-                Recipes: include,
-                activities: include,
-                users: include
-            },
-            take: limit ? Number(limit) : undefined,
-            skip: page && limit ? (Number(page) + 1) * Number(limit) : 0
         });
 
         return this.projectsToReadableData(responses);

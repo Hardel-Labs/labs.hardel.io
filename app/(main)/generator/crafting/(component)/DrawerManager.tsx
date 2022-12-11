@@ -1,14 +1,15 @@
 'use client';
 
 import Drawer from '@components/drawer';
-import { useState } from 'react';
+import { useContext } from 'react';
+import { DrawerContext } from '@main/generator/crafting/(component)/DrawerContext';
 
 export default function DrawerManager() {
-    const [open, setOpen] = useState(false);
+    const { open, setOpen, children } = useContext(DrawerContext);
 
     return (
         <Drawer onClose={() => setOpen(false)} isOpened={open} title={'Drawer'}>
-            <div>Jeje</div>
+            {children}
         </Drawer>
     );
 }
