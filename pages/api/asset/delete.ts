@@ -26,7 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     try {
         const url = await S3.send(
             new DeleteObjectCommand({
-                Bucket: process.env.R2_BUCKET_NAME,
+                Bucket: process.env.S3_BUCKET_NAME,
                 Key: path
             })
         );

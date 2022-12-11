@@ -103,7 +103,7 @@ export default class ItemRepository {
             id: item.id,
             minecraftId: item.minecraftId,
             name: item.name,
-            image: `${process.env.ASSET_PREFIX}/minecraft/items/vanilla/${item.asset}`,
+            image: `${process.env.ASSET_PREFIX}/minecraft/items/${item.asset}`,
             custom: item.custom,
             tag: item.tag,
             categories:
@@ -112,7 +112,7 @@ export default class ItemRepository {
                         id: category.id,
                         name: category.name,
                         minecraftId: category.categoryId,
-                        asset: `${process.env.ASSET_PREFIX}/minecraft/items/vanilla/${category.asset}`
+                        asset: `${process.env.ASSET_PREFIX}/minecraft/items/${category.asset}`
                     };
                 }) ?? []
         };

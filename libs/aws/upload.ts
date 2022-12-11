@@ -21,7 +21,11 @@ export type AssetUploadOutput = {
     filename: string;
 };
 
-export default async function uploadAsset(destination: string, file: formidable.File, options?: UploadOptions): Promise<RestRequest<AssetUploadOutput>> {
+export default async function uploadAsset(
+    destination: string,
+    file: formidable.File,
+    options?: UploadOptions
+): Promise<RestRequest<AssetUploadOutput>> {
     try {
         if (file && destination) {
             const resizeWidth = options?.width || 64;
@@ -37,14 +41,14 @@ export default async function uploadAsset(destination: string, file: formidable.
             const key = `${destination}/${filename}.webp`;
             await S3.send(
                 new DeleteObjectCommand({
-                    Bucket: process.env.R2_BUCKET_NAME,
+                    Bucket: process.env.S3_BUCKET_NAME,
                     Key: key
                 })
             );
 
             await S3.send(
                 new PutObjectCommand({
-                    Bucket: process.env.R2_BUCKET_NAME,
+                    Bucket: process.env.S3_BUCKET_NAME,
                     Key: key,
                     Body: newImage
                 })

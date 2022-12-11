@@ -18,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     try {
         const data = await S3.send(
             new ListObjectsV2Command({
-                Bucket: process.env.R2_BUCKET_NAME,
+                Bucket: process.env.S3_BUCKET_NAME,
                 Delimiter: '/',
                 Prefix: path
             })
